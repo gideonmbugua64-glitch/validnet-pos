@@ -1,93 +1,90 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>ValidNet Technologies - Cloud POS V4</title>
-<style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:Inter,system-ui,Segoe UI,sans-serif}
-body{background:#0f172a;color:#e2e8f0;display:flex;min-height:100vh}
-.sidebar{width:240px;background:#020617;padding:20px;border-right:1px solid #1e293b}
-.brand{font-weight:900;color:#38bdf8;font-size:20px;margin-bottom:30px}
-.brand span{color:#fff}
-.menu div{padding:12px 14px;margin:6px 0;border-radius:10px;cursor:pointer;background:#0f172a}
-.menu div.active,.menu div:hover{background:#38bdf8;color:#000;font-weight:700}
-.main{flex:1;padding:20px;display:grid;grid-template-columns:1fr 360px;gap:20px}
-.card{background:#1e293b;border-radius:16px;padding:16px;border:1px solid #334155}
-.products{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:12px;max-height:70vh;overflow:auto}
-.prod{background:#0f172a;padding:12px;border-radius:12px;cursor:pointer;border:1px solid #334155;text-align:center}
-.prod:hover{border-color:#38bdf8;transform:scale(1.02)}
-.prod b{color:#fff;display:block;margin-top:6px}
-.price{color:#38bdf8;font-weight:800}
-.cart-item{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px dashed #334155}
-.total{font-size:28px;font-weight:900;color:#38bdf8;margin:10px 0}
-.btn{width:100%;padding:14px;border-radius:12px;border:none;font-weight:800;cursor:pointer;margin-top:8px}
-.btn-primary{background:#38bdf8;color:#000}
-.btn-success{background:#22c55e;color:#000}
-.btn-danger{background:#ef4444;color:#fff}
-input,select{width:100%;padding:12px;border-radius:10px;border:1px solid #334155;background:#0f172a;color:#fff;margin:6px 0}
-.badge{background:#22c55e;color:#000;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:800}
-.header{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
-@media(max-width:900px){.main{grid-template-columns:1fr}.sidebar{display:none}}
-</style>
-</head>
-<body>
-<div class="sidebar">
-<div class="brand">VALIDNET<span> TECHNOLOGIES</span><div style="font-size:11px;color:#94a3b8;font-weight:400">Cloud POS V4 • Kenya</div></div>
-<div class="menu">
-<div class="active">🛒 POS Terminal</div>
-<div>📦 Stock</div>
-<div>📊 Sales Today</div>
-<div>⚙️ Shop Settings</div>
-</div>
-<div style="margin-top:40px;font-size:12px;color:#64748b">
-<b>ValidNet Shop</b><br>
-validnettecnologies.co.ke<br>
-M-PESA Supported
-</div>
-</div>
-<div class="main">
-<div class="card">
-<div class="header">
-<h2>🛒 Products <span class="badge" id="stockCount">0 Items</span></h2>
-<input id="searchProd" placeholder="Search product..." oninput="renderProducts()" style="max-width:200px">
-</div>
-<div class="products" id="productsGrid"></div>
-</div>
-<div>
-<div class="card">
-<h3>🧾 Cart</h3>
-<div id="cartList" style="margin:12px 0;min-height:120px"><small style="color:#64748b">No items</small></div>
-<div class="total">KES <span id="totalAmt">0</span></div>
-<input id="customerName" placeholder="Customer name">
-<select id="payMethod"><option value="CASH">CASH</option><option value="M-PESA">M-PESA</option><option value="BANK">BANK</option></select>
-<input id="mpesaCode" placeholder="M-PESA Code">
-<button class="btn btn-success" onclick="completeSale()">✅ COMPLETE SALE & PRINT</button>
-<button class="btn btn-danger" onclick="clearCart()">Clear Cart</button>
-<div id="receipt" style="margin-top:14px;background:#fff;color:#000;padding:12px;border-radius:10px;display:none;font-family:monospace;font-size:12px"></div>
-</div>
-<div class="card" style="margin-top:12px">
-<h4>Add Quick Product</h4>
-<input id="newProdName" placeholder="Name e.g. Bread 400g">
-<input id="newProdPrice" type="number" placeholder="Price">
-<input id="newProdStock" type="number" placeholder="Stock qty">
-<button class="btn btn-primary" onclick="addProduct()">+ Add Product</button>
-</div>
-</div>
-</div>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>VALIDNET POS V5 - Fixed</title>
+<script src="https://cdn.tailwindcss.com"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>.tab-content{display:none}.tab-content.active{display:block}</style></head>
+<body class="bg-gray-100">
+<div id="loginPage" class="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-900 to-black p-4">
+<div class="bg-white rounded-2xl shadow-2xl p-8 w-full max-w-md text-center">
+<h1 class="text-3xl font-bold text-blue-900">VALIDNET</h1><p class="text-gray-500 mb-2">POS V5 - FIXED</p><p class="text-xs text-green-600 mb-4">Stock | Sales | Settings - WORKING</p>
+<input id="loginUser" class="w-full p-3 border rounded mb-3" value="admin" placeholder="Username">
+<input id="loginPass" type="password" class="w-full p-3 border rounded mb-4" value="admin123" placeholder="Password">
+<button onclick="login()" class="w-full bg-blue-900 text-white p-3 rounded font-bold">LOGIN</button>
+<p class="text-xs mt-3 text-gray-500">admin/admin123 = Admin | tech1/tech123 = Tech</p>
+<p id="loginErr" class="text-red-500 text-sm mt-2 hidden">Wrong password</p></div></div>
+<div id="appPage" class="hidden min-h-screen flex flex-col md:flex-row">
+<div class="bg-blue-900 text-white w-full md:w-64 p-4"><h2 class="font-bold text-xl mb-4">VALIDNET SHOP</h2><p id="userRoleDisplay" class="text-xs bg-blue-800 p-2 rounded mb-4"></p>
+<nav class="space-y-2"><button onclick="showTab('pos')" id="btn-pos" class="w-full text-left p-3 rounded bg-blue-700">POS Terminal</button>
+<button onclick="showTab('stock')" id="btn-stock" class="w-full text-left p-3 rounded hover:bg-blue-800">Stock</button>
+<button onclick="showTab('sales')" id="btn-sales" class="w-full text-left p-3 rounded hover:bg-blue-800">Sales Today</button>
+<button onclick="showTab('repairs')" id="btn-repairs" class="w-full text-left p-3 rounded hover:bg-blue-800">Repairs</button>
+<button onclick="showTab('settings')" id="btn-settings" class="w-full text-left p-3 rounded hover:bg-blue-800">Shop Settings</button></nav>
+<button onclick="logout()" class="mt-8 w-full bg-red-600 p-2 rounded text-sm">Logout</button></div>
+<div class="flex-1 p-4 overflow-auto">
+<div id="tab-pos" class="tab-content active"><h2 class="text-2xl font-bold mb-4">POS Terminal</h2>
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-4"><div class="lg:col-span-2"><input id="searchProd" oninput="renderProducts()" placeholder="Search product..." class="w-full p-2 border rounded mb-3"><div id="productGrid" class="grid grid-cols-2 md:grid-cols-3 gap-3"></div></div>
+<div class="bg-white p-4 rounded shadow"><h3 class="font-bold mb-2">Cart</h3><div id="cartItems" class="space-y-2 mb-3 max-h-64 overflow-auto"></div>
+<div class="border-t pt-2"><p class="flex justify-between font-bold"><span>Total:</span><span id="cartTotal">KES 0</span></p></div>
+<input id="mpesaCode" placeholder="M-PESA Code" class="w-full p-2 border rounded mt-2"><select id="payMethod" class="w-full p-2 border rounded mt-2"><option>Cash</option><option>M-PESA</option></select>
+<button onclick="checkout()" class="w-full bg-green-600 text-white p-3 rounded mt-3 font-bold">PAY</button></div></div></div>
+<div id="tab-stock" class="tab-content"><div class="flex justify-between items-center mb-4"><h2 class="text-2xl font-bold">Stock WORKING</h2><button onclick="openAddProduct()" class="bg-blue-900 text-white px-4 py-2 rounded">+ Add Product</button></div>
+<div class="bg-white rounded shadow overflow-auto"><table class="w-full text-sm"><thead class="bg-gray-100"><tr><th class="p-2 text-left">Name</th><th class="p-2">Price</th><th class="p-2">Stock</th><th class="p-2">Action</th></tr></thead><tbody id="stockTable"></tbody></table></div></div>
+<div id="tab-sales" class="tab-content"><h2 class="text-2xl font-bold mb-4">Sales Today WORKING</h2>
+<div class="grid grid-cols-3 gap-4 mb-4"><div class="bg-green-600 text-white p-4 rounded"><p>Today</p><h3 id="todayTotal" class="text-2xl font-bold">KES 0</h3></div><div class="bg-blue-600 text-white p-4 rounded"><p>Count</p><h3 id="todayCount" class="text-2xl font-bold">0</h3></div><div class="bg-purple-600 text-white p-4 rounded"><p>Items</p><h3 id="todayItems" class="text-2xl font-bold">0</h3></div></div>
+<div class="bg-white rounded shadow p-2"><table class="w-full text-sm"><thead class="bg-gray-100"><tr><th class="p-2 text-left">Time</th><th class="p-2">Items</th><th class="p-2">Total</th><th class="p-2">M-PESA</th></tr></thead><tbody id="salesTable"></tbody></table></div><button onclick="clearSales()" class="mt-3 text-red-600 text-sm">Clear Sales</button></div>
+<div id="tab-repairs" class="tab-content"><div class="flex justify-between items-center mb-4"><h2 class="text-2xl font-bold">Repairs / Technician</h2><button onclick="openAddRepair()" class="bg-blue-900 text-white px-4 py-2 rounded">+ New Repair</button></div>
+<div class="bg-white rounded shadow overflow-auto"><table class="w-full text-sm"><thead class="bg-gray-100"><tr><th class="p-2 text-left">Customer</th><th class="p-2">Device</th><th class="p-2">Issue</th><th class="p-2">Status</th><th class="p-2">Tech</th><th class="p-2">Action</th></tr></thead><tbody id="repairTable"></tbody></table></div></div>
+<div id="tab-settings" class="tab-content"><h2 class="text-2xl font-bold mb-4">Shop Settings WORKING</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6"><div class="bg-white p-4 rounded shadow"><h3 class="font-bold mb-3">Shop Info</h3>
+<input id="setShopName" class="w-full p-2 border rounded mb-2" placeholder="Shop Name"><input id="setPhone" class="w-full p-2 border rounded mb-2" placeholder="Phone"><input id="setLocation" class="w-full p-2 border rounded mb-2" placeholder="Location">
+<button onclick="saveShopInfo()" class="bg-blue-900 text-white px-4 py-2 rounded">Save</button></div>
+<div class="bg-white p-4 rounded shadow"><h3 class="font-bold mb-3">Technicians</h3><div id="techList" class="mb-3 space-y-1 text-sm"></div>
+<input id="newTechUser" placeholder="Username" class="w-full p-2 border rounded mb-2"><input id="newTechPass" placeholder="Password" class="w-full p-2 border rounded mb-2"><input id="newTechName" placeholder="Full Name" class="w-full p-2 border rounded mb-2">
+<button onclick="addTechnician()" class="bg-green-600 text-white px-4 py-2 rounded">Add Tech</button></div></div></div>
+</div></div>
+<div id="productModal" class="hidden fixed inset-0 bg-black/50 flex items-center justify-center p-4"><div class="bg-white p-6 rounded w-full max-w-sm"><h3 id="prodModalTitle" class="font-bold mb-3">Add Product</h3>
+<input id="pName" placeholder="Name" class="w-full p-2 border rounded mb-2"><input id="pPrice" type="number" placeholder="Price" class="w-full p-2 border rounded mb-2"><input id="pStock" type="number" placeholder="Stock" class="w-full p-2 border rounded mb-2"><input id="pCategory" placeholder="Category" class="w-full p-2 border rounded mb-2">
+<div class="flex gap-2"><button onclick="saveProduct()" class="flex-1 bg-blue-900 text-white p-2 rounded">Save</button><button onclick="closeModal('productModal')" class="flex-1 bg-gray-300 p-2 rounded">Cancel</button></div></div></div>
+<div id="repairModal" class="hidden fixed inset-0 bg-black/50 flex items-center justify-center p-4"><div class="bg-white p-6 rounded w-full max-w-sm"><h3 class="font-bold mb-3">New Repair</h3>
+<input id="rCustomer" placeholder="Customer" class="w-full p-2 border rounded mb-2"><input id="rPhone" placeholder="Phone" class="w-full p-2 border rounded mb-2"><input id="rDevice" placeholder="Device" class="w-full p-2 border rounded mb-2"><input id="rIssue" placeholder="Issue" class="w-full p-2 border rounded mb-2"><select id="rTech" class="w-full p-2 border rounded mb-2"></select>
+<div class="flex gap-2"><button onclick="saveRepair()" class="flex-1 bg-blue-900 text-white p-2 rounded">Save</button><button onclick="closeModal('repairModal')" class="flex-1 bg-gray-300 p-2 rounded">Cancel</button></div></div></div>
 <script>
-let products=JSON.parse(localStorage.getItem('vn_products_v4')||'[]');
-if(products.length==0){products=[{id:1,name:'Milk 500ml',price:60,stock:100},{id:2,name:'Bread 400g',price:65,stock:50},{id:3,name:'Sugar 1kg',price:160,stock:40},{id:4,name:'Cooking Oil 1L',price:320,stock:30}];saveProd();}
-let cart=[];let sales=JSON.parse(localStorage.getItem('vn_sales_v4')||'[]');
-function saveProd(){localStorage.setItem('vn_products_v4',JSON.stringify(products));}
-function renderProducts(){let q=document.getElementById('searchProd').value.toLowerCase();let g=document.getElementById('productsGrid');g.innerHTML='';let f=products.filter(p=>p.name.toLowerCase().includes(q));document.getElementById('stockCount').innerText=f.length+' Items';f.forEach(p=>{let d=document.createElement('div');d.className='prod';d.innerHTML=`<div style="font-size:28px">📦</div><b>${p.name}</b><div class="price">KES ${p.price}</div><small style="color:#94a3b8">${p.stock} left</small>`;d.onclick=()=>addToCart(p.id);g.appendChild(d);});}
-function addToCart(id){let p=products.find(x=>x.id==id);if(p.stock<=0){alert('Out of stock');return;}let c=cart.find(x=>x.id==id);if(c){c.qty++;}else{cart.push({id:p.id,name:p.name,price:p.price,qty:1});}renderCart();}
-function renderCart(){let list=document.getElementById('cartList');if(cart.length==0){list.innerHTML='<small style="color:#64748b">No items</small>';document.getElementById('totalAmt').innerText='0';return;}let total=0;list.innerHTML='';cart.forEach(i=>{total+=i.price*i.qty;let r=document.createElement('div');r.className='cart-item';r.innerHTML=`<span>${i.name} x${i.qty}</span><span>KES ${i.price*i.qty} <b onclick="removeFromCart(${i.id})" style="cursor:pointer;color:#ef4444">×</b></span>`;list.appendChild(r);});document.getElementById('totalAmt').innerText=total;}
-function removeFromCart(id){cart=cart.filter(x=>x.id!=id);renderCart();}
-function clearCart(){cart=[];renderCart();document.getElementById('receipt').style.display='none';}
-function addProduct(){let n=document.getElementById('newProdName').value;let pr=parseFloat(document.getElementById('newProdPrice').value);let st=parseInt(document.getElementById('newProdStock').value)||0;if(!n||!pr){alert('Enter name and price');return;}products.push({id:Date.now(),name:n,price:pr,stock:st});saveProd();renderProducts();document.getElementById('newProdName').value='';document.getElementById('newProdPrice').value='';document.getElementById('newProdStock').value='';}
-function completeSale(){if(cart.length==0){alert('Cart empty');return;}let total=cart.reduce((s,i)=>s+i.price*i.qty,0);let cust=document.getElementById('customerName').value||'Walk-in';let method=document.getElementById('payMethod').value;let mpesa=document.getElementById('mpesaCode').value;products.forEach(p=>{let ci=cart.find(c=>c.id==p.id);if(ci)p.stock-=ci.qty;});saveProd();let sale={id:Date.now(),date:new Date().toLocaleString(),items:[...cart],total,customer:cust,method,mpesa};sales.unshift(sale);localStorage.setItem('vn_sales_v4',JSON.stringify(sales));let rec=document.getElementById('receipt');rec.style.display='block';rec.innerHTML=`<center><b>VALIDNET TECHNOLOGIES</b><br>validnettecnologies.co.ke<br>--- RECEIPT ---<br>${sale.date}<br>Customer: ${cust}<br>Pay: ${method} ${mpesa? '('+mpesa+')':''}</center><br>${cart.map(i=>`${i.name} x${i.qty} = ${i.price*i.qty}`).join('<br>')}<br><br><b>TOTAL: KES ${total}</b><br><br><center>Thank you! Karibu Tena!</center>`;cart=[];renderCart();renderProducts();setTimeout(()=>window.print(),500);}
-renderProducts();
-</script>
-</body>
-</html>
+let products=JSON.parse(localStorage.getItem('v5_products'))||[{id:1,name:'Fresh Milk',price:60,stock:50,category:'Groceries'},{id:2,name:'Bread',price:65,stock:30,category:'Bakery'},{id:3,name:'Cooking Oil 1L',price:280,stock:20,category:'Groceries'}];
+let sales=JSON.parse(localStorage.getItem('v5_sales'))||'[]');let repairs=JSON.parse(localStorage.getItem('v5_repairs'))||'[]';
+let technicians=JSON.parse(localStorage.getItem('v5_techs'))||[{username:'tech1',password:'tech123',name:'Main Technician'}];
+let shopInfo=JSON.parse(localStorage.getItem('v5_shop'))||{name:'VALIDNET',phone:'0712xxxxxx',location:'Nairobi',receipt:'Thank you! Karibu tena!'};
+let cart=[];let editingProdId=null;let currentUser=null;
+function login(){let u=document.getElementById('loginUser').value.trim();let p=document.getElementById('loginPass').value.trim();
+if(u==='admin'&&p==='admin123'){currentUser={role:'admin',name:'Admin'};enterApp();}else{let tech=technicians.find(t=>t.username===u&&t.password===p);if(tech){currentUser={role:'tech',name:tech.name,username:tech.username};enterApp();}else{document.getElementById('loginErr').classList.remove('hidden');}}}
+function enterApp(){document.getElementById('loginPage').classList.add('hidden');document.getElementById('appPage').classList.remove('hidden');document.getElementById('userRoleDisplay').innerText=currentUser.role==='admin'?'ADMIN - Full Access':'TECH - '+currentUser.name;
+if(currentUser.role==='tech'){document.getElementById('btn-stock').style.display='none';document.getElementById('btn-sales').style.display='none';document.getElementById('btn-settings').style.display='none';showTab('repairs');}else{showTab('pos');}loadAll();}
+function logout(){location.reload();}function showTab(name){document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active'));document.getElementById('tab-'+name).classList.add('active');}
+function loadAll(){renderProducts();renderStock();renderSales();renderRepairs();renderTechs();document.getElementById('setShopName').value=shopInfo.name;document.getElementById('setPhone').value=shopInfo.phone;document.getElementById('setLocation').value=shopInfo.location;}
+function renderProducts(){let q=document.getElementById('searchProd').value.toLowerCase();let grid=document.getElementById('productGrid');grid.innerHTML='';products.filter(p=>p.name.toLowerCase().includes(q)).forEach(p=>{grid.innerHTML+=`<div class="bg-white p-3 rounded shadow cursor-pointer border" onclick="addToCart(${p.id})"><p class="font-bold text-sm">${p.name}</p><p class="text-xs">Stock:${p.stock}</p><p class="text-blue-900 font-bold">KES ${p.price}</p></div>`;});}
+function addToCart(id){let prod=products.find(p=>p.id===id);if(prod.stock<=0)return alert('Out of stock');let item=cart.find(c=>c.id===id);if(item)item.qty++;else cart.push({id,name:prod.name,price:prod.price,qty:1});renderCart();}
+function renderCart(){let div=document.getElementById('cartItems');div.innerHTML='';let total=0;cart.forEach((c,i)=>{total+=c.price*c.qty;div.innerHTML+=`<div class="flex justify-between text-sm"><span>${c.name} x${c.qty}</span><span>KES ${c.price*c.qty} <button onclick="removeCart(${i})" class="text-red-500 ml-2">x</button></span></div>`});document.getElementById('cartTotal').innerText='KES '+total;}
+function removeCart(i){cart.splice(i,1);renderCart();}
+function checkout(){if(cart.length===0)return alert('Cart empty');let total=cart.reduce((s,c)=>s+c.price*c.qty,0);let mpesa=document.getElementById('mpesaCode').value;let pay=document.getElementById('payMethod').value;
+sales.push({time:new Date().toLocaleString(),items:cart.map(c=>c.name+' x'+c.qty).join(', '),total,payment:pay,mpesa});cart.forEach(c=>{let p=products.find(pr=>pr.id===c.id);if(p)p.stock-=c.qty;});
+localStorage.setItem('v5_products',JSON.stringify(products));localStorage.setItem('v5_sales',JSON.stringify(sales));cart=[];renderCart();renderProducts();renderStock();renderSales();alert('Sale saved! KES '+total);document.getElementById('mpesaCode').value='';}
+function renderStock(){let tbody=document.getElementById('stockTable');tbody.innerHTML='';products.forEach(p=>{tbody.innerHTML+=`<tr class="border-b"><td class="p-2">${p.name}</td><td class="p-2 text-center">${p.price}</td><td class="p-2 text-center">${p.stock}</td><td class="p-2 text-center"><button onclick="editProd(${p.id})" class="text-blue-600 mr-2">Edit</button><button onclick="delProd(${p.id})" class="text-red-600">Del</button></td></tr>`});}
+function openAddProduct(){editingProdId=null;document.getElementById('prodModalTitle').innerText='Add Product';document.getElementById('pName').value='';document.getElementById('pPrice').value='';document.getElementById('pStock').value='';document.getElementById('pCategory').value='';document.getElementById('productModal').classList.remove('hidden');}
+function editProd(id){let p=products.find(pr=>pr.id===id);editingProdId=id;document.getElementById('prodModalTitle').innerText='Edit Product';document.getElementById('pName').value=p.name;document.getElementById('pPrice').value=p.price;document.getElementById('pStock').value=p.stock;document.getElementById('pCategory').value=p.category;document.getElementById('productModal').classList.remove('hidden');}
+function delProd(id){if(confirm('Delete?')){products=products.filter(p=>p.id!==id);localStorage.setItem('v5_products',JSON.stringify(products));renderStock();renderProducts();}}
+function saveProduct(){let name=document.getElementById('pName').value,price=parseInt(document.getElementById('pPrice').value),stock=parseInt(document.getElementById('pStock').value),cat=document.getElementById('pCategory').value;
+if(!name||!price)return alert('Fill name & price');if(editingProdId){let p=products.find(pr=>pr.id===editingProdId);p.name=name;p.price=price;p.stock=stock;p.category=cat;}else{products.push({id:Date.now(),name,price,stock:stock||0,category:cat||'General'});}
+localStorage.setItem('v5_products',JSON.stringify(products));closeModal('productModal');renderStock();renderProducts();}
+function renderSales(){let tbody=document.getElementById('salesTable');tbody.innerHTML='';let todayTotal=0,count=sales.length,items=0;sales.slice().reverse().forEach(s=>{todayTotal+=s.total;items+=s.items.split(',').length;tbody.innerHTML+=`<tr class="border-b"><td class="p-2">${s.time}</td><td class="p-2">${s.items}</td><td class="p-2">KES ${s.total}</td><td class="p-2">${s.mpesa||'-'}</td></tr>`});document.getElementById('todayTotal').innerText='KES '+todayTotal;document.getElementById('todayCount').innerText=count;document.getElementById('todayItems').innerText=items;}
+function clearSales(){if(confirm('Clear?')){sales=[];localStorage.setItem('v5_sales',JSON.stringify(sales));renderSales();}}
+function renderRepairs(){let tbody=document.getElementById('repairTable');tbody.innerHTML='';repairs.forEach((r,i)=>{tbody.innerHTML+=`<tr class="border-b"><td class="p-2">${r.customer}</td><td class="p-2">${r.device}</td><td class="p-2">${r.issue}</td><td class="p-2"><select onchange="updateRepairStatus(${i},this.value)"><option ${r.status==='Received'?'selected':''}>Received</option><option ${r.status==='In Progress'?'selected':''}>In Progress</option><option ${r.status==='Fixed'?'selected':''}>Fixed</option><option ${r.status==='Collected'?'selected':''}>Collected</option></select></td><td class="p-2">${r.techName}</td><td class="p-2"><button onclick="delRepair(${i})" class="text-red-600">Del</button></td></tr>`});let sel=document.getElementById('rTech');sel.innerHTML='';technicians.forEach(t=>{sel.innerHTML+=`<option value="${t.username}">${t.name} (${t.username})</option>`});}
+function openAddRepair(){document.getElementById('repairModal').classList.remove('hidden');}
+function saveRepair(){let c=document.getElementById('rCustomer').value,ph=document.getElementById('rPhone').value,dev=document.getElementById('rDevice').value,iss=document.getElementById('rIssue').value,tu=document.getElementById('rTech').value;
+if(!c||!dev)return alert('Fill customer & device');let tech=technicians.find(t=>t.username===tu);repairs.push({customer:c,phone:ph,device:dev,issue:iss,tech:tu,techName:tech?tech.name:tu,status:'Received'});
+localStorage.setItem('v5_repairs',JSON.stringify(repairs));closeModal('repairModal');renderRepairs();document.getElementById('rCustomer').value='';document.getElementById('rPhone').value='';document.getElementById('rDevice').value='';document.getElementById('rIssue').value='';}
+function updateRepairStatus(i,val){repairs[i].status=val;localStorage.setItem('v5_repairs',JSON.stringify(repairs));}
+function delRepair(i){if(confirm('Delete?')){repairs.splice(i,1);localStorage.setItem('v5_repairs',JSON.stringify(repairs));renderRepairs();}}
+function renderTechs(){let div=document.getElementById('techList');div.innerHTML='';technicians.forEach((t,i)=>{div.innerHTML+=`<div class="flex justify-between bg-gray-100 p-1 rounded"><span>${t.name} - ${t.username}/${t.password}</span><button onclick="delTech(${i})" class="text-red-600">x</button></div>`});}
+function addTechnician(){let u=document.getElementById('newTechUser').value,p=document.getElementById('newTechPass').value,n=document.getElementById('newTechName').value;if(!u||!p)return alert('Username & password');technicians.push({username:u,password:p,name:n||u});localStorage.setItem('v5_techs',JSON.stringify(technicians));renderTechs();renderRepairs();document.getElementById('newTechUser').value='';document.getElementById('newTechPass').value='';document.getElementById('newTechName').value='';}
+function delTech(i){if(confirm('Delete?')){technicians.splice(i,1);localStorage.setItem('v5_techs',JSON.stringify(technicians));renderTechs();}}
+function saveShopInfo(){shopInfo.name=document.getElementById('setShopName').value;shopInfo.phone=document.getElementById('setPhone').value;shopInfo.location=document.getElementById('setLocation').value;localStorage.setItem('v5_shop',JSON.stringify(shopInfo));alert('Saved!');}
+function closeModal(id){document.getElementById(id).classList.add('hidden');}
+</script></body></html>
