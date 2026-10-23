@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>VALIDNET POS V5 - Fixed</title>
-<script src="https://cdn.tailwindcss.com"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>VALIDNET POS V5.1</title>
+<script src="https://cdn.tailwindcss.com"></script>
 <style>.tab-content{display:none}.tab-content.active{display:block}</style></head>
 <body class="bg-gray-100">
 <div id="loginPage" class="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-900 to-black p-4">
 <div class="bg-white rounded-2xl shadow-2xl p-8 w-full max-w-md text-center">
-<h1 class="text-3xl font-bold text-blue-900">VALIDNET</h1><p class="text-gray-500 mb-2">POS V5 - FIXED</p><p class="text-xs text-green-600 mb-4">Stock | Sales | Settings - WORKING</p>
+<h1 class="text-3xl font-bold text-blue-900">VALIDNET</h1><p class="text-gray-500 mb-2">POS V5.1 - WORKING</p><p class="text-xs text-green-600 mb-4">Stock | Sales | Settings - FIXED</p>
 <input id="loginUser" class="w-full p-3 border rounded mb-3" value="admin" placeholder="Username">
 <input id="loginPass" type="password" class="w-full p-3 border rounded mb-4" value="admin123" placeholder="Password">
 <button onclick="login()" class="w-full bg-blue-900 text-white p-3 rounded font-bold">LOGIN</button>
@@ -48,10 +48,11 @@
 <input id="rCustomer" placeholder="Customer" class="w-full p-2 border rounded mb-2"><input id="rPhone" placeholder="Phone" class="w-full p-2 border rounded mb-2"><input id="rDevice" placeholder="Device" class="w-full p-2 border rounded mb-2"><input id="rIssue" placeholder="Issue" class="w-full p-2 border rounded mb-2"><select id="rTech" class="w-full p-2 border rounded mb-2"></select>
 <div class="flex gap-2"><button onclick="saveRepair()" class="flex-1 bg-blue-900 text-white p-2 rounded">Save</button><button onclick="closeModal('repairModal')" class="flex-1 bg-gray-300 p-2 rounded">Cancel</button></div></div></div>
 <script>
-let products=JSON.parse(localStorage.getItem('v5_products'))||[{id:1,name:'Fresh Milk',price:60,stock:50,category:'Groceries'},{id:2,name:'Bread',price:65,stock:30,category:'Bakery'},{id:3,name:'Cooking Oil 1L',price:280,stock:20,category:'Groceries'}];
-let sales=JSON.parse(localStorage.getItem('v5_sales'))||'[]');let repairs=JSON.parse(localStorage.getItem('v5_repairs'))||'[]';
-let technicians=JSON.parse(localStorage.getItem('v5_techs'))||[{username:'tech1',password:'tech123',name:'Main Technician'}];
-let shopInfo=JSON.parse(localStorage.getItem('v5_shop'))||{name:'VALIDNET',phone:'0712xxxxxx',location:'Nairobi',receipt:'Thank you! Karibu tena!'};
+let products=JSON.parse(localStorage.getItem('v5_products')||'[{"id":1,"name":"Fresh Milk","price":60,"stock":50,"category":"Groceries"},{"id":2,"name":"Bread","price":65,"stock":30,"category":"Bakery"},{"id":3,"name":"Cooking Oil 1L","price":280,"stock":20,"category":"Groceries"}]');
+let sales=JSON.parse(localStorage.getItem('v5_sales')||'[]');
+let repairs=JSON.parse(localStorage.getItem('v5_repairs')||'[]');
+let technicians=JSON.parse(localStorage.getItem('v5_techs')||'[{"username":"tech1","password":"tech123","name":"Main Technician"}]');
+let shopInfo=JSON.parse(localStorage.getItem('v5_shop')||'{"name":"VALIDNET","phone":"0712xxxxxx","location":"Nairobi"}');
 let cart=[];let editingProdId=null;let currentUser=null;
 function login(){let u=document.getElementById('loginUser').value.trim();let p=document.getElementById('loginPass').value.trim();
 if(u==='admin'&&p==='admin123'){currentUser={role:'admin',name:'Admin'};enterApp();}else{let tech=technicians.find(t=>t.username===u&&t.password===p);if(tech){currentUser={role:'tech',name:tech.name,username:tech.username};enterApp();}else{document.getElementById('loginErr').classList.remove('hidden');}}}
@@ -59,7 +60,7 @@ function enterApp(){document.getElementById('loginPage').classList.add('hidden')
 if(currentUser.role==='tech'){document.getElementById('btn-stock').style.display='none';document.getElementById('btn-sales').style.display='none';document.getElementById('btn-settings').style.display='none';showTab('repairs');}else{showTab('pos');}loadAll();}
 function logout(){location.reload();}function showTab(name){document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active'));document.getElementById('tab-'+name).classList.add('active');}
 function loadAll(){renderProducts();renderStock();renderSales();renderRepairs();renderTechs();document.getElementById('setShopName').value=shopInfo.name;document.getElementById('setPhone').value=shopInfo.phone;document.getElementById('setLocation').value=shopInfo.location;}
-function renderProducts(){let q=document.getElementById('searchProd').value.toLowerCase();let grid=document.getElementById('productGrid');grid.innerHTML='';products.filter(p=>p.name.toLowerCase().includes(q)).forEach(p=>{grid.innerHTML+=`<div class="bg-white p-3 rounded shadow cursor-pointer border" onclick="addToCart(${p.id})"><p class="font-bold text-sm">${p.name}</p><p class="text-xs">Stock:${p.stock}</p><p class="text-blue-900 font-bold">KES ${p.price}</p></div>`;});}
+function renderProducts(){let q=(document.getElementById('searchProd').value||'').toLowerCase();let grid=document.getElementById('productGrid');grid.innerHTML='';products.filter(p=>p.name.toLowerCase().includes(q)).forEach(p=>{grid.innerHTML+=`<div class="bg-white p-3 rounded shadow cursor-pointer border" onclick="addToCart(${p.id})"><p class="font-bold text-sm">${p.name}</p><p class="text-xs">Stock:${p.stock}</p><p class="text-blue-900 font-bold">KES ${p.price}</p></div>`;});}
 function addToCart(id){let prod=products.find(p=>p.id===id);if(prod.stock<=0)return alert('Out of stock');let item=cart.find(c=>c.id===id);if(item)item.qty++;else cart.push({id,name:prod.name,price:prod.price,qty:1});renderCart();}
 function renderCart(){let div=document.getElementById('cartItems');div.innerHTML='';let total=0;cart.forEach((c,i)=>{total+=c.price*c.qty;div.innerHTML+=`<div class="flex justify-between text-sm"><span>${c.name} x${c.qty}</span><span>KES ${c.price*c.qty} <button onclick="removeCart(${i})" class="text-red-500 ml-2">x</button></span></div>`});document.getElementById('cartTotal').innerText='KES '+total;}
 function removeCart(i){cart.splice(i,1);renderCart();}
