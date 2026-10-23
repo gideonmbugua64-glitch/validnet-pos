@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ValidNet Technologies - Cloud POS V4</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Inter,system-ui,Segoe UI,sans-serif}
+body{background:#0f172a;color:#e2e8f0;display:flex;min-height:100vh}
+.sidebar{width:240px;background:#020617;padding:20px;border-right:1px solid #1e293b}
+.brand{font-weight:900;color:#38bdf8;font-size:20px;margin-bottom:30px}
+.brand span{color:#fff}
+.menu div{padding:12px 14px;margin:6px 0;border-radius:10px;cursor:pointer;background:#0f172a}
+.menu div.active,.menu div:hover{background:#38bdf8;color:#000;font-weight:700}
+.main{flex:1;padding:20px;display:grid;grid-template-columns:1fr 360px;gap:20px}
+.card{background:#1e293b;border-radius:16px;padding:16px;border:1px solid #334155}
+.products{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:12px;max-height:70vh;overflow:auto}
+.prod{background:#0f172a;padding:12px;border-radius:12px;cursor:pointer;border:1px solid #334155;text-align:center}
+.prod:hover{border-color:#38bdf8;transform:scale(1.02)}
+.prod b{color:#fff;display:block;margin-top:6px}
+.price{color:#38bdf8;font-weight:800}
+.cart-item{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px dashed #334155}
+.total{font-size:28px;font-weight:900;color:#38bdf8;margin:10px 0}
+.btn{width:100%;padding:14px;border-radius:12px;border:none;font-weight:800;cursor:pointer;margin-top:8px}
+.btn-primary{background:#38bdf8;color:#000}
+.btn-success{background:#22c55e;color:#000}
+.btn-danger{background:#ef4444;color:#fff}
+input,select{width:100%;padding:12px;border-radius:10px;border:1px solid #334155;background:#0f172a;color:#fff;margin:6px 0}
+.badge{background:#22c55e;color:#000;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:800}
+.header{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
+@media(max-width:900px){.main{grid-template-columns:1fr}.sidebar{display:none}}
+</style>
+</head>
+<body>
+<div class="sidebar">
+<div class="brand">VALIDNET<span> TECHNOLOGIES</span><div style="font-size:11px;color:#94a3b8;font-weight:400">Cloud POS V4 • Kenya</div></div>
+<div class="menu">
+<div class="active">🛒 POS Terminal</div>
+<div>📦 Stock</div>
+<div>📊 Sales Today</div>
+<div>⚙️ Shop Settings</div>
+</div>
+<div style="margin-top:40px;font-size:12px;color:#64748b">
+<b>ValidNet Shop</b><br>
+validnettecnologies.co.ke<br>
+M-PESA Supported
+</div>
+</div>
+<div class="main">
+<div class="card">
+<div class="header">
+<h2>🛒 Products <span class="badge" id="stockCount">0 Items</span></h2>
+<input id="searchProd" placeholder="Search product..." oninput="renderProducts()" style="max-width:200px">
+</div>
+<div class="products" id="productsGrid"></div>
+</div>
+<div>
+<div class="card">
+<h3>🧾 Cart</h3>
+<div id="cartList" style="margin:12px 0;min-height:120px"><small style="color:#64748b">No items</small></div>
+<div class="total">KES <span id="totalAmt">0</span></div>
+<input id="customerName" placeholder="Customer name">
+<select id="payMethod"><option value="CASH">CASH</option><option value="M-PESA">M-PESA</option><option value="BANK">BANK</option></select>
+<input id="mpesaCode" placeholder="M-PESA Code">
+<button class="btn btn-success" onclick="completeSale()">✅ COMPLETE SALE & PRINT</button>
+<button class="btn btn-danger" onclick="clearCart()">Clear Cart</button>
+<div id="receipt" style="margin-top:14px;background:#fff;color:#000;padding:12px;border-radius:10px;display:none;font-family:monospace;font-size:12px"></div>
+</div>
+<div class="card" style="margin-top:12px">
+<h4>Add Quick Product</h4>
+<input id="newProdName" placeholder="Name e.g. Bread 400g">
+<input id="newProdPrice" type="number" placeholder="Price">
+<input id="newProdStock" type="number" placeholder="Stock qty">
+<button class="btn btn-primary" onclick="addProduct()">+ Add Product</button>
+</div>
+</div>
+</div>
+<script>
+let products=JSON.parse(localStorage.getItem('vn_products_v4')||'[]');
+if(products.length==0){products=[{id:1,name:'Milk 500ml',price:60,stock:100},{id:2,name:'Bread 400g',price:65,stock:50},{id:3,name:'Sugar 1kg',price:160,stock:40},{id:4,name:'Cooking Oil 1L',price:320,stock:30}];saveProd();}
+let cart=[];let sales=JSON.parse(localStorage.getItem('vn_sales_v4')||'[]');
+function saveProd(){localStorage.setItem('vn_products_v4',JSON.stringify(products));}
+function renderProducts(){let q=document.getElementById('searchProd').value.toLowerCase();let g=document.getElementById('productsGrid');g.innerHTML='';let f=products.filter(p=>p.name.toLowerCase().includes(q));document.getElementById('stockCount').innerText=f.length+' Items';f.forEach(p=>{let d=document.createElement('div');d.className='prod';d.innerHTML=`<div style="font-size:28px">📦</div><b>${p.name}</b><div class="price">KES ${p.price}</div><small style="color:#94a3b8">${p.stock} left</small>`;d.onclick=()=>addToCart(p.id);g.appendChild(d);});}
+function addToCart(id){let p=products.find(x=>x.id==id);if(p.stock<=0){alert('Out of stock');return;}let c=cart.find(x=>x.id==id);if(c){c.qty++;}else{cart.push({id:p.id,name:p.name,price:p.price,qty:1});}renderCart();}
+function renderCart(){let list=document.getElementById('cartList');if(cart.length==0){list.innerHTML='<small style="color:#64748b">No items</small>';document.getElementById('totalAmt').innerText='0';return;}let total=0;list.innerHTML='';cart.forEach(i=>{total+=i.price*i.qty;let r=document.createElement('div');r.className='cart-item';r.innerHTML=`<span>${i.name} x${i.qty}</span><span>KES ${i.price*i.qty} <b onclick="removeFromCart(${i.id})" style="cursor:pointer;color:#ef4444">×</b></span>`;list.appendChild(r);});document.getElementById('totalAmt').innerText=total;}
+function removeFromCart(id){cart=cart.filter(x=>x.id!=id);renderCart();}
+function clearCart(){cart=[];renderCart();document.getElementById('receipt').style.display='none';}
+function addProduct(){let n=document.getElementById('newProdName').value;let pr=parseFloat(document.getElementById('newProdPrice').value);let st=parseInt(document.getElementById('newProdStock').value)||0;if(!n||!pr){alert('Enter name and price');return;}products.push({id:Date.now(),name:n,price:pr,stock:st});saveProd();renderProducts();document.getElementById('newProdName').value='';document.getElementById('newProdPrice').value='';document.getElementById('newProdStock').value='';}
+function completeSale(){if(cart.length==0){alert('Cart empty');return;}let total=cart.reduce((s,i)=>s+i.price*i.qty,0);let cust=document.getElementById('customerName').value||'Walk-in';let method=document.getElementById('payMethod').value;let mpesa=document.getElementById('mpesaCode').value;products.forEach(p=>{let ci=cart.find(c=>c.id==p.id);if(ci)p.stock-=ci.qty;});saveProd();let sale={id:Date.now(),date:new Date().toLocaleString(),items:[...cart],total,customer:cust,method,mpesa};sales.unshift(sale);localStorage.setItem('vn_sales_v4',JSON.stringify(sales));let rec=document.getElementById('receipt');rec.style.display='block';rec.innerHTML=`<center><b>VALIDNET TECHNOLOGIES</b><br>validnettecnologies.co.ke<br>--- RECEIPT ---<br>${sale.date}<br>Customer: ${cust}<br>Pay: ${method} ${mpesa? '('+mpesa+')':''}</center><br>${cart.map(i=>`${i.name} x${i.qty} = ${i.price*i.qty}`).join('<br>')}<br><br><b>TOTAL: KES ${total}</b><br><br><center>Thank you! Karibu Tena!</center>`;cart=[];renderCart();renderProducts();setTimeout(()=>window.print(),500);}
+renderProducts();
+</script>
+</body>
+</html>
