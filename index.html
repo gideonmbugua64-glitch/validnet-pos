@@ -1,263 +1,90 @@
 <!DOCTYPE html>
-<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>VALIDNET POS V5.4 - PRO MAX</title>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>VALIDNET POS V5.6 - PERMISSIONS</title>
 <script src="https://cdn.tailwindcss.com"></script>
-<style>.tab-content{display:none}.tab-content.active{display:block}</style></head>
+<style>.tab-content{display:none}.tab-content.active{display:block}@media print{.no-print{display:none}}</style></head>
 <body class="bg-gray-100">
 <div id="loginPage" class="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-900 to-black p-4">
 <div class="bg-white rounded-2xl shadow-2xl p-8 w-full max-w-md text-center">
-<h1 class="text-3xl font-bold text-blue-900">VALIDNET</h1><p class="text-gray-500 mb-2">POS V5.4 - PRO MAX</p><p class="text-xs text-green-600 mb-4">Categories • Profit • Repairs + Deposits</p>
+<h1 class="text-3xl font-bold text-blue-900">VALIDNET</h1><p class="text-gray-500 mb-2">POS V5.6 PERMISSIONS</p><p class="text-xs text-green-600 mb-4">Admin • Shop • Field Techs</p>
 <input id="loginUser" class="w-full p-3 border rounded mb-3" placeholder="Username">
 <input id="loginPass" type="password" class="w-full p-3 border rounded mb-4" placeholder="Password">
 <button onclick="login()" class="w-full bg-blue-900 text-white p-3 rounded font-bold">LOGIN</button>
 <p id="loginErr" class="text-red-500 text-sm mt-2 hidden">Wrong password</p>
+<p class="text-xs text-gray-400 mt-3">Admin: admin / 36939181<br>Shop: machaa / 0769<br>Field: mutugu / 0791 , Elias / 0759</p>
 </div></div>
 <div id="appPage" class="hidden min-h-screen flex flex-col md:flex-row">
-<div class="bg-blue-900 text-white w-full md:w-64 p-4">
-<h2 class="font-bold text-xl mb-4">VALIDNET SHOP</h2><p id="userRoleDisplay" class="text-xs bg-blue-700 rounded p-1 mb-4"></p>
-<nav class="space-y-2">
-<button onclick="showTab('pos')" class="w-full text-left p-3 rounded bg-blue-700">POS</button>
-<button onclick="showTab('stock')" class="w-full text-left p-3 rounded hover:bg-blue-800">Stock</button>
-<button onclick="showTab('sales')" class="w-full text-left p-3 rounded hover:bg-blue-800">Sales Reports</button>
-<button onclick="showTab('repairs')" class="w-full text-left p-3 rounded hover:bg-blue-800 bg-yellow-600">Repairs + History</button>
+<div class="bg-blue-900 text-white w-full md:w-64 p-4 no-print">
+<h2 class="font-bold text-xl mb-4">VALIDNET</h2><p id="userRoleDisplay" class="text-xs bg-blue-700 rounded p-1 mb-4"></p>
+<nav class="space-y-1 text-sm">
+<button onclick="showTab('pos')" class="w-full text-left p-2 rounded bg-blue-700">POS</button>
+<button onclick="showTab('stock')" class="w-full text-left p-2 rounded hover:bg-blue-800">Stock</button>
+<button onclick="showTab('sales')" class="w-full text-left p-2 rounded hover:bg-blue-800">Sales</button>
+<button onclick="showTab('repairs')" class="w-full text-left p-2 rounded hover:bg-blue-800">Repairs</button>
+<button onclick="showTab('quotations')" class="w-full text-left p-2 rounded bg-green-700 hover:bg-green-800">📄 Quotations</button>
+<button onclick="showTab('jobs')" class="w-full text-left p-2 rounded bg-orange-700 hover:bg-orange-800">💰 Job Costing</button>
 </nav>
 <button onclick="logout()" class="w-full mt-8 bg-red-600 p-2 rounded">Logout</button>
 </div>
 <div class="flex-1 p-4 overflow-auto">
-<div id="tab-pos" class="tab-content active">
-<h2 class="text-2xl font-bold mb-2">POS Terminal</h2>
-<div class="flex flex-wrap gap-2 mb-3" id="categoryFilters"></div>
-<input id="searchProd" oninput="renderPOS()" class="w-full p-3 border rounded mb-3" placeholder="Search product or category..">
-<div class="flex flex-col lg:flex-row gap-4">
-<div class="flex-1"><div id="posProducts" class="grid grid-cols-2 md:grid-cols-3 gap-2"></div></div>
-<div class="w-full lg:w-80 bg-white p-4 rounded shadow h-fit">
-<h3 class="font-bold">Cart</h3><div id="cartItems" class="my-2 text-sm"></div>
-<div class="flex justify-between font-bold border-t pt-2">Total: <span id="cartTotal">KES 0</span></div>
-<select id="payMethod" class="w-full p-2 border rounded mt-2"><option>Cash</option><option>M-PESA</option></select>
-<button onclick="doPay()" class="w-full bg-green-600 text-white p-3 rounded font-bold mt-3">PAY</button>
-<p id="profitPreview" class="text-xs text-green-600 mt-2"></p>
-</div></div></div>
-<div id="tab-stock" class="tab-content">
-<h2 class="text-2xl font-bold mb-2">Stock - Categories + Profit</h2>
-<div class="bg-white p-4 rounded shadow mb-4">
-<div class="grid grid-cols-1 md:grid-cols-6 gap-2">
-<input id="sName" class="p-2 border rounded" placeholder="Product Name">
-<input id="sCat" class="p-2 border rounded" placeholder="Category" list="catList"><datalist id="catList"></datalist>
-<input id="sBuy" type="number" class="p-2 border rounded" placeholder="Buying Price">
-<input id="sSell" type="number" class="p-2 border rounded" placeholder="Selling Price">
-<input id="sQty" type="number" class="p-2 border rounded" placeholder="Qty">
-<button onclick="addStock()" class="bg-blue-900 text-white p-2 rounded">Add</button>
-</div>
-</div>
-<div class="bg-white p-4 rounded shadow overflow-auto">
-<table class="w-full text-sm"><thead><tr class="bg-gray-100"><th class="p-2 text-left">Product</th><th>Category</th><th>Buy</th><th>Sell</th><th>Profit</th><th>Qty</th><th>Action</th></tr></thead><tbody id="stockTable"></tbody></table>
-</div>
-</div>
-<div id="tab-sales" class="tab-content">
-<h2 class="text-2xl font-bold mb-4">Sales Reports</h2>
-<div class="flex gap-2 mb-4 flex-wrap">
-<button onclick="filterSales('today')" class="bg-blue-900 text-white px-4 py-2 rounded">Daily</button>
-<button onclick="filterSales('week')" class="bg-gray-600 text-white px-4 py-2 rounded">Weekly</button>
-<button onclick="filterSales('month')" class="bg-gray-600 text-white px-4 py-2 rounded">Monthly</button>
-<button onclick="filterSales('all')" class="bg-gray-600 text-white px-4 py-2 rounded">All</button>
-<select id="salesCatFilter" onchange="filterSales(currentRange)" class="p-2 border rounded"><option value="">All Categories</option></select>
-</div>
-<div class="grid grid-cols-3 gap-2 mb-4">
-<div class="bg-white p-3 rounded shadow"><p class="text-xs">Total Sales</p><p id="statSales" class="font-bold text-lg">KES 0</p></div>
-<div class="bg-green-50 p-3 rounded shadow"><p class="text-xs">Total Profit</p><p id="statProfit" class="font-bold text-lg text-green-600">KES 0</p></div>
-<div class="bg-blue-50 p-3 rounded shadow"><p class="text-xs">Transactions</p><p id="statCount" class="font-bold text-lg">0</p></div>
-</div>
-<div class="bg-white p-4 rounded shadow overflow-auto">
-<table class="w-full text-sm"><thead><tr class="bg-gray-100"><th class="p-2 text-left">Date</th><th>Items</th><th>Cat</th><th>Total</th><th>Profit</th><th>Method</th></tr></thead><tbody id="salesTable"></tbody></table>
-</div>
-</div>
-<div id="tab-repairs" class="tab-content">
-<h2 class="text-2xl font-bold mb-2">Repairs - With Deposits + History + WhatsApp</h2>
-<div class="bg-white p-4 rounded shadow mb-4">
-<h3 class="font-bold mb-2">Add New Repair</h3>
-<div class="grid grid-cols-2 md:grid-cols-4 gap-2">
-<input id="rCustomer" class="p-2 border rounded" placeholder="Customer Name">
-<input id="rPhone" class="p-2 border rounded" placeholder="Phone 0712345678">
-<input id="rDevice" class="p-2 border rounded" placeholder="Device e.g. Samsung A12">
-<input id="rIssue" class="p-2 border rounded" placeholder="Issue e.g. Screen">
-<input id="rQuoted" type="number" class="p-2 border rounded" placeholder="Quoted Price">
-<input id="rParts" type="number" class="p-2 border rounded" placeholder="Parts Cost">
-<input id="rDeposit" type="number" class="p-2 border rounded" placeholder="Deposit Paid">
-<select id="rStatus" class="p-2 border rounded"><option>Received</option><option>Diagnosing</option><option>Waiting Parts</option><option>Repairing</option><option>Ready</option><option>Collected</option></select>
-<button onclick="addRepair()" class="bg-yellow-600 text-white p-2 rounded font-bold col-span-2 md:col-span-1">Add Repair</button>
-</div>
-</div>
-<div class="bg-white p-3 rounded shadow mb-3 flex gap-2 flex-wrap">
-<input id="searchRepair" oninput="renderRepairs()" class="p-2 border rounded flex-1" placeholder="Search name, phone, device...">
-<select id="filterRepairStatus" onchange="renderRepairs()" class="p-2 border rounded"><option value="">All Status</option><option>Received</option><option>Diagnosing</option><option>Waiting Parts</option><option>Repairing</option><option>Ready</option><option>Collected</option></select>
-<select id="filterRepairDate" onchange="renderRepairs()" class="p-2 border rounded"><option value="all">All Time</option><option value="today">Today</option><option value="week">This Week</option><option value="month">This Month</option></select>
-</div>
-<div class="grid grid-cols-4 gap-2 mb-3">
-<div class="bg-yellow-50 p-2 rounded shadow text-center"><p class="text-xs">Pending</p><p id="rStatPending" class="font-bold">0</p></div>
-<div class="bg-green-50 p-2 rounded shadow text-center"><p class="text-xs">Ready</p><p id="rStatReady" class="font-bold">0</p></div>
-<div class="bg-blue-50 p-2 rounded shadow text-center"><p class="text-xs">Collected Today</p><p id="rStatCollected" class="font-bold">0</p></div>
-<div class="bg-gray-50 p-2 rounded shadow text-center"><p class="text-xs">Repair Profit</p><p id="rStatProfit" class="font-bold text-green-600">KES 0</p></div>
-</div>
-<div class="bg-white p-4 rounded shadow overflow-auto">
-<table class="w-full text-xs"><thead><tr class="bg-gray-100"><th class="p-2 text-left">Date</th><th>Customer</th><th>Phone</th><th>Device</th><th>Issue</th><th>Quoted</th><th>Deposit</th><th>Balance</th><th>Profit</th><th>Status</th><th>Actions</th></tr></thead><tbody id="repairTable"></tbody></table>
-</div>
-</div>
+<div id="tab-pos" class="tab-content active"><h2 class="text-xl font-bold mb-2">POS Terminal</h2><div class="flex flex-wrap gap-2 mb-3" id="categoryFilters"></div><input id="searchProd" oninput="renderPOS()" class="w-full p-3 border rounded mb-3" placeholder="Search.."><div class="flex flex-col lg:flex-row gap-4"><div class="flex-1"><div id="posProducts" class="grid grid-cols-2 md:grid-cols-3 gap-2"></div></div><div class="w-full lg:w-80 bg-white p-4 rounded shadow h-fit"><h3 class="font-bold">Cart</h3><div id="cartItems" class="my-2 text-sm"></div><div class="flex justify-between font-bold border-t pt-2">Total: <span id="cartTotal">KES 0</span></div><select id="payMethod" class="w-full p-2 border rounded mt-2"><option>Cash</option><option>M-PESA</option></select><button onclick="doPay()" class="w-full bg-green-600 text-white p-3 rounded font-bold mt-3">PAY</button><p id="profitPreview" class="text-xs text-green-600 mt-2"></p></div></div></div>
+<div id="tab-stock" class="tab-content"><h2 class="text-xl font-bold mb-2">Stock</h2><div class="bg-white p-4 rounded shadow mb-4"><div class="grid grid-cols-1 md:grid-cols-6 gap-2"><input id="sName" class="p-2 border rounded" placeholder="Product"><input id="sCat" class="p-2 border rounded" placeholder="Category" list="catList"><datalist id="catList"></datalist><input id="sBuy" type="number" class="p-2 border rounded" placeholder="Buy"><input id="sSell" type="number" class="p-2 border rounded" placeholder="Sell"><input id="sQty" type="number" class="p-2 border rounded" placeholder="Qty"><button onclick="addStock()" class="bg-blue-900 text-white p-2 rounded">Add</button></div></div><div class="bg-white p-4 rounded shadow overflow-auto"><table class="w-full text-sm"><thead><tr class="bg-gray-100"><th class="p-2 text-left">Product</th><th>Category</th><th>Buy</th><th>Sell</th><th>Profit</th><th>Qty</th><th>Action</th></tr></thead><tbody id="stockTable"></tbody></table></div></div>
+<div id="tab-sales" class="tab-content"><h2 class="text-xl font-bold mb-4">Sales Reports</h2><div class="flex gap-2 mb-4 flex-wrap"><button onclick="filterSales('today')" class="bg-blue-900 text-white px-3 py-1 rounded">Daily</button><button onclick="filterSales('week')" class="bg-gray-600 text-white px-3 py-1 rounded">Weekly</button><button onclick="filterSales('month')" class="bg-gray-600 text-white px-3 py-1 rounded">Monthly</button><button onclick="filterSales('all')" class="bg-gray-600 text-white px-3 py-1 rounded">All</button><select id="salesCatFilter" onchange="filterSales(currentRange)" class="p-2 border rounded"><option value="">All Categories</option></select></div><div class="grid grid-cols-3 gap-2 mb-4"><div class="bg-white p-3 rounded shadow"><p class="text-xs">Sales</p><p id="statSales" class="font-bold">KES 0</p></div><div class="bg-green-50 p-3 rounded shadow"><p class="text-xs">Profit</p><p id="statProfit" class="font-bold text-green-600">KES 0</p></div><div class="bg-blue-50 p-3 rounded shadow"><p class="text-xs">Tx</p><p id="statCount" class="font-bold">0</p></div></div><div class="bg-white p-4 rounded shadow overflow-auto"><table class="w-full text-sm"><thead><tr class="bg-gray-100"><th class="p-2 text-left">Date</th><th>Items</th><th>Cat</th><th>Total</th><th>Profit</th><th>Method</th></tr></thead><tbody id="salesTable"></tbody></table></div></div>
+<div id="tab-repairs" class="tab-content"><h2 class="text-xl font-bold mb-2">Repairs</h2><div class="bg-white p-4 rounded shadow mb-4"><div class="grid grid-cols-2 md:grid-cols-4 gap-2"><input id="rCustomer" class="p-2 border rounded" placeholder="Customer"><input id="rPhone" class="p-2 border rounded" placeholder="Phone"><input id="rDevice" class="p-2 border rounded" placeholder="Device"><input id="rIssue" class="p-2 border rounded" placeholder="Issue"><input id="rQuoted" type="number" class="p-2 border rounded" placeholder="Quoted"><input id="rParts" type="number" class="p-2 border rounded" placeholder="Parts Cost"><input id="rDeposit" type="number" class="p-2 border rounded" placeholder="Deposit"><select id="rStatus" class="p-2 border rounded"><option>Received</option><option>Diagnosing</option><option>Waiting Parts</option><option>Repairing</option><option>Ready</option><option>Collected</option></select><button onclick="addRepair()" class="bg-yellow-600 text-white p-2 rounded font-bold">Add Repair</button></div></div><div class="bg-white p-3 rounded shadow mb-3 flex gap-2 flex-wrap"><input id="searchRepair" oninput="renderRepairs()" class="p-2 border rounded flex-1" placeholder="Search repairs.."><select id="filterRepairStatus" onchange="renderRepairs()" class="p-2 border rounded"><option value="">All Status</option><option>Received</option><option>Ready</option><option>Collected</option></select></div><div class="bg-white p-4 rounded shadow overflow-auto"><table class="w-full text-xs"><thead><tr class="bg-gray-100"><th class="p-2 text-left">Date</th><th>Customer</th><th>Device</th><th>Quoted</th><th>Deposit</th><th>Balance</th><th>Status</th><th>Actions</th></tr></thead><tbody id="repairTable"></tbody></table></div></div>
+<div id="tab-quotations" class="tab-content"><h2 class="text-2xl font-bold mb-2">📄 Quotation Management</h2><div class="bg-white p-4 rounded shadow mb-4"><h3 class="font-bold mb-2">Create Quotation</h3><div class="grid grid-cols-2 md:grid-cols-3 gap-2 mb-3"><input id="qCustomer" class="p-2 border rounded" placeholder="Client Name"><input id="qPhone" class="p-2 border rounded" placeholder="Client Phone"><input id="qProject" class="p-2 border rounded" placeholder="Project"><input id="qValidDays" type="number" class="p-2 border rounded" value="7"><input id="qLabour" type="number" class="p-2 border rounded" placeholder="Labour" oninput="calcQuote()"><input id="qTransport" type="number" class="p-2 border rounded" placeholder="Transport" oninput="calcQuote()"><input id="qLunch" type="number" class="p-2 border rounded" placeholder="Lunches" oninput="calcQuote()"></div><div class="flex gap-2 mb-2"><input id="qMatName" class="p-2 border rounded flex-1" placeholder="Material"><input id="qMatQty" type="number" class="p-2 border rounded w-20" placeholder="Qty"><input id="qMatPrice" type="number" class="p-2 border rounded w-24" placeholder="Price"><button onclick="addQuoteMaterial()" class="bg-blue-900 text-white px-4 rounded">Add</button></div><div id="qMaterialsList" class="text-sm mb-3 bg-gray-50 p-2 rounded"></div><div class="bg-blue-50 p-3 rounded mb-3"><p class="text-sm">Materials: <span id="qMatTotal" class="font-bold">KES 0</span> | Labour: <span id="qLabourDisplay" class="font-bold">KES 0</span> | Transport: <span id="qTransportDisplay" class="font-bold">KES 0</span> | Other: <span id="qLunchDisplay" class="font-bold">KES 0</span></p><p class="text-lg font-bold">TOTAL: <span id="qGrandTotal" class="text-blue-900">KES 0</span></p></div><button onclick="saveQuotation()" class="bg-green-600 text-white px-6 py-2 rounded font-bold">Save</button><button onclick="printQuotation()" class="bg-gray-700 text-white px-6 py-2 rounded">Print</button></div><div id="quotationPrintArea" class="bg-white p-6 rounded shadow mb-4 hidden"><div id="printContent"></div></div><div class="bg-white p-4 rounded shadow overflow-auto"><table class="w-full text-xs"><thead><tr class="bg-gray-100"><th class="p-2 text-left">Date</th><th>Client</th><th>Project</th><th>Total</th><th>Status</th><th>Actions</th></tr></thead><tbody id="quotationTable"></tbody></table></div></div>
+<div id="tab-jobs" class="tab-content"><h2 class="text-2xl font-bold mb-2">💰 Job Costing</h2><div class="bg-white p-4 rounded shadow mb-4"><div class="grid grid-cols-2 md:grid-cols-4 gap-2 mb-3"><input id="jClient" class="p-2 border rounded" placeholder="Client"><select id="jFromQuote" class="p-2 border rounded"><option value="">Select Quotation</option></select><input id="jQuotedTotal" type="number" class="p-2 border rounded" placeholder="Quoted Total"><input id="jStatus" class="p-2 border rounded" value="In Progress"></div><div class="grid grid-cols-2 md:grid-cols-5 gap-2 mb-3"><input id="jMatActual" type="number" class="p-2 border rounded" placeholder="Materials Actual" oninput="calcJobProfit()"><input id="jLabourActual" type="number" class="p-2 border rounded" placeholder="Labour Actual" oninput="calcJobProfit()"><input id="jTransportActual" type="number" class="p-2 border rounded" placeholder="Transport Actual" oninput="calcJobProfit()"><input id="jLunchActual" type="number" class="p-2 border rounded" placeholder="Lunches Actual" oninput="calcJobProfit()"><button onclick="saveJob()" class="bg-orange-600 text-white p-2 rounded font-bold">Save Job</button></div><div class="bg-orange-50 p-3 rounded"><p class="text-sm">Actual Cost: <span id="jCostTotal" class="font-bold">KES 0</span></p><p class="text-lg font-bold">PROFIT: <span id="jProfitTotal" class="text-green-600">KES 0</span> | Margin: <span id="jMargin">0%</span></p></div></div><div class="grid grid-cols-3 gap-2 mb-3"><div class="bg-white p-3 rounded shadow text-center"><p class="text-xs">Total Jobs</p><p id="jobStatTotal" class="font-bold">0</p></div><div class="bg-green-50 p-3 rounded shadow text-center"><p class="text-xs">Total Profit</p><p id="jobStatProfit" class="font-bold text-green-600">KES 0</p></div><div class="bg-blue-50 p-3 rounded shadow text-center"><p class="text-xs">Avg Margin</p><p id="jobStatMargin" class="font-bold">0%</p></div></div><div class="bg-white p-4 rounded shadow overflow-auto"><table class="w-full text-xs"><thead><tr class="bg-gray-100"><th class="p-2 text-left">Date</th><th>Client</th><th>Quoted</th><th>Actual</th><th>Profit</th><th>Margin</th><th>Status</th><th>Action</th></tr></thead><tbody id="jobTable"></tbody></table></div></div>
 </div>
 </div>
 <script>
-const USERS={admin:{pass:"36939181",role:"ADMIN"},validnet:{pass:"654321",role:"TECH"}};
-function login(){let u=document.getElementById('loginUser').value.trim();let p=document.getElementById('loginPass').value;if(USERS[u]&&USERS[u].pass===p){localStorage.setItem('validnet_user',u);document.getElementById('loginPage').classList.add('hidden');document.getElementById('appPage').classList.remove('hidden');document.getElementById('userRoleDisplay').innerText=USERS[u].role;renderPOS();renderStock();filterSales('today');renderRepairs();}else{document.getElementById('loginErr').classList.remove('hidden');}}
+const USERS={
+admin:{pass:"36939181",role:"ADMIN",label:"ADMIN - Boss"},
+machaa:{pass:"0769",role:"SHOP",label:"SHOP TECH - Machaa"},
+mutugu:{pass:"0791",role:"FIELD",label:"FIELD TECH - Mutugu"},
+elias:{pass:"0759",role:"FIELD",label:"FIELD TECH - Elias"},
+Elias:{pass:"0759",role:"FIELD",label:"FIELD TECH - Elias"}
+};
+function applyPermissions(role){
+  const navPos = document.querySelector('button[onclick="showTab(\'pos\')"]');
+  const navStock = document.querySelector('button[onclick="showTab(\'stock\')"]');
+  const navSales = document.querySelector('button[onclick="showTab(\'sales\')"]');
+  const navRepairs = document.querySelector('button[onclick="showTab(\'repairs\')"]');
+  const navQuot = document.querySelector('button[onclick="showTab(\'quotations\')"]');
+  const navJobs = document.querySelector('button[onclick="showTab(\'jobs\')"]');
+  [navPos,navStock,navSales,navRepairs,navQuot,navJobs].forEach(b=>{if(b) b.style.display='block';});
+  if(role==='FIELD'){
+    if(navPos) navPos.style.display='none';
+    if(navStock) navStock.style.display='none';
+    if(navSales) navSales.style.display='none';
+    showTab('repairs');
+  } else {
+    showTab('pos');
+  }
+}
+function login(){let uRaw=document.getElementById('loginUser').value.trim();let u=uRaw.toLowerCase();let p=document.getElementById('loginPass').value.trim();let user=USERS[uRaw]||USERS[u];if(user&&user.pass===p){localStorage.setItem('validnet_user',uRaw);localStorage.setItem('validnet_role',user.role);document.getElementById('loginPage').classList.add('hidden');document.getElementById('appPage').classList.remove('hidden');document.getElementById('userRoleDisplay').innerText=user.label+' ('+user.role+')';renderPOS();renderStock();filterSales('today');renderRepairs();renderQuotations();renderJobs();applyPermissions(user.role);}else{document.getElementById('loginErr').classList.remove('hidden');}}
 function logout(){localStorage.removeItem('validnet_user');location.reload();}
 function showTab(t){document.querySelectorAll('.tab-content').forEach(e=>e.classList.remove('active'));document.getElementById('tab-'+t).classList.add('active');}
-let products=JSON.parse(localStorage.getItem('v_products')||'[]');
-let sales=JSON.parse(localStorage.getItem('v_sales')||'[]');
-let repairs=JSON.parse(localStorage.getItem('v_repairs')||'[]');
-let cart=[];let currentCatFilter='';let currentRange='today';
-function saveProducts(){localStorage.setItem('v_products',JSON.stringify(products));}
-function saveSales(){localStorage.setItem('v_sales',JSON.stringify(sales));}
-function saveRepairs(){localStorage.setItem('v_repairs',JSON.stringify(repairs));}
+let products=JSON.parse(localStorage.getItem('v_products')||'[]');let sales=JSON.parse(localStorage.getItem('v_sales')||'[]');let repairs=JSON.parse(localStorage.getItem('v_repairs')||'[]');let quotations=JSON.parse(localStorage.getItem('v_quotations')||'[]');let jobs=JSON.parse(localStorage.getItem('v_jobs')||'[]');let cart=[];let currentCatFilter='';let currentRange='today';let tempMaterials=[];
+function saveProducts(){localStorage.setItem('v_products',JSON.stringify(products));}function saveSales(){localStorage.setItem('v_sales',JSON.stringify(sales));}function saveRepairs(){localStorage.setItem('v_repairs',JSON.stringify(repairs));}function saveQuotations(){localStorage.setItem('v_quotations',JSON.stringify(quotations));}function saveJobs(){localStorage.setItem('v_jobs',JSON.stringify(jobs));}
 function getCategories(){return [...new Set(products.map(p=>p.category).filter(Boolean))];}
-function renderCategoryFilters(){
-let cats=getCategories();
-let html='<button onclick="currentCatFilter=\'\';renderPOS()" class="px-3 py-1 rounded '+(currentCatFilter===''?'bg-blue-900 text-white':'bg-white border')+'">All</button>';
-cats.forEach(c=>{html+=`<button onclick="currentCatFilter='${c}';renderPOS()" class="px-3 py-1 rounded ${currentCatFilter===c?'bg-blue-900 text-white':'bg-white border'}">${c}</button>`;});
-let cf=document.getElementById('categoryFilters'); if(cf) cf.innerHTML=html;
-let datalistHtml='';cats.forEach(c=>datalistHtml+=`<option value="${c}">`);
-let dl=document.getElementById('catList'); if(dl) dl.innerHTML=datalistHtml;
-let salesFilter=document.getElementById('salesCatFilter');
-if(salesFilter){let curVal=salesFilter.value; salesFilter.innerHTML='<option value="">All Categories</option>'+cats.map(c=>`<option value="${c}">${c}</option>`).join(''); salesFilter.value=curVal;}
-}
-function addStock(){
-let name=document.getElementById('sName').value.trim();
-let category=document.getElementById('sCat').value.trim()||'General';
-let buy=parseFloat(document.getElementById('sBuy').value)||0;
-let sell=parseFloat(document.getElementById('sSell').value)||0;
-let qty=parseInt(document.getElementById('sQty').value)||0;
-if(!name||!sell)return alert('Enter name & selling price');
-products.push({name,category,buy,sell,qty});saveProducts();renderStock();renderPOS();
-document.getElementById('sName').value='';document.getElementById('sCat').value='';document.getElementById('sBuy').value='';document.getElementById('sSell').value='';document.getElementById('sQty').value='';
-}
-function renderStock(){
-renderCategoryFilters();
-let html='';
-products.forEach((p,i)=>{
-let profit=p.sell-p.buy;
-html+=`<tr class="border-t"><td class="p-2">${p.name}</td><td><span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs">${p.category||'General'}</span></td><td>KES ${p.buy}</td><td>KES ${p.sell}</td><td class="text-green-600 font-bold">KES ${profit}</td><td>${p.qty}</td><td><button onclick="products.splice(${i},1);saveProducts();renderStock();renderPOS()" class="text-red-500">Delete</button></td></tr>`;
-});
-document.getElementById('stockTable').innerHTML=html||'<tr><td colspan=7 class="p-4 text-center text-gray-400">No stock</td></tr>';
-}
-function renderPOS(){
-renderCategoryFilters();
-let q=document.getElementById('searchProd').value.toLowerCase();
-let filtered=products.filter(p=>{
-let matchSearch=p.name.toLowerCase().includes(q)||(p.category||'').toLowerCase().includes(q);
-let matchCat=currentCatFilter? (p.category===currentCatFilter):true;
-return matchSearch&&matchCat&&p.qty>0;
-});
-let html='';
-filtered.forEach((p)=>{
-let realIdx=products.indexOf(p);
-html+=`<div onclick="addToCart(${realIdx})" class="bg-white p-3 rounded shadow cursor-pointer hover:bg-blue-50 border-l-4 border-blue-900"><p class="font-bold text-sm">${p.name}</p><p class="text-xs bg-gray-100 inline-block px-1 rounded">${p.category}</p><p class="text-xs mt-1">Sell: KES ${p.sell}</p><p class="text-xs text-green-600">Profit: KES ${p.sell-p.buy}</p><p class="text-xs">Stock: ${p.qty}</p></div>`;
-});
-document.getElementById('posProducts').innerHTML=html||'<p class="text-gray-400">No products</p>';
-renderCart();
-}
-function addToCart(idx){let existing=cart.find(c=>c.idx===idx);if(existing)existing.qty++;else cart.push({idx,qty:1});renderCart();}
-function renderCart(){
-let total=0;let profitTotal=0;let html='';
-cart.forEach((c,i)=>{
-let p=products[c.idx];
-let sub=p.sell*c.qty;total+=sub;profitTotal+=(p.sell-p.buy)*c.qty;
-html+=`<div class="flex justify-between text-xs mb-1"><span>${p.name} x${c.qty}</span><span>KES ${sub} <button onclick="cart.splice(${i},1);renderCart()" class="text-red-500 ml-2">x</button></span></div>`;
-});
-document.getElementById('cartItems').innerHTML=html||'Empty';
-document.getElementById('cartTotal').innerText='KES '+total;
-document.getElementById('profitPreview').innerText=cart.length?`Profit: KES ${profitTotal}`:'';
-}
-function doPay(){
-if(!cart.length)return alert('Cart empty');
-let total=0;let profit=0;let cats=[];
-cart.forEach(c=>{let p=products[c.idx];total+=p.sell*c.qty;profit+=(p.sell-p.buy)*c.qty;products[c.idx].qty-=c.qty;cats.push(p.category);});
-let method=document.getElementById('payMethod').value;
-sales.push({date:new Date().toISOString(),items:cart.map(c=>products[c.idx].name+' x'+c.qty).join(', '),categories:[...new Set(cats)].join(','),total,profit,method});
-saveProducts();saveSales();cart=[];renderCart();renderPOS();renderStock();filterSales('today');
-alert('Sale saved! Profit KES '+profit);
-}
-function filterSales(range){
-currentRange=range;
-let now=new Date();let catFilter=document.getElementById('salesCatFilter').value;
-let filtered=sales.filter(s=>{
-let d=new Date(s.date);
-let timeOk=true;
-if(range==='today')timeOk=d.toDateString()===now.toDateString();
-if(range==='week'){let weekAgo=new Date();weekAgo.setDate(now.getDate()-7);timeOk=d>=weekAgo;}
-if(range==='month')timeOk=d.getMonth()===now.getMonth()&&d.getFullYear()===now.getFullYear();
-let catOk=catFilter? (s.categories||'').includes(catFilter):true;
-return timeOk&&catOk;
-});
-let total=filtered.reduce((a,b)=>a+b.total,0);
-let prof=filtered.reduce((a,b)=>a+b.profit,0);
-document.getElementById('statSales').innerText='KES '+total;
-document.getElementById('statProfit').innerText='KES '+prof;
-document.getElementById('statCount').innerText=filtered.length;
-let html='';
-filtered.slice().reverse().forEach(s=>{
-let d=new Date(s.date);
-html+=`<tr class="border-t"><td class="p-2 text-xs">${d.toLocaleString()}</td><td class="text-xs">${s.items}</td><td class="text-xs">${s.categories||''}</td><td>KES ${s.total}</td><td class="text-green-600">KES ${s.profit}</td><td>${s.method}</td></tr>`;
-});
-document.getElementById('salesTable').innerHTML=html||'<tr><td colspan=6 class="p-4 text-center text-gray-400">No sales</td></tr>';
-}
-function addRepair(){
-let cust=document.getElementById('rCustomer').value.trim();
-let phone=document.getElementById('rPhone').value.trim();
-let device=document.getElementById('rDevice').value.trim();
-let issue=document.getElementById('rIssue').value.trim();
-let quoted=parseFloat(document.getElementById('rQuoted').value)||0;
-let parts=parseFloat(document.getElementById('rParts').value)||0;
-let deposit=parseFloat(document.getElementById('rDeposit').value)||0;
-let status=document.getElementById('rStatus').value;
-if(!cust||!phone)return alert('Enter customer name & phone');
-let balance=quoted-deposit;
-let profit=quoted-parts;
-repairs.push({id:Date.now(),date:new Date().toISOString(),customer:cust,phone,device,issue,quoted,parts,deposit,balance,profit,status});
-saveRepairs();renderRepairs();
-document.getElementById('rCustomer').value='';document.getElementById('rPhone').value='';document.getElementById('rDevice').value='';document.getElementById('rIssue').value='';document.getElementById('rQuoted').value='';document.getElementById('rParts').value='';document.getElementById('rDeposit').value='';
-alert('Repair added! Balance KES '+balance);
-}
-function renderRepairs(){
-let search=document.getElementById('searchRepair').value.toLowerCase();
-let statusFilter=document.getElementById('filterRepairStatus').value;
-let dateFilter=document.getElementById('filterRepairDate').value;
-let now=new Date();
-let filtered=repairs.filter(r=>{
-let matchSearch=!search|| r.customer.toLowerCase().includes(search)|| r.phone.includes(search)|| r.device.toLowerCase().includes(search);
-let matchStatus=!statusFilter|| r.status===statusFilter;
-let d=new Date(r.date); let matchDate=true;
-if(dateFilter==='today')matchDate=d.toDateString()===now.toDateString();
-if(dateFilter==='week'){let w=new Date();w.setDate(now.getDate()-7);matchDate=d>=w;}
-if(dateFilter==='month')matchDate=d.getMonth()===now.getMonth()&&d.getFullYear()===now.getFullYear();
-return matchSearch&&matchStatus&&matchDate;
-});
-let pending=repairs.filter(r=>['Received','Diagnosing','Waiting Parts','Repairing'].includes(r.status)).length;
-let ready=repairs.filter(r=>r.status==='Ready').length;
-let collectedToday=repairs.filter(r=>{let d=new Date(r.date); return r.status==='Collected'&&d.toDateString()===now.toDateString();}).length;
-let totalProfit=filtered.filter(r=>r.status==='Collected').reduce((a,b)=>a+b.profit,0);
-document.getElementById('rStatPending').innerText=pending;
-document.getElementById('rStatReady').innerText=ready;
-document.getElementById('rStatCollected').innerText=collectedToday;
-document.getElementById('rStatProfit').innerText='KES '+totalProfit;
-let html='';
-filtered.slice().reverse().forEach(r=>{
-let d=new Date(r.date);
-let waPhone=r.phone.replace(/[^0-9]/g,''); if(waPhone.startsWith('0'))waPhone='254'+waPhone.substring(1);
-let waMsg=encodeURIComponent(`Hello ${r.customer}, your ${r.device} (${r.issue}) is READY for collection at Validnet Technologies. Balance: KES ${r.balance}. Thank you!`);
-let waLink=`https://wa.me/${waPhone}?text=${waMsg}`;
-html+=`<tr class="border-t"><td class="p-2">${d.toLocaleDateString()}</td><td>${r.customer}</td><td>${r.phone}</td><td>${r.device}</td><td>${r.issue}</td><td>KES ${r.quoted}</td><td class="text-green-600">KES ${r.deposit}</td><td class="font-bold ${r.balance>0?'text-red-600':'text-green-600'}">KES ${r.balance}</td><td class="text-green-600">KES ${r.profit}</td><td><select onchange="updateRepairStatus(${r.id},this.value)" class="border rounded p-1 text-xs"><option ${r.status==='Received'?'selected':''}>Received</option><option ${r.status==='Diagnosing'?'selected':''}>Diagnosing</option><option ${r.status==='Waiting Parts'?'selected':''}>Waiting Parts</option><option ${r.status==='Repairing'?'selected':''}>Repairing</option><option ${r.status==='Ready'?'selected':''}>Ready</option><option ${r.status==='Collected'?'selected':''}>Collected</option></select></td><td class="flex gap-1"><a href="${waLink}" target="_blank" class="bg-green-600 text-white px-2 py-1 rounded text-xs">WhatsApp</a><button onclick="deleteRepair(${r.id})" class="bg-red-500 text-white px-2 py-1 rounded text-xs">Del</button></td></tr>`;
-});
-document.getElementById('repairTable').innerHTML=html||'<tr><td colspan=11 class="p-4 text-center text-gray-400">No repairs</td></tr>';
-}
-function updateRepairStatus(id,newStatus){
-let r=repairs.find(x=>x.id===id); if(r){r.status=newStatus; saveRepairs(); renderRepairs(); if(newStatus==='Ready'){alert('Marked Ready - Send WhatsApp now!');}}
-}
-function deleteRepair(id){if(confirm('Delete this repair?')){repairs=repairs.filter(r=>r.id!==id); saveRepairs(); renderRepairs();}}
+function renderCategoryFilters(){let cats=getCategories();let html='<button onclick="currentCatFilter=\'\';renderPOS()" class="px-3 py-1 rounded '+(currentCatFilter===''?'bg-blue-900 text-white':'bg-white border')+'">All</button>';cats.forEach(c=>{html+=`<button onclick="currentCatFilter='${c}';renderPOS()" class="px-3 py-1 rounded ${currentCatFilter===c?'bg-blue-900 text-white':'bg-white border'}">${c}</button>`;});let cf=document.getElementById('categoryFilters'); if(cf) cf.innerHTML=html;let dl=document.getElementById('catList'); if(dl) dl.innerHTML=cats.map(c=>`<option value="${c}">`).join('');let sf=document.getElementById('salesCatFilter'); if(sf){let cv=sf.value; sf.innerHTML='<option value="">All Categories</option>'+cats.map(c=>`<option value="${c}">${c}</option>`).join(''); sf.value=cv;}}
+function addStock(){let name=document.getElementById('sName').value.trim();let category=document.getElementById('sCat').value.trim()||'General';let buy=parseFloat(document.getElementById('sBuy').value)||0;let sell=parseFloat(document.getElementById('sSell').value)||0;let qty=parseInt(document.getElementById('sQty').value)||0;if(!name||!sell)return alert('Enter name & selling');products.push({name,category,buy,sell,qty});saveProducts();renderStock();renderPOS();document.getElementById('sName').value='';document.getElementById('sCat').value='';document.getElementById('sBuy').value='';document.getElementById('sSell').value='';document.getElementById('sQty').value='';}
+function renderStock(){renderCategoryFilters();let html='';products.forEach((p,i)=>{let profit=p.sell-p.buy;html+=`<tr class="border-t"><td class="p-2">${p.name}</td><td><span class="bg-blue-100 px-2 rounded text-xs">${p.category}</span></td><td>KES ${p.buy}</td><td>KES ${p.sell}</td><td class="text-green-600 font-bold">KES ${profit}</td><td>${p.qty}</td><td><button onclick="products.splice(${i},1);saveProducts();renderStock();renderPOS()" class="text-red-500">Del</button></td></tr>`;});document.getElementById('stockTable').innerHTML=html||'<tr><td colspan=7 class="text-center p-4">No stock</td></tr>';}
+function renderPOS(){renderCategoryFilters();let q=document.getElementById('searchProd').value.toLowerCase();let filtered=products.filter(p=>{let ms=p.name.toLowerCase().includes(q)||(p.category||'').toLowerCase().includes(q);let mc=currentCatFilter? p.category===currentCatFilter:true; return ms&&mc&&p.qty>0;});let html='';filtered.forEach(p=>{let ri=products.indexOf(p);html+=`<div onclick="addToCart(${ri})" class="bg-white p-3 rounded shadow cursor-pointer hover:bg-blue-50 border-l-4 border-blue-900"><p class="font-bold text-sm">${p.name}</p><p class="text-xs bg-gray-100 rounded px-1">${p.category}</p><p class="text-xs">Sell: KES ${p.sell}</p><p class="text-xs text-green-600">Profit: KES ${p.sell-p.buy}</p></div>`;});document.getElementById('posProducts').innerHTML=html||'<p class="text-gray-400">No products</p>';renderCart();}
+function addToCart(idx){let ex=cart.find(c=>c.idx===idx);if(ex)ex.qty++;else cart.push({idx,qty:1});renderCart();}
+function renderCart(){let total=0;let pt=0;let html='';cart.forEach((c,i)=>{let p=products[c.idx];let sub=p.sell*c.qty;total+=sub;pt+=(p.sell-p.buy)*c.qty;html+=`<div class="flex justify-between text-xs"><span>${p.name} x${c.qty}</span><span>KES ${sub} <button onclick="cart.splice(${i},1);renderCart()" class="text-red-500 ml-2">x</button></span></div>`;});document.getElementById('cartItems').innerHTML=html||'Empty';document.getElementById('cartTotal').innerText='KES '+total;document.getElementById('profitPreview').innerText=cart.length?`Profit: KES ${pt}`:'';}
+function doPay(){if(!cart.length)return alert('Cart empty');let total=0;let profit=0;let cats=[];cart.forEach(c=>{let p=products[c.idx];total+=p.sell*c.qty;profit+=(p.sell-p.buy)*c.qty;products[c.idx].qty-=c.qty;cats.push(p.category);});sales.push({date:new Date().toISOString(),items:cart.map(c=>products[c.idx].name+' x'+c.qty).join(', '),categories:[...new Set(cats)].join(','),total,profit,method:document.getElementById('payMethod').value});saveProducts();saveSales();cart=[];renderCart();renderPOS();renderStock();filterSales('today');alert('Sale saved! Profit KES '+profit);}
+function filterSales(range){currentRange=range;let now=new Date();let catFilter=document.getElementById('salesCatFilter').value;let filtered=sales.filter(s=>{let d=new Date(s.date);let ok=true;if(range==='today')ok=d.toDateString()===now.toDateString();if(range==='week'){let w=new Date();w.setDate(now.getDate()-7);ok=d>=w;}if(range==='month')ok=d.getMonth()===now.getMonth()&&d.getFullYear()===now.getFullYear();let catOk=catFilter? (s.categories||'').includes(catFilter):true;return ok&&catOk;});document.getElementById('statSales').innerText='KES '+filtered.reduce((a,b)=>a+b.total,0);document.getElementById('statProfit').innerText='KES '+filtered.reduce((a,b)=>a+b.profit,0);document.getElementById('statCount').innerText=filtered.length;let html='';filtered.slice().reverse().forEach(s=>{let d=new Date(s.date);html+=`<tr class="border-t"><td class="p-2 text-xs">${d.toLocaleString()}</td><td class="text-xs">${s.items}</td><td class="text-xs">${s.categories}</td><td>KES ${s.total}</td><td class="text-green-600">KES ${s.profit}</td><td>${s.method}</td></tr>`;});document.getElementById('salesTable').innerHTML=html||'<tr><td colspan=6 class="text-center">No sales</td></tr>';}
+function addRepair(){let cust=document.getElementById('rCustomer').value.trim();let phone=document.getElementById('rPhone').value.trim();let device=document.getElementById('rDevice').value.trim();let issue=document.getElementById('rIssue').value.trim();let quoted=parseFloat(document.getElementById('rQuoted').value)||0;let parts=parseFloat(document.getElementById('rParts').value)||0;let deposit=parseFloat(document.getElementById('rDeposit').value)||0;let status=document.getElementById('rStatus').value;if(!cust||!phone)return alert('Enter customer & phone');repairs.push({id:Date.now(),date:new Date().toISOString(),customer:cust,phone,device,issue,quoted,parts,deposit,balance:quoted-deposit,profit:quoted-parts,status});saveRepairs();renderRepairs();document.getElementById('rCustomer').value='';document.getElementById('rPhone').value='';document.getElementById('rDevice').value='';document.getElementById('rIssue').value='';document.getElementById('rQuoted').value='';document.getElementById('rParts').value='';document.getElementById('rDeposit').value='';}
+function renderRepairs(){let search=(document.getElementById('searchRepair')?.value||'').toLowerCase();let statusFilter=document.getElementById('filterRepairStatus')?.value||'';let filtered=repairs.filter(r=>{let ms=!search|| r.customer.toLowerCase().includes(search)|| r.phone.includes(search);let st=!statusFilter|| r.status===statusFilter;return ms&&st;});let html='';filtered.slice().reverse().forEach(r=>{let d=new Date(r.date);let waPhone=r.phone.replace(/[^0-9]/g,'');if(waPhone.startsWith('0'))waPhone='254'+waPhone.substring(1);let waMsg=encodeURIComponent(`Hello ${r.customer}, your ${r.device} is READY. Balance KES ${r.balance}`);let waLink=`https://wa.me/${waPhone}?text=${waMsg}`;html+=`<tr class="border-t"><td class="p-2">${d.toLocaleDateString()}</td><td>${r.customer}</td><td>${r.device}</td><td>KES ${r.quoted}</td><td>KES ${r.deposit}</td><td>KES ${r.balance}</td><td>${r.status}</td><td><a href="${waLink}" target="_blank" class="bg-green-600 text-white px-2 py-1 rounded text-xs">WA</a> <button onclick="repairs=repairs.filter(x=>x.id!==${r.id});saveRepairs();renderRepairs()" class="bg-red-500 text-white px-1 rounded">Del</button></td></tr>`;});let rt=document.getElementById('repairTable');if(rt) rt.innerHTML=html||'<tr><td colspan=8 class="text-center">No repairs</td></tr>';}
+function addQuoteMaterial(){let name=document.getElementById('qMatName').value.trim();let qty=parseFloat(document.getElementById('qMatQty').value)||0;let price=parseFloat(document.getElementById('qMatPrice').value)||0;if(!name||!price)return alert('Enter material & price');tempMaterials.push({name,qty,price,total:qty*price||price});document.getElementById('qMatName').value='';document.getElementById('qMatQty').value='';document.getElementById('qMatPrice').value='';renderTempMaterials();calcQuote();}
+function renderTempMaterials(){let html='';tempMaterials.forEach((m,i)=>{html+=`<div class="flex justify-between"><span>${m.name} x${m.qty||1} @ KES ${m.price} = KES ${m.total}</span><button onclick="tempMaterials.splice(${i},1);renderTempMaterials();calcQuote()" class="text-red-500">x</button></div>`;});document.getElementById('qMaterialsList').innerHTML=html||'No materials';}
+function calcQuote(){let matTotal=tempMaterials.reduce((a,b)=>a+b.total,0);let labour=parseFloat(document.getElementById('qLabour').value)||0;let transport=parseFloat(document.getElementById('qTransport').value)||0;let lunch=parseFloat(document.getElementById('qLunch').value)||0;document.getElementById('qMatTotal').innerText='KES '+matTotal;document.getElementById('qLabourDisplay').innerText='KES '+labour;document.getElementById('qTransportDisplay').innerText='KES '+transport;document.getElementById('qLunchDisplay').innerText='KES '+lunch;document.getElementById('qGrandTotal').innerText='KES '+(matTotal+labour+transport+lunch);}
+function saveQuotation(){let cust=document.getElementById('qCustomer').value.trim();let phone=document.getElementById('qPhone').value.trim();let project=document.getElementById('qProject').value.trim();if(!cust||!project)return alert('Enter client & project');let matTotal=tempMaterials.reduce((a,b)=>a+b.total,0);let labour=parseFloat(document.getElementById('qLabour').value)||0;let transport=parseFloat(document.getElementById('qTransport').value)||0;let lunch=parseFloat(document.getElementById('qLunch').value)||0;let total=matTotal+labour+transport+lunch;let validDays=parseInt(document.getElementById('qValidDays').value)||7;let validDate=new Date();validDate.setDate(validDate.getDate()+validDays);quotations.push({id:Date.now(),date:new Date().toISOString(),customer:cust,phone,project,materials:[...tempMaterials],matTotal,labour,transport,lunch,total,validDate:validDate.toISOString(),status:'Draft'});saveQuotations();tempMaterials=[];renderTempMaterials();calcQuote();renderQuotations();document.getElementById('qCustomer').value='';document.getElementById('qPhone').value='';document.getElementById('qProject').value='';document.getElementById('qLabour').value='';document.getElementById('qTransport').value='';document.getElementById('qLunch').value='';alert('Quotation saved! Total KES '+total);}
+function renderQuotations(){let html='';quotations.slice().reverse().forEach(q=>{let d=new Date(q.date);html+=`<tr class="border-t"><td class="p-2">${d.toLocaleDateString()}</td><td>${q.customer}</td><td>${q.project}</td><td class="font-bold">KES ${q.total}</td><td><select onchange="quotations.find(x=>x.id===${q.id}).status=this.value;saveQuotations();renderQuotations()" class="border rounded p-1 text-xs"><option ${q.status==='Draft'?'selected':''}>Draft</option><option ${q.status==='Sent'?'selected':''}>Sent</option><option ${q.status==='Accepted'?'selected':''}>Accepted</option><option ${q.status==='Expired'?'selected':''}>Expired</option></select></td><td class="flex gap-1"><button onclick="viewQuotation(${q.id})" class="bg-blue-600 text-white px-2 py-1 rounded text-xs">View/Print</button><button onclick="loadQuoteToJob(${q.id})" class="bg-orange-600 text-white px-2 py-1 rounded text-xs">To Job</button><button onclick="quotations=quotations.filter(x=>x.id!==${q.id});saveQuotations();renderQuotations()" class="bg-red-500 text-white px-2 py-1 rounded text-xs">Del</button></td></tr>`;});document.getElementById('quotationTable').innerHTML=html||'<tr><td colspan=6 class="text-center">No quotations</td></tr>';let sel=document.getElementById('jFromQuote');if(sel){sel.innerHTML='<option value="">Select Quotation</option>'+quotations.map(q=>`<option value="${q.id}">${q.customer} - ${q.project} - KES ${q.total}</option>`).join('');}}
+function viewQuotation(id){let q=quotations.find(x=>x.id===id);if(!q)return;let d=new Date(q.date);let vd=new Date(q.validDate);let matRows=q.materials.map(m=>`<tr><td style="padding:8px;border:1px solid #ddd">${m.name}</td><td style="padding:8px;border:1px solid #ddd">${m.qty||1}</td><td style="padding:8px;border:1px solid #ddd">KES ${m.price}</td><td style="padding:8px;border:1px solid #ddd">KES ${m.total}</td></tr>`).join('');let html=`<div style="font-family:Arial;max-width:700px;margin:auto;border:2px solid #1e3a8a;padding:20px"><h1 style="color:#1e3a8a;text-align:center">VALIDNET TECHNOLOGIES</h1><p style="text-align:center">Electrical & Wiring Services<br>Karatina</p><hr><h2>QUOTATION</h2><p><strong>To:</strong> ${q.customer} (${q.phone})<br><strong>Project:</strong> ${q.project}<br><strong>Date:</strong> ${d.toLocaleDateString()}<br><strong>Valid:</strong> ${vd.toLocaleDateString()}</p><table style="width:100%;border-collapse:collapse"><tr style="background:#1e3a8a;color:white"><th style="padding:8px;border:1px solid #ddd">Material</th><th style="padding:8px;border:1px solid #ddd">Qty</th><th style="padding:8px;border:1px solid #ddd">Price</th><th style="padding:8px;border:1px solid #ddd">Total</th></tr>${matRows}<tr><td colspan=3 style="padding:8px;border:1px solid #ddd;text-align:right"><strong>Materials</strong></td><td style="padding:8px;border:1px solid #ddd">KES ${q.matTotal}</td></tr><tr><td colspan=3 style="padding:8px;border:1px solid #ddd;text-align:right">Labour</td><td style="padding:8px;border:1px solid #ddd">KES ${q.labour}</td></tr><tr><td colspan=3 style="padding:8px;border:1px solid #ddd;text-align:right">Transport</td><td style="padding:8px;border:1px solid #ddd">KES ${q.transport}</td></tr><tr><td colspan=3 style="padding:8px;border:1px solid #ddd;text-align:right">Lunches/Other</td><td style="padding:8px;border:1px solid #ddd">KES ${q.lunch}</td></tr><tr style="background:#dbeafe;font-weight:bold"><td colspan=3 style="padding:8px;border:1px solid #ddd;text-align:right">GRAND TOTAL</td><td style="padding:8px;border:1px solid #ddd">KES ${q.total}</td></tr></table></div>`;document.getElementById('printContent').innerHTML=html;document.getElementById('quotationPrintArea').classList.remove('hidden');setTimeout(()=>window.print(),500);}
+function printQuotation(){if(tempMaterials.length===0)return alert('Add materials first');let q=quotations[quotations.length-1];if(q) viewQuotation(q.id);}
+function loadQuoteToJob(id){let q=quotations.find(x=>x.id===id);if(!q)return;document.getElementById('jClient').value=q.customer;document.getElementById('jFromQuote').value=q.id;document.getElementById('jQuotedTotal').value=q.total;showTab('jobs');calcJobProfit();}
+function calcJobProfit(){let quoted=parseFloat(document.getElementById('jQuotedTotal').value)||0;let mat=parseFloat(document.getElementById('jMatActual').value)||0;let labour=parseFloat(document.getElementById('jLabourActual').value)||0;let trans=parseFloat(document.getElementById('jTransportActual').value)||0;let lunch=parseFloat(document.getElementById('jLunchActual').value)||0;let actual=mat+labour+trans+lunch;let profit=quoted-actual;let margin=quoted? (profit/quoted*100).toFixed(1):0;document.getElementById('jCostTotal').innerText='KES '+actual;document.getElementById('jProfitTotal').innerText='KES '+profit;document.getElementById('jMargin').innerText=margin+'%';}
+function saveJob(){let client=document.getElementById('jClient').value.trim();let quoted=parseFloat(document.getElementById('jQuotedTotal').value)||0;if(!client||!quoted)return alert('Enter client & quoted');let mat=parseFloat(document.getElementById('jMatActual').value)||0;let labour=parseFloat(document.getElementById('jLabourActual').value)||0;let trans=parseFloat(document.getElementById('jTransportActual').value)||0;let lunch=parseFloat(document.getElementById('jLunchActual').value)||0;let actual=mat+labour+trans+lunch;let profit=quoted-actual;let margin=quoted? profit/quoted*100:0;let qId=document.getElementById('jFromQuote').value;let status=document.getElementById('jStatus').value||'In Progress';jobs.push({id:Date.now(),date:new Date().toISOString(),client,quoteId:qId,quoted,actual,mat,labour,trans,lunch,profit,margin,status});saveJobs();renderJobs();document.getElementById('jClient').value='';document.getElementById('jQuotedTotal').value='';document.getElementById('jMatActual').value='';document.getElementById('jLabourActual').value='';document.getElementById('jTransportActual').value='';document.getElementById('jLunchActual').value='';alert('Job saved! Profit KES '+profit);}
+function renderJobs(){let totalProfit=jobs.reduce((a,b)=>a+b.profit,0);let avgMargin=jobs.length? (jobs.reduce((a,b)=>a+b.margin,0)/jobs.length).toFixed(1):0;document.getElementById('jobStatTotal').innerText=jobs.length;document.getElementById('jobStatProfit').innerText='KES '+totalProfit;document.getElementById('jobStatMargin').innerText=avgMargin+'%';let html='';jobs.slice().reverse().forEach(j=>{let d=new Date(j.date);html+=`<tr class="border-t"><td class="p-2">${d.toLocaleDateString()}</td><td>${j.client}</td><td>KES ${j.quoted}</td><td>KES ${j.actual}<br><span class="text-xs">M:${j.mat} L:${j.labour} T:${j.trans} O:${j.lunch}</span></td><td class="${j.profit>=0?'text-green-600':'text-red-600'} font-bold">KES ${j.profit}</td><td>${j.margin.toFixed(1)}%</td><td>${j.status}</td><td><button onclick="jobs=jobs.filter(x=>x.id!==${j.id});saveJobs();renderJobs()" class="bg-red-500 text-white px-2 py-1 rounded text-xs">Del</button></td></tr>`;});document.getElementById('jobTable').innerHTML=html||'<tr><td colspan=8 class="text-center">No jobs</td></tr>';}
 </script>
 </body></html>
