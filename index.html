@@ -1,91 +1,170 @@
 <!DOCTYPE html>
-<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>VALIDNET POS V5.1</title>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>VALIDNET POS V5.2 - PRO</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <style>.tab-content{display:none}.tab-content.active{display:block}</style></head>
 <body class="bg-gray-100">
 <div id="loginPage" class="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-900 to-black p-4">
 <div class="bg-white rounded-2xl shadow-2xl p-8 w-full max-w-md text-center">
-<h1 class="text-3xl font-bold text-blue-900">VALIDNET</h1><p class="text-gray-500 mb-2">POS V5.1 - WORKING</p><p class="text-xs text-green-600 mb-4">Stock | Sales | Settings - FIXED</p>
-<input id="loginUser" class="w-full p-3 border rounded mb-3" value="admin" placeholder="Username">
-<input id="loginPass" type="password" class="w-full p-3 border rounded mb-4" value="admin123" placeholder="Password">
-<button onclick="login()" class="w-full bg-blue-900 text-white p-3 rounded font-bold">LOGIN</button>
-<p class="text-xs mt-3 text-gray-500">admin/admin123 = Admin | tech1/tech123 = Tech</p>
-<p id="loginErr" class="text-red-500 text-sm mt-2 hidden">Wrong password</p></div></div>
-<div id="appPage" class="hidden min-h-screen flex flex-col md:flex-row">
-<div class="bg-blue-900 text-white w-full md:w-64 p-4"><h2 class="font-bold text-xl mb-4">VALIDNET SHOP</h2><p id="userRoleDisplay" class="text-xs bg-blue-800 p-2 rounded mb-4"></p>
-<nav class="space-y-2"><button onclick="showTab('pos')" id="btn-pos" class="w-full text-left p-3 rounded bg-blue-700">POS Terminal</button>
-<button onclick="showTab('stock')" id="btn-stock" class="w-full text-left p-3 rounded hover:bg-blue-800">Stock</button>
-<button onclick="showTab('sales')" id="btn-sales" class="w-full text-left p-3 rounded hover:bg-blue-800">Sales Today</button>
-<button onclick="showTab('repairs')" id="btn-repairs" class="w-full text-left p-3 rounded hover:bg-blue-800">Repairs</button>
-<button onclick="showTab('settings')" id="btn-settings" class="w-full text-left p-3 rounded hover:bg-blue-800">Shop Settings</button></nav>
-<button onclick="logout()" class="mt-8 w-full bg-red-600 p-2 rounded text-sm">Logout</button></div>
-<div class="flex-1 p-4 overflow-auto">
-<div id="tab-pos" class="tab-content active"><h2 class="text-2xl font-bold mb-4">POS Terminal</h2>
-<div class="grid grid-cols-1 lg:grid-cols-3 gap-4"><div class="lg:col-span-2"><input id="searchProd" oninput="renderProducts()" placeholder="Search product..." class="w-full p-2 border rounded mb-3"><div id="productGrid" class="grid grid-cols-2 md:grid-cols-3 gap-3"></div></div>
-<div class="bg-white p-4 rounded shadow"><h3 class="font-bold mb-2">Cart</h3><div id="cartItems" class="space-y-2 mb-3 max-h-64 overflow-auto"></div>
-<div class="border-t pt-2"><p class="flex justify-between font-bold"><span>Total:</span><span id="cartTotal">KES 0</span></p></div>
-<input id="mpesaCode" placeholder="M-PESA Code" class="w-full p-2 border rounded mt-2"><select id="payMethod" class="w-full p-2 border rounded mt-2"><option>Cash</option><option>M-PESA</option></select>
-<button onclick="checkout()" class="w-full bg-green-600 text-white p-3 rounded mt-3 font-bold">PAY</button></div></div></div>
-<div id="tab-stock" class="tab-content"><div class="flex justify-between items-center mb-4"><h2 class="text-2xl font-bold">Stock WORKING</h2><button onclick="openAddProduct()" class="bg-blue-900 text-white px-4 py-2 rounded">+ Add Product</button></div>
-<div class="bg-white rounded shadow overflow-auto"><table class="w-full text-sm"><thead class="bg-gray-100"><tr><th class="p-2 text-left">Name</th><th class="p-2">Price</th><th class="p-2">Stock</th><th class="p-2">Action</th></tr></thead><tbody id="stockTable"></tbody></table></div></div>
-<div id="tab-sales" class="tab-content"><h2 class="text-2xl font-bold mb-4">Sales Today WORKING</h2>
-<div class="grid grid-cols-3 gap-4 mb-4"><div class="bg-green-600 text-white p-4 rounded"><p>Today</p><h3 id="todayTotal" class="text-2xl font-bold">KES 0</h3></div><div class="bg-blue-600 text-white p-4 rounded"><p>Count</p><h3 id="todayCount" class="text-2xl font-bold">0</h3></div><div class="bg-purple-600 text-white p-4 rounded"><p>Items</p><h3 id="todayItems" class="text-2xl font-bold">0</h3></div></div>
-<div class="bg-white rounded shadow p-2"><table class="w-full text-sm"><thead class="bg-gray-100"><tr><th class="p-2 text-left">Time</th><th class="p-2">Items</th><th class="p-2">Total</th><th class="p-2">M-PESA</th></tr></thead><tbody id="salesTable"></tbody></table></div><button onclick="clearSales()" class="mt-3 text-red-600 text-sm">Clear Sales</button></div>
-<div id="tab-repairs" class="tab-content"><div class="flex justify-between items-center mb-4"><h2 class="text-2xl font-bold">Repairs / Technician</h2><button onclick="openAddRepair()" class="bg-blue-900 text-white px-4 py-2 rounded">+ New Repair</button></div>
-<div class="bg-white rounded shadow overflow-auto"><table class="w-full text-sm"><thead class="bg-gray-100"><tr><th class="p-2 text-left">Customer</th><th class="p-2">Device</th><th class="p-2">Issue</th><th class="p-2">Status</th><th class="p-2">Tech</th><th class="p-2">Action</th></tr></thead><tbody id="repairTable"></tbody></table></div></div>
-<div id="tab-settings" class="tab-content"><h2 class="text-2xl font-bold mb-4">Shop Settings WORKING</h2>
-<div class="grid grid-cols-1 md:grid-cols-2 gap-6"><div class="bg-white p-4 rounded shadow"><h3 class="font-bold mb-3">Shop Info</h3>
-<input id="setShopName" class="w-full p-2 border rounded mb-2" placeholder="Shop Name"><input id="setPhone" class="w-full p-2 border rounded mb-2" placeholder="Phone"><input id="setLocation" class="w-full p-2 border rounded mb-2" placeholder="Location">
-<button onclick="saveShopInfo()" class="bg-blue-900 text-white px-4 py-2 rounded">Save</button></div>
-<div class="bg-white p-4 rounded shadow"><h3 class="font-bold mb-3">Technicians</h3><div id="techList" class="mb-3 space-y-1 text-sm"></div>
-<input id="newTechUser" placeholder="Username" class="w-full p-2 border rounded mb-2"><input id="newTechPass" placeholder="Password" class="w-full p-2 border rounded mb-2"><input id="newTechName" placeholder="Full Name" class="w-full p-2 border rounded mb-2">
-<button onclick="addTechnician()" class="bg-green-600 text-white px-4 py-2 rounded">Add Tech</button></div></div></div>
+<h1 class="text-3xl font-bold text-blue-900">VALIDNET</h1><p class="text-gray-500 mb-2">POS V5.2 - PRO</p><p class="text-xs text-green-600 mb-4">Stock • Profit • Sales Reports</p>
+<input id="loginUser" class="w-full p-3 border rounded mb-3" placeholder="Username">
+<input id="loginPass" type="password" class="w-full p-3 border rounded mb-4" placeholder="Password">
+<button onclick="login()" class="w-full bg-blue-900 text-white p-3 rounded font-bold hover:bg-blue-800">LOGIN</button>
+<p id="loginErr" class="text-red-500 text-sm mt-2 hidden">Wrong password</p>
+<p class="text-xs text-gray-400 mt-4">Validnet Technologies © 2024</p>
 </div></div>
-<div id="productModal" class="hidden fixed inset-0 bg-black/50 flex items-center justify-center p-4"><div class="bg-white p-6 rounded w-full max-w-sm"><h3 id="prodModalTitle" class="font-bold mb-3">Add Product</h3>
-<input id="pName" placeholder="Name" class="w-full p-2 border rounded mb-2"><input id="pPrice" type="number" placeholder="Price" class="w-full p-2 border rounded mb-2"><input id="pStock" type="number" placeholder="Stock" class="w-full p-2 border rounded mb-2"><input id="pCategory" placeholder="Category" class="w-full p-2 border rounded mb-2">
-<div class="flex gap-2"><button onclick="saveProduct()" class="flex-1 bg-blue-900 text-white p-2 rounded">Save</button><button onclick="closeModal('productModal')" class="flex-1 bg-gray-300 p-2 rounded">Cancel</button></div></div></div>
-<div id="repairModal" class="hidden fixed inset-0 bg-black/50 flex items-center justify-center p-4"><div class="bg-white p-6 rounded w-full max-w-sm"><h3 class="font-bold mb-3">New Repair</h3>
-<input id="rCustomer" placeholder="Customer" class="w-full p-2 border rounded mb-2"><input id="rPhone" placeholder="Phone" class="w-full p-2 border rounded mb-2"><input id="rDevice" placeholder="Device" class="w-full p-2 border rounded mb-2"><input id="rIssue" placeholder="Issue" class="w-full p-2 border rounded mb-2"><select id="rTech" class="w-full p-2 border rounded mb-2"></select>
-<div class="flex gap-2"><button onclick="saveRepair()" class="flex-1 bg-blue-900 text-white p-2 rounded">Save</button><button onclick="closeModal('repairModal')" class="flex-1 bg-gray-300 p-2 rounded">Cancel</button></div></div></div>
+<div id="appPage" class="hidden min-h-screen flex flex-col md:flex-row">
+<div class="bg-blue-900 text-white w-full md:w-64 p-4">
+<h2 class="font-bold text-xl mb-4">VALIDNET SHOP</h2><p id="userRoleDisplay" class="text-xs bg-blue-700 rounded p-1 mb-4"></p>
+<nav class="space-y-2">
+<button onclick="showTab('pos')" class="w-full text-left p-3 rounded bg-blue-700">POS Terminal</button>
+<button onclick="showTab('stock')" class="w-full text-left p-3 rounded hover:bg-blue-800">Stock + Profit</button>
+<button onclick="showTab('sales')" class="w-full text-left p-3 rounded hover:bg-blue-800">Sales Reports</button>
+<button onclick="showTab('repairs')" class="w-full text-left p-3 rounded hover:bg-blue-800">Repairs</button>
+<button onclick="showTab('settings')" class="w-full text-left p-3 rounded hover:bg-blue-800">Shop Settings</button>
+</nav>
+<button onclick="logout()" class="w-full mt-8 bg-red-600 p-2 rounded">Logout</button>
+</div>
+<div class="flex-1 p-4">
+<div id="tab-pos" class="tab-content active">
+<h2 class="text-2xl font-bold mb-4">POS Terminal</h2>
+<div class="flex flex-col lg:flex-row gap-4">
+<div class="flex-1">
+<input id="searchProd" oninput="renderPOS()" class="w-full p-3 border rounded mb-3" placeholder="Search product..">
+<div id="posProducts" class="grid grid-cols-2 md:grid-cols-3 gap-2"></div>
+</div>
+<div class="w-full lg:w-80 bg-white p-4 rounded shadow">
+<h3 class="font-bold">Cart</h3>
+<div id="cartItems" class="my-2 text-sm"></div>
+<div class="flex justify-between font-bold border-t pt-2">Total: <span id="cartTotal">KES 0</span></div>
+<input id="mpesaCode" class="w-full p-2 border rounded mt-2" placeholder="M-PESA Code (optional)">
+<select id="payMethod" class="w-full p-2 border rounded mt-2"><option>Cash</option><option>M-PESA</option></select>
+<button onclick="doPay()" class="w-full bg-green-600 text-white p-3 rounded font-bold mt-3">PAY</button>
+<p id="profitPreview" class="text-xs text-green-600 mt-2"></p>
+</div>
+</div>
+</div>
+<div id="tab-stock" class="tab-content">
+<h2 class="text-2xl font-bold mb-2">Stock Management - Buying vs Selling Price</h2>
+<div class="bg-white p-4 rounded shadow mb-4">
+<div class="grid grid-cols-2 md:grid-cols-5 gap-2">
+<input id="sName" class="p-2 border rounded" placeholder="Product Name">
+<input id="sBuy" type="number" class="p-2 border rounded" placeholder="Buying Price">
+<input id="sSell" type="number" class="p-2 border rounded" placeholder="Selling Price">
+<input id="sQty" type="number" class="p-2 border rounded" placeholder="Qty">
+<button onclick="addStock()" class="bg-blue-900 text-white p-2 rounded">Add Stock</button>
+</div>
+<p class="text-xs text-gray-500 mt-2">Profit = Selling - Buying</p>
+</div>
+<div class="bg-white p-4 rounded shadow">
+<table class="w-full text-sm"><thead><tr class="bg-gray-100"><th class="p-2 text-left">Product</th><th>Buy</th><th>Sell</th><th>Profit</th><th>Qty</th><th>Action</th></tr></thead><tbody id="stockTable"></tbody></table>
+</div>
+</div>
+<div id="tab-sales" class="tab-content">
+<h2 class="text-2xl font-bold mb-4">Sales Records</h2>
+<div class="flex gap-2 mb-4">
+<button onclick="filterSales('today')" class="bg-blue-900 text-white px-4 py-2 rounded">Daily</button>
+<button onclick="filterSales('week')" class="bg-gray-600 text-white px-4 py-2 rounded">Weekly</button>
+<button onclick="filterSales('month')" class="bg-gray-600 text-white px-4 py-2 rounded">Monthly</button>
+<button onclick="filterSales('all')" class="bg-gray-600 text-white px-4 py-2 rounded">All Time</button>
+</div>
+<div class="grid grid-cols-3 gap-2 mb-4">
+<div class="bg-white p-3 rounded shadow"><p class="text-xs">Total Sales</p><p id="statSales" class="font-bold text-lg">KES 0</p></div>
+<div class="bg-green-50 p-3 rounded shadow"><p class="text-xs">Total Profit</p><p id="statProfit" class="font-bold text-lg text-green-600">KES 0</p></div>
+<div class="bg-blue-50 p-3 rounded shadow"><p class="text-xs">Transactions</p><p id="statCount" class="font-bold text-lg">0</p></div>
+</div>
+<div class="bg-white p-4 rounded shadow">
+<table class="w-full text-sm"><thead><tr class="bg-gray-100"><th class="p-2 text-left">Date</th><th>Items</th><th>Total</th><th>Profit</th><th>Method</th></tr></thead><tbody id="salesTable"></tbody></table>
+</div>
+</div>
+<div id="tab-repairs" class="tab-content"><h2 class="text-xl">Repairs Module</h2></div>
+<div id="tab-settings" class="tab-content"><h2 class="text-xl">Shop Settings</h2></div>
+</div>
+</div>
 <script>
-let products=JSON.parse(localStorage.getItem('v5_products')||'[{"id":1,"name":"Fresh Milk","price":60,"stock":50,"category":"Groceries"},{"id":2,"name":"Bread","price":65,"stock":30,"category":"Bakery"},{"id":3,"name":"Cooking Oil 1L","price":280,"stock":20,"category":"Groceries"}]');
-let sales=JSON.parse(localStorage.getItem('v5_sales')||'[]');
-let repairs=JSON.parse(localStorage.getItem('v5_repairs')||'[]');
-let technicians=JSON.parse(localStorage.getItem('v5_techs')||'[{"username":"tech1","password":"tech123","name":"Main Technician"}]');
-let shopInfo=JSON.parse(localStorage.getItem('v5_shop')||'{"name":"VALIDNET","phone":"0712xxxxxx","location":"Nairobi"}');
-let cart=[];let editingProdId=null;let currentUser=null;
-function login(){let u=document.getElementById('loginUser').value.trim();let p=document.getElementById('loginPass').value.trim();
-if(u==='admin'&&p==='admin123'){currentUser={role:'admin',name:'Admin'};enterApp();}else{let tech=technicians.find(t=>t.username===u&&t.password===p);if(tech){currentUser={role:'tech',name:tech.name,username:tech.username};enterApp();}else{document.getElementById('loginErr').classList.remove('hidden');}}}
-function enterApp(){document.getElementById('loginPage').classList.add('hidden');document.getElementById('appPage').classList.remove('hidden');document.getElementById('userRoleDisplay').innerText=currentUser.role==='admin'?'ADMIN - Full Access':'TECH - '+currentUser.name;
-if(currentUser.role==='tech'){document.getElementById('btn-stock').style.display='none';document.getElementById('btn-sales').style.display='none';document.getElementById('btn-settings').style.display='none';showTab('repairs');}else{showTab('pos');}loadAll();}
-function logout(){location.reload();}function showTab(name){document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active'));document.getElementById('tab-'+name).classList.add('active');}
-function loadAll(){renderProducts();renderStock();renderSales();renderRepairs();renderTechs();document.getElementById('setShopName').value=shopInfo.name;document.getElementById('setPhone').value=shopInfo.phone;document.getElementById('setLocation').value=shopInfo.location;}
-function renderProducts(){let q=(document.getElementById('searchProd').value||'').toLowerCase();let grid=document.getElementById('productGrid');grid.innerHTML='';products.filter(p=>p.name.toLowerCase().includes(q)).forEach(p=>{grid.innerHTML+=`<div class="bg-white p-3 rounded shadow cursor-pointer border" onclick="addToCart(${p.id})"><p class="font-bold text-sm">${p.name}</p><p class="text-xs">Stock:${p.stock}</p><p class="text-blue-900 font-bold">KES ${p.price}</p></div>`;});}
-function addToCart(id){let prod=products.find(p=>p.id===id);if(prod.stock<=0)return alert('Out of stock');let item=cart.find(c=>c.id===id);if(item)item.qty++;else cart.push({id,name:prod.name,price:prod.price,qty:1});renderCart();}
-function renderCart(){let div=document.getElementById('cartItems');div.innerHTML='';let total=0;cart.forEach((c,i)=>{total+=c.price*c.qty;div.innerHTML+=`<div class="flex justify-between text-sm"><span>${c.name} x${c.qty}</span><span>KES ${c.price*c.qty} <button onclick="removeCart(${i})" class="text-red-500 ml-2">x</button></span></div>`});document.getElementById('cartTotal').innerText='KES '+total;}
-function removeCart(i){cart.splice(i,1);renderCart();}
-function checkout(){if(cart.length===0)return alert('Cart empty');let total=cart.reduce((s,c)=>s+c.price*c.qty,0);let mpesa=document.getElementById('mpesaCode').value;let pay=document.getElementById('payMethod').value;
-sales.push({time:new Date().toLocaleString(),items:cart.map(c=>c.name+' x'+c.qty).join(', '),total,payment:pay,mpesa});cart.forEach(c=>{let p=products.find(pr=>pr.id===c.id);if(p)p.stock-=c.qty;});
-localStorage.setItem('v5_products',JSON.stringify(products));localStorage.setItem('v5_sales',JSON.stringify(sales));cart=[];renderCart();renderProducts();renderStock();renderSales();alert('Sale saved! KES '+total);document.getElementById('mpesaCode').value='';}
-function renderStock(){let tbody=document.getElementById('stockTable');tbody.innerHTML='';products.forEach(p=>{tbody.innerHTML+=`<tr class="border-b"><td class="p-2">${p.name}</td><td class="p-2 text-center">${p.price}</td><td class="p-2 text-center">${p.stock}</td><td class="p-2 text-center"><button onclick="editProd(${p.id})" class="text-blue-600 mr-2">Edit</button><button onclick="delProd(${p.id})" class="text-red-600">Del</button></td></tr>`});}
-function openAddProduct(){editingProdId=null;document.getElementById('prodModalTitle').innerText='Add Product';document.getElementById('pName').value='';document.getElementById('pPrice').value='';document.getElementById('pStock').value='';document.getElementById('pCategory').value='';document.getElementById('productModal').classList.remove('hidden');}
-function editProd(id){let p=products.find(pr=>pr.id===id);editingProdId=id;document.getElementById('prodModalTitle').innerText='Edit Product';document.getElementById('pName').value=p.name;document.getElementById('pPrice').value=p.price;document.getElementById('pStock').value=p.stock;document.getElementById('pCategory').value=p.category;document.getElementById('productModal').classList.remove('hidden');}
-function delProd(id){if(confirm('Delete?')){products=products.filter(p=>p.id!==id);localStorage.setItem('v5_products',JSON.stringify(products));renderStock();renderProducts();}}
-function saveProduct(){let name=document.getElementById('pName').value,price=parseInt(document.getElementById('pPrice').value),stock=parseInt(document.getElementById('pStock').value),cat=document.getElementById('pCategory').value;
-if(!name||!price)return alert('Fill name & price');if(editingProdId){let p=products.find(pr=>pr.id===editingProdId);p.name=name;p.price=price;p.stock=stock;p.category=cat;}else{products.push({id:Date.now(),name,price,stock:stock||0,category:cat||'General'});}
-localStorage.setItem('v5_products',JSON.stringify(products));closeModal('productModal');renderStock();renderProducts();}
-function renderSales(){let tbody=document.getElementById('salesTable');tbody.innerHTML='';let todayTotal=0,count=sales.length,items=0;sales.slice().reverse().forEach(s=>{todayTotal+=s.total;items+=s.items.split(',').length;tbody.innerHTML+=`<tr class="border-b"><td class="p-2">${s.time}</td><td class="p-2">${s.items}</td><td class="p-2">KES ${s.total}</td><td class="p-2">${s.mpesa||'-'}</td></tr>`});document.getElementById('todayTotal').innerText='KES '+todayTotal;document.getElementById('todayCount').innerText=count;document.getElementById('todayItems').innerText=items;}
-function clearSales(){if(confirm('Clear?')){sales=[];localStorage.setItem('v5_sales',JSON.stringify(sales));renderSales();}}
-function renderRepairs(){let tbody=document.getElementById('repairTable');tbody.innerHTML='';repairs.forEach((r,i)=>{tbody.innerHTML+=`<tr class="border-b"><td class="p-2">${r.customer}</td><td class="p-2">${r.device}</td><td class="p-2">${r.issue}</td><td class="p-2"><select onchange="updateRepairStatus(${i},this.value)"><option ${r.status==='Received'?'selected':''}>Received</option><option ${r.status==='In Progress'?'selected':''}>In Progress</option><option ${r.status==='Fixed'?'selected':''}>Fixed</option><option ${r.status==='Collected'?'selected':''}>Collected</option></select></td><td class="p-2">${r.techName}</td><td class="p-2"><button onclick="delRepair(${i})" class="text-red-600">Del</button></td></tr>`});let sel=document.getElementById('rTech');sel.innerHTML='';technicians.forEach(t=>{sel.innerHTML+=`<option value="${t.username}">${t.name} (${t.username})</option>`});}
-function openAddRepair(){document.getElementById('repairModal').classList.remove('hidden');}
-function saveRepair(){let c=document.getElementById('rCustomer').value,ph=document.getElementById('rPhone').value,dev=document.getElementById('rDevice').value,iss=document.getElementById('rIssue').value,tu=document.getElementById('rTech').value;
-if(!c||!dev)return alert('Fill customer & device');let tech=technicians.find(t=>t.username===tu);repairs.push({customer:c,phone:ph,device:dev,issue:iss,tech:tu,techName:tech?tech.name:tu,status:'Received'});
-localStorage.setItem('v5_repairs',JSON.stringify(repairs));closeModal('repairModal');renderRepairs();document.getElementById('rCustomer').value='';document.getElementById('rPhone').value='';document.getElementById('rDevice').value='';document.getElementById('rIssue').value='';}
-function updateRepairStatus(i,val){repairs[i].status=val;localStorage.setItem('v5_repairs',JSON.stringify(repairs));}
-function delRepair(i){if(confirm('Delete?')){repairs.splice(i,1);localStorage.setItem('v5_repairs',JSON.stringify(repairs));renderRepairs();}}
-function renderTechs(){let div=document.getElementById('techList');div.innerHTML='';technicians.forEach((t,i)=>{div.innerHTML+=`<div class="flex justify-between bg-gray-100 p-1 rounded"><span>${t.name} - ${t.username}/${t.password}</span><button onclick="delTech(${i})" class="text-red-600">x</button></div>`});}
-function addTechnician(){let u=document.getElementById('newTechUser').value,p=document.getElementById('newTechPass').value,n=document.getElementById('newTechName').value;if(!u||!p)return alert('Username & password');technicians.push({username:u,password:p,name:n||u});localStorage.setItem('v5_techs',JSON.stringify(technicians));renderTechs();renderRepairs();document.getElementById('newTechUser').value='';document.getElementById('newTechPass').value='';document.getElementById('newTechName').value='';}
-function delTech(i){if(confirm('Delete?')){technicians.splice(i,1);localStorage.setItem('v5_techs',JSON.stringify(technicians));renderTechs();}}
-function saveShopInfo(){shopInfo.name=document.getElementById('setShopName').value;shopInfo.phone=document.getElementById('setPhone').value;shopInfo.location=document.getElementById('setLocation').value;localStorage.setItem('v5_shop',JSON.stringify(shopInfo));alert('Saved!');}
-function closeModal(id){document.getElementById(id).classList.add('hidden');}
-</script></body></html>
+const USERS={admin:{pass:"36939181",role:"ADMIN - Full Access"},validnet:{pass:"654321",role:"TECH - Technician"}};
+function login(){let u=document.getElementById('loginUser').value.trim();let p=document.getElementById('loginPass').value;if(USERS[u]&&USERS[u].pass===p){localStorage.setItem('validnet_user',u);document.getElementById('loginPage').classList.add('hidden');document.getElementById('appPage').classList.remove('hidden');document.getElementById('userRoleDisplay').innerText=USERS[u].role;renderPOS();renderStock();filterSales('today');}else{document.getElementById('loginErr').classList.remove('hidden');}}
+function logout(){localStorage.removeItem('validnet_user');location.reload();}
+function showTab(t){document.querySelectorAll('.tab-content').forEach(e=>e.classList.remove('active'));document.getElementById('tab-'+t).classList.add('active');}
+let products=JSON.parse(localStorage.getItem('v_products')||'[]');
+let sales=JSON.parse(localStorage.getItem('v_sales')||'[]');
+let cart=[];
+function saveProducts(){localStorage.setItem('v_products',JSON.stringify(products));}
+function saveSales(){localStorage.setItem('v_sales',JSON.stringify(sales));}
+function addStock(){
+let name=document.getElementById('sName').value.trim();
+let buy=parseFloat(document.getElementById('sBuy').value)||0;
+let sell=parseFloat(document.getElementById('sSell').value)||0;
+let qty=parseInt(document.getElementById('sQty').value)||0;
+if(!name||!sell)return alert('Enter name & selling price');
+products.push({name,buy,sell,qty});saveProducts();renderStock();renderPOS();
+document.getElementById('sName').value='';document.getElementById('sBuy').value='';document.getElementById('sSell').value='';document.getElementById('sQty').value='';
+}
+function renderStock(){
+let html='';
+products.forEach((p,i)=>{
+let profit=p.sell-p.buy;
+html+=`<tr class="border-t"><td class="p-2">${p.name}</td><td>KES ${p.buy}</td><td>KES ${p.sell}</td><td class="text-green-600 font-bold">KES ${profit}</td><td>${p.qty}</td><td><button onclick="products.splice(${i},1);saveProducts();renderStock();renderPOS()" class="text-red-500">Delete</button></td></tr>`;
+});
+document.getElementById('stockTable').innerHTML=html||'<tr><td colspan=6 class="p-4 text-center text-gray-400">No stock</td></tr>';
+}
+function renderPOS(){
+let q=document.getElementById('searchProd').value.toLowerCase();
+let filtered=products.filter(p=>p.name.toLowerCase().includes(q)&&p.qty>0);
+let html='';
+filtered.forEach((p,i)=>{
+let realIdx=products.indexOf(p);
+html+=`<div onclick="addToCart(${realIdx})" class="bg-white p-3 rounded shadow cursor-pointer hover:bg-blue-50"><p class="font-bold text-sm">${p.name}</p><p class="text-xs">Sell: KES ${p.sell}</p><p class="text-xs text-green-600">Profit: KES ${p.sell-p.buy}</p><p class="text-xs">Stock: ${p.qty}</p></div>`;
+});
+document.getElementById('posProducts').innerHTML=html;
+renderCart();
+}
+function addToCart(idx){
+let prod=products[idx];
+let existing=cart.find(c=>c.idx===idx);
+if(existing)existing.qty++;else cart.push({idx,qty:1});
+renderCart();
+}
+function renderCart(){
+let total=0;let profitTotal=0;let html='';
+cart.forEach((c,i)=>{
+let p=products[c.idx];
+let sub=p.sell*c.qty;total+=sub;profitTotal+=(p.sell-p.buy)*c.qty;
+html+=`<div class="flex justify-between"><span>${p.name} x${c.qty}</span><span>KES ${sub} <button onclick="cart.splice(${i},1);renderCart()" class="text-red-500 ml-2">x</button></span></div>`;
+});
+document.getElementById('cartItems').innerHTML=html||'Empty';
+document.getElementById('cartTotal').innerText='KES '+total;
+document.getElementById('profitPreview').innerText=cart.length?`Expected Profit: KES ${profitTotal}`:'';
+}
+function doPay(){
+if(!cart.length)return alert('Cart empty');
+let total=0;let profit=0;
+cart.forEach(c=>{let p=products[c.idx];total+=p.sell*c.qty;profit+=(p.sell-p.buy)*c.qty;products[c.idx].qty-=c.qty;});
+let method=document.getElementById('payMethod').value;
+let mpesa=document.getElementById('mpesaCode').value;
+sales.push({date:new Date().toISOString(),items:cart.map(c=>products[c.idx].name+' x'+c.qty).join(', '),total,profit,method,mpesa});
+saveProducts();saveSales();cart=[];renderCart();renderPOS();renderStock();filterSales('today');
+alert('Sale saved! Profit KES '+profit);
+}
+function filterSales(range){
+let now=new Date();
+let filtered=sales.filter(s=>{
+let d=new Date(s.date);
+if(range==='today')return d.toDateString()===now.toDateString();
+if(range==='week'){let weekAgo=new Date();weekAgo.setDate(now.getDate()-7);return d>=weekAgo;}
+if(range==='month')return d.getMonth()===now.getMonth()&&d.getFullYear()===now.getFullYear();
+return true;
+});
+let total=filtered.reduce((a,b)=>a+b.total,0);
+let prof=filtered.reduce((a,b)=>a+b.profit,0);
+document.getElementById('statSales').innerText='KES '+total;
+document.getElementById('statProfit').innerText='KES '+prof;
+document.getElementById('statCount').innerText=filtered.length;
+let html='';
+filtered.slice().reverse().forEach(s=>{
+let d=new Date(s.date);
+html+=`<tr class="border-t"><td class="p-2">${d.toLocaleString()}</td><td>${s.items}</td><td>KES ${s.total}</td><td class="text-green-600">KES ${s.profit}</td><td>${s.method}</td></tr>`;
+});
+document.getElementById('salesTable').innerHTML=html||'<tr><td colspan=5 class="p-4 text-center text-gray-400">No sales</td></tr>';
+}
+</script>
+</body></html>
