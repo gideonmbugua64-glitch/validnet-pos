@@ -2,54 +2,44 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>VALIDNET POS V5.6.5 - FULL RESTORE + Expenses</title>
+<title>VALIDNET POS V5.6.6 - Profits + Low Stock + Dashboard</title>
 <style>
-*{box-sizing:border-box;margin:0;padding:0;font-family:'Segoe UI',system-ui,sans-serif}
+*{box-sizing:border-box;margin:0;padding:0;font-family:Segoe UI,system-ui}
 body{display:flex;min-height:100vh;background:#eef2f7}
 .sidebar{width:250px;background:#0b2e8a;color:#fff;padding:10px;display:flex;flex-direction:column;position:sticky;top:0;height:100vh;overflow:auto}
-.sidebar h3{padding:12px 6px;font-size:15px;letter-spacing:.5px}
+.sidebar h3{padding:10px 6px;font-size:15px}
 .u-box{font-size:11px;background:#1239a8;padding:6px 8px;border-radius:6px;margin-bottom:10px}
-.m{padding:10px 12px;margin:3px 0;border-radius:8px;cursor:pointer;font-size:13px;font-weight:600;display:flex;align-items:center;gap:8px;transition:.15s}
+.m{padding:10px 12px;margin:3px 0;border-radius:8px;cursor:pointer;font-size:13px;font-weight:700;display:flex;gap:8px}
 .m:hover{background:#123ec0}
-.m.active{background:#1e5bd8;box-shadow:0 2px 6px rgba(0,0,0,.2)}
-.m.green{background:#0d9d63}
-.m.orange{background:#ea580c}
-.m.purple{background:#7c3aed}
-.m.red{background:#dc2626;margin-top:auto}
-.main{flex:1;padding:14px;overflow:auto}
+.m.active{background:#1e5bd8}
+.m.green{background:#0d9d63}.m.orange{background:#ea580c}.m.purple{background:#7c3aed}.m.red{background:#dc2626;margin-top:auto}
+.main{flex:1;padding:12px;overflow:auto}
 .card{background:#fff;border-radius:12px;padding:14px;margin-bottom:12px;box-shadow:0 1px 3px rgba(0,0,0,.07)}
-.card h4{color:#0b2e8a;margin-bottom:6px}
 .btn{border:none;border-radius:8px;padding:10px 14px;font-weight:700;cursor:pointer;font-size:13px}
-.btn-blue{background:#0b2e8a;color:#fff}
-.btn-green{background:#0d9d63;color:#fff}
-.btn-orange{background:#ea580c;color:#fff}
-.btn-purple{background:#7c3aed;color:#fff}
-.btn-red{background:#ef4444;color:#fff}
-.btn-sm{padding:6px 10px;font-size:11px}
-input,select,textarea{width:100%;padding:9px 10px;border:1px solid #cbd5e1;border-radius:8px;margin:4px 0;font-size:13px}
+.btn-blue{background:#0b2e8a;color:#fff}.btn-green{background:#0d9d63;color:#fff}.btn-orange{background:#ea580c;color:#fff}.btn-purple{background:#7c3aed;color:#fff}.btn-red{background:#ef4444;color:#fff}.btn-sm{padding:6px 10px;font-size:11px}
+input,select,textarea{width:100%;padding:9px;border:1px solid #cbd5e1;border-radius:8px;margin:4px 0;font-size:13px}
 table{width:100%;border-collapse:collapse;font-size:12px}
-th,td{padding:8px 6px;border-bottom:1px solid #e2e8f0;text-align:left;vertical-align:top}
+th,td{padding:8px 6px;border-bottom:1px solid #e2e8f0;text-align:left}
 th{background:#f8fafc;color:#64748b;font-size:10px;text-transform:uppercase}
-.badge{padding:2px 7px;border-radius:10px;font-size:10px;font-weight:700}
-.b-red{background:#fee2e2;color:#991b1b}
-.b-green{background:#dcfce7;color:#166534}
-.b-yellow{background:#fef9c3;color:#854d0e}
-.b-blue{background:#dbeafe;color:#1e40af}
-.grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
-.grid4{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:8px}
-.page{display:none}
-.page.active{display:block}
-.kpi{font-size:19px;font-weight:800}
-.scroll{overflow:auto;max-height:380px}
-@media(max-width:900px){body{flex-direction:column}.sidebar{width:100%;height:auto;flex-direction:row;flex-wrap:wrap;position:relative}.sidebar h3,.u-box{width:100%}.m{flex:0 0 auto}.m.red{margin-top:3px;margin-left:auto}.grid2,.grid3,.grid4{grid-template-columns:1fr}}
+.badge{padding:2px 8px;border-radius:10px;font-size:10px;font-weight:700}
+.b-red{background:#fee2e2;color:#991b1b;border:1px solid #fecaca}.b-green{background:#dcfce7;color:#166534}.b-yellow{background:#fef9c3;color:#854d0e}.b-blue{background:#dbeafe;color:#1e40af}
+.kpi{font-size:20px;font-weight:800}.kpi-sub{font-size:10px;color:#64748b}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:8px}.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}.grid4{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:8px}
+.page{display:none}.page.active{display:block}
+.scroll{overflow:auto;max-height:400px}
+.low{border-left:4px solid #ef4444;background:#fff1f2}
+.profit-positive{color:#0d9d63}.profit-negative{color:#dc2626}
+.bar{height:8px;background:#e2e8f0;border-radius:4px;overflow:hidden;margin-top:4px}
+.bar-fill{height:100%;background:#0b2e8a}
+@media(max-width:900px){body{flex-direction:column}.sidebar{width:100%;height:auto;flex-direction:row;flex-wrap:wrap;position:relative}.sidebar h3,.u-box{width:100%}.m{flex:0 0 auto}.m.red{margin-left:auto}.grid2,.grid3,.grid4{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
 <div class="sidebar">
-<h3>VALIDNET - KANYONI</h3>
+<h3>VALIDNET - KANYONI V5.6.6</h3>
 <div class="u-box" id="uLabel">Not logged</div>
-<div class="m active" onclick="nav('pos')">🛒 POS</div>
+<div class="m active" style="background:#0d9488" onclick="nav('dashboard')">📊 Dashboard</div>
+<div class="m" onclick="nav('pos')">🛒 POS</div>
 <div class="m" onclick="nav('stock')">📦 Stock</div>
 <div class="m" onclick="nav('sales')">💰 Sales</div>
 <div class="m" onclick="nav('repairs')">🔧 Repairs</div>
@@ -61,316 +51,166 @@ th{background:#f8fafc;color:#64748b;font-size:10px;text-transform:uppercase}
 </div>
 <div class="main">
 <div id="loginDiv" class="card" style="max-width:420px;margin:50px auto">
-<h2 style="text-align:center;color:#0b2e8a">VALIDNET POS V5.6.5</h2>
-<p style="text-align:center;color:#64748b;font-size:12px;margin:8px 0">FULL RESTORE - Repairs + Quotations + Job Costing + Expenses<br>Secure Login</p>
+<h2 style="text-align:center;color:#0b2e8a">VALIDNET POS V5.6.6</h2>
+<p style="text-align:center;color:#64748b;font-size:12px;margin:8px 0">PROFITS + LOW STOCK + DASHBOARD<br>Secure Login</p>
 <input id="l_u" placeholder="Username"><input id="l_p" type="password" placeholder="Password">
 <button class="btn btn-blue" style="width:100%;margin-top:8px" onclick="doLogin()">LOGIN</button>
 <div id="l_msg" style="color:red;font-size:12px;margin-top:8px;text-align:center"></div>
 <div style="margin-top:10px;font-size:10px;color:#94a3b8;text-align:center">machaa / 0769 | mutugu / 0791 | Elias / 0759 | admin / 36939181</div>
 </div>
 <div id="appDiv" style="display:none">
-<div id="page-pos" class="page active">
-<div class="grid3">
-<div class="card"><div style="font-size:10px;color:#64748b">SALES TODAY</div><div class="kpi" id="kpiS">KSh 0</div><div style="font-size:10px;color:#10b981" id="kpiSCount">0 sales</div></div>
-<div class="card"><div style="font-size:10px;color:#ef4444">EXPENSES TODAY</div><div class="kpi" style="color:#ef4444" id="kpiE">KSh 0</div></div>
-<div class="card"><div style="font-size:10px;color:#0b2e8a">NET CASH TODAY</div><div class="kpi" style="color:#0b2e8a" id="kpiN">KSh 0</div></div>
+<div id="page-dashboard" class="page active">
+<div class="grid4">
+<div class="card"><div class="kpi-sub">SALES TODAY</div><div class="kpi" id="dSales">KSh 0</div><div class="kpi-sub" id="dSalesCount">0 sales</div></div>
+<div class="card"><div class="kpi-sub">COST (BUY) TODAY</div><div class="kpi" style="color:#ea580c" id="dCost">KSh 0</div></div>
+<div class="card"><div class="kpi-sub">GROSS PROFIT TODAY</div><div class="kpi profit-positive" id="dGross">KSh 0</div></div>
+<div class="card"><div class="kpi-sub">NET PROFIT TODAY</div><div class="kpi" id="dNet">KSh 0</div><div class="kpi-sub" id="dNetSub">After Expenses</div></div>
 </div>
-<div class="card"><h4>Quick Sale - POS</h4>
-<div class="grid4" style="margin-top:8px"><select id="posItem"></select><input id="posQty" type="number" value="1" min="1"><input id="posPrice" type="number" placeholder="Price"><input id="posDisc" type="number" placeholder="Discount" value="0"></div>
-<button class="btn btn-blue" style="margin-top:8px" onclick="addCart()">Add to Cart</button>
-<div id="cartBox" style="margin-top:10px"></div>
-<div class="grid2" style="margin-top:10px"><select id="payMethod"><option>Cash</option><option>Mpesa</option><option>Bank</option><option>Credit</option></select><input id="custName" placeholder="Customer name (optional)"></div>
+<div class="grid4">
+<div class="card"><div class="kpi-sub">EXPENSES TODAY</div><div class="kpi" style="color:#dc2626" id="dExp">KSh 0</div></div>
+<div class="card"><div class="kpi-sub">STOCK VALUE (BUY)</div><div class="kpi" id="dStockVal">KSh 0</div><div class="kpi-sub" id="dStockCount">0 items</div></div>
+<div class="card low"><div class="kpi-sub">⚠️ LOW STOCK (&lt;5)</div><div class="kpi" style="color:#dc2626" id="dLowCount">0</div></div>
+<div class="card"><div class="kpi-sub">🔧 REPAIRS PENDING</div><div class="kpi" style="color:#0d9d63" id="dRepairs">0</div><div class="kpi-sub" id="dRepairsVal">KSh 0 value</div></div>
 </div>
+<div class="grid2">
+<div class="card"><h4>⚠️ Low Stock Alert - Restock Needed</h4><div class="scroll" style="margin-top:8px"><table><thead><tr><th>Item</th><th>Qty</th><th>Buy</th><th>Sell</th><th>Profit/Unit</th><th>Action</th></tr></thead><tbody id="lowBody"></tbody></table></div></div>
+<div class="card"><h4>🏆 Top Selling Today</h4><div id="topSelling" style="margin-top:8px"></div></div>
 </div>
-<div id="page-stock" class="page">
-<div class="card"><h4>Stock Management</h4>
-<div class="grid4" style="margin-top:8px"><input id="stName" placeholder="Item name"><input id="stQty" type="number" placeholder="Qty"><input id="stPrice" type="number" placeholder="Selling Price"><input id="stBuy" type="number" placeholder="Buying Price"></div>
-<button class="btn btn-blue" style="margin-top:8px" onclick="addStock()">Add / Update Stock</button>
-<div class="grid2" style="margin-top:10px"><input id="stSearch" placeholder="Search stock..." oninput="renderStock()"><button class="btn btn-sm btn-blue" onclick="exportStock()">Export Stock CSV</button></div>
-<div class="scroll" style="margin-top:10px"><table><thead><tr><th>Item</th><th>Qty</th><th>Buy</th><th>Sell</th><th>Value</th><th>Action</th></tr></thead><tbody id="stBody"></tbody></table></div>
-</div>
-</div>
-<div id="page-sales" class="page">
-<div class="card"><h4>Sales Records</h4>
-<div class="grid3" style="margin-top:8px"><input id="salesDate" type="date"><input id="salesSearch" placeholder="Search customer/item" oninput="renderSales()"><button class="btn btn-blue btn-sm" onclick="renderSales()">Filter</button></div>
-<div class="scroll" style="margin-top:10px"><table><thead><tr><th>Date/Time</th><th>Items</th><th>Pay</th><th>Total</th><th>Customer</th><th>By</th></tr></thead><tbody id="salesBody"></tbody></table></div>
-<div style="text-align:right;font-weight:800;margin-top:8px">Total Filtered: <span id="salesTotal">KSh 0</span></div>
-<button class="btn btn-red btn-sm" style="margin-top:8px" onclick="exportSales()">Export Sales CSV</button>
+<div class="grid2">
+<div class="card"><h4>💸 Expenses Breakdown Today</h4><div id="expBreakdown" style="margin-top:8px"></div></div>
+<div class="card"><h4>📦 Stock Profit Potential</h4><div class="scroll"><table><thead><tr><th>Item</th><th>Qty</th><th>Total Buy</th><th>Total Sell</th><th>Potential Profit</th></tr></thead><tbody id="profitPotential"></tbody></table></div><div style="text-align:right;font-weight:800;margin-top:8px">Total Potential: <span id="totalPotential">KSh 0</span></div></div>
 </div>
 </div>
-<div id="page-repairs" class="page">
-<div class="card"><h4>🔧 Repairs Management - Kanyoni</h4>
-<div class="grid3" style="margin-top:8px"><input id="rCust" placeholder="Customer Name"><input id="rPhone" placeholder="Phone (07xx)"><input id="rDevice" placeholder="Device (e.g. Mikrotik Router)"></div>
-<div class="grid2" style="margin-top:6px"><input id="rIssue" placeholder="Issue description"><select id="rStatus"><option>Received</option><option>Diagnosing</option><option>Waiting Parts</option><option>Repaired</option><option>Collected</option><option>Returned</option></select></div>
-<div class="grid3" style="margin-top:6px"><input id="rCost" type="number" placeholder="Repair Cost"><input id="rParts" type="number" placeholder="Parts Cost"><input id="rAdv" type="number" placeholder="Advance Paid"></div>
-<button class="btn btn-orange" style="margin-top:8px" onclick="addRepair()">➕ Add Repair Job</button>
-<div class="grid2" style="margin-top:10px"><input id="rSearch" placeholder="Search customer/phone/device" oninput="renderRepairs()"><select id="rFilterStatus" onchange="renderRepairs()"><option value="">All Status</option><option>Received</option><option>Diagnosing</option><option>Waiting Parts</option><option>Repaired</option><option>Collected</option></select></div>
-<div class="scroll" style="margin-top:10px"><table><thead><tr><th>ID</th><th>Date</th><th>Customer/Phone</th><th>Device/Issue</th><th>Cost</th><th>Status</th><th>By</th><th>Action</th></tr></thead><tbody id="rBody"></tbody></table></div>
-</div>
-</div>
-<div id="page-quotations" class="page">
-<div class="card"><h4>📄 Quotations - Create & Print</h4>
-<div class="grid3" style="margin-top:8px"><input id="qCust" placeholder="Customer Name"><input id="qPhone" placeholder="Phone"><input id="qValid" type="date"></div>
-<div class="grid3" style="margin-top:6px"><select id="qItem"></select><input id="qQty" type="number" value="1"><input id="qPrice" type="number"></div>
-<button class="btn btn-green" style="margin-top:6px" onclick="addQItem()">Add to Quotation</button>
-<div id="qCart" style="margin-top:10px"></div>
-<div class="grid2" style="margin-top:8px"><input id="qDisc" type="number" placeholder="Discount" value="0"><input id="qNotes" placeholder="Notes (valid 7 days etc)"></div>
-<button class="btn btn-blue" style="margin-top:8px" onclick="saveQuotation()">💾 Save Quotation</button>
-<button class="btn btn-green" style="margin-top:8px;margin-left:6px" onclick="printQuotation()">🖨️ Print Last Quotation</button>
-<div style="margin-top:14px"><h5>Saved Quotations</h5><div class="scroll"><table><thead><tr><th>Date</th><th>Customer</th><th>Items</th><th>Total</th><th>By</th><th>Print</th></tr></thead><tbody id="qList"></tbody></table></div></div>
-</div>
-</div>
-<div id="page-jobcosting" class="page">
-<div class="card"><h4>🧮 Job Costing - Installation / Project Profit</h4>
-<div class="grid2" style="margin-top:8px"><input id="jCust" placeholder="Client / Site Name"><input id="jType" placeholder="Job Type (Installation, Fiber, etc)"></div>
-<div class="grid3" style="margin-top:6px"><input id="jIncome" type="number" placeholder="Quoted / Income KSh"><input id="jLabor" type="number" placeholder="Labor Cost"><input id="jTransport" type="number" placeholder="Transport"></div>
-<div class="grid3" style="margin-top:6px"><input id="jMaterials" type="number" placeholder="Materials Cost"><input id="jOther" type="number" placeholder="Other Expenses"><input id="jDate" type="date"></div>
-<textarea id="jDesc" placeholder="Job description / materials used" rows="2"></textarea>
-<button class="btn btn-orange" style="margin-top:6px" onclick="addJob()">➕ Add Job Costing</button>
-<div id="jProfit" style="margin-top:10px;font-weight:800"></div>
-<div class="scroll" style="margin-top:10px"><table><thead><tr><th>Date</th><th>Client</th><th>Income</th><th>Total Cost</th><th>Profit</th><th>Margin %</th><th>By</th><th>Del</th></tr></thead><tbody id="jBody"></tbody></table></div>
-<div style="text-align:right;margin-top:8px;font-weight:800">Total Profit: <span id="jTotalProfit">KSh 0</span></div>
-<button class="btn btn-sm btn-red" onclick="exportJobs()">Export Jobs CSV</button>
-</div>
-</div>
-<div id="page-expenses" class="page">
-<div class="card"><h4>💸 Daily Expenses</h4>
-<div class="grid3" style="margin-top:8px"><div><label style="font-size:10px">Date</label><input id="expDate" type="date"></div><div><label style="font-size:10px">Category</label><select id="expCat"><option>Transport</option><option>Airtime</option><option>Food</option><option>Shop Rent</option><option>Electricity</option><option>Repair Parts</option><option>Staff Advance</option><option>Internet</option><option>Other</option></select></div><div><label style="font-size:10px">Method</label><select id="expMethod"><option>Cash</option><option>Mpesa</option><option>Bank</option></select></div></div>
-<div class="grid2" style="margin-top:6px"><input id="expAmt" type="number" placeholder="Amount KSh"><input id="expDesc" placeholder="Description"></div>
-<button class="btn btn-purple" style="width:100%;margin-top:8px" onclick="saveExp()">➕ Save Expense</button>
-<div id="expMsg" style="font-size:11px;margin-top:6px;color:green"></div>
-<div style="margin-top:14px"><h5>Today's Expenses - <span id="todayLbl"></span></h5><div class="scroll"><table><thead><tr><th>Time</th><th>Cat</th><th>Desc</th><th>Amt</th><th>By</th><th>Del</th></tr></thead><tbody id="expTodayBody"></tbody></table></div><div style="text-align:right;font-weight:800;margin-top:6px">Total: <span id="expTodayTotal">KSh 0</span></div></div>
-</div>
-<div class="card"><h5>All Expenses</h5><div class="grid2" style="margin-top:8px"><input id="expFilterDate" type="date"><button class="btn btn-blue btn-sm" onclick="renderExp()">Filter</button></div><div class="scroll"><table><thead><tr><th>Date</th><th>Category</th><th>Desc</th><th>Amt</th><th>Method</th><th>User</th></tr></thead><tbody id="expAllBody"></tbody></table></div><button class="btn btn-red btn-sm" style="margin-top:8px" onclick="exportExpCSV()">Export Expenses</button></div>
-</div>
-<div id="page-history" class="page">
-<div class="card"><h4>📜 Full History - Sales + Repairs + Expenses + Jobs</h4>
-<div class="grid3" style="margin-top:8px"><input id="hDate" type="date"><select id="hType"><option value="all">All Types</option><option value="sales">Sales</option><option value="repairs">Repairs</option><option value="expenses">Expenses</option><option value="jobs">Job Costing</option></select><button class="btn btn-blue btn-sm" onclick="renderHistory()">Filter</button></div>
-<div class="scroll" style="margin-top:10px"><table><thead><tr><th>Date/Time</th><th>Type</th><th>Details</th><th>Amount</th><th>User</th></tr></thead><tbody id="hBody"></tbody></table></div>
-</div>
-</div>
+<div id="page-pos" class="page"><div class="card"><h4>Quick Sale - POS (Profit Auto-Calculated)</h4><div class="grid4" style="margin-top:8px"><select id="posItem"></select><input id="posQty" type="number" value="1"><input id="posPrice" type="number"><input id="posDisc" type="number" value="0" placeholder="Discount"></div><div id="posProfitHint" style="font-size:11px;color:#0d9d63;margin-top:4px"></div><button class="btn btn-blue" style="margin-top:8px" onclick="addCart()">Add to Cart</button><div id="cartBox" style="margin-top:10px"></div><div class="grid2" style="margin-top:10px"><select id="payMethod"><option>Cash</option><option>Mpesa</option><option>Bank</option><option>Credit</option></select><input id="custName" placeholder="Customer name"></div></div></div>
+<div id="page-stock" class="page"><div class="card"><h4>Stock with Profit Analysis</h4><div class="grid4" style="margin-top:8px"><input id="stName" placeholder="Item"><input id="stQty" type="number" placeholder="Qty"><input id="stPrice" type="number" placeholder="Sell Price"><input id="stBuy" type="number" placeholder="Buy Price"></div><button class="btn btn-blue" style="margin-top:8px" onclick="addStock()">Add / Update Stock</button><div class="grid2" style="margin-top:10px"><input id="stSearch" placeholder="Search..." oninput="renderStock()"><button class="btn btn-sm btn-blue" onclick="exportStock()">Export Stock Profit CSV</button></div><div class="scroll" style="margin-top:10px"><table><thead><tr><th>Item</th><th>Qty</th><th>Buy</th><th>Sell</th><th>Profit/U</th><th>Total Value</th><th>Status</th><th>Del</th></tr></thead><tbody id="stBody"></tbody></table></div></div></div>
+<div id="page-sales" class="page"><div class="card"><h4>Sales Records with Profit</h4><div class="grid3" style="margin-top:8px"><input id="salesDate" type="date"><input id="salesSearch" placeholder="Search" oninput="renderSales()"><button class="btn btn-blue btn-sm" onclick="renderSales()">Filter</button></div><div class="scroll" style="margin-top:10px"><table><thead><tr><th>Date</th><th>Items</th><th>Sell</th><th>Buy Cost</th><th>Profit</th><th>Pay</th><th>By</th></tr></thead><tbody id="salesBody"></tbody></table></div><div style="text-align:right;font-weight:800;margin-top:8px">Filtered Profit: <span id="salesProfit">KSh 0</span> | Total Sales: <span id="salesTotal">KSh 0</span></div><button class="btn btn-red btn-sm" onclick="exportSales()">Export Sales Profit CSV</button></div></div>
+<div id="page-repairs" class="page"><div class="card"><h4>🔧 Repairs Management</h4><div class="grid3" style="margin-top:8px"><input id="rCust" placeholder="Customer"><input id="rPhone" placeholder="Phone"><input id="rDevice" placeholder="Device"></div><div class="grid2" style="margin-top:6px"><input id="rIssue" placeholder="Issue"><select id="rStatus"><option>Received</option><option>Diagnosing</option><option>Waiting Parts</option><option>Repaired</option><option>Collected</option><option>Returned</option></select></div><div class="grid3" style="margin-top:6px"><input id="rCost" type="number" placeholder="Repair Cost"><input id="rParts" type="number" placeholder="Parts Cost"><input id="rAdv" type="number" placeholder="Advance"></div><button class="btn btn-orange" style="margin-top:8px" onclick="addRepair()">Add Repair</button><div class="grid2" style="margin-top:10px"><input id="rSearch" placeholder="Search" oninput="renderRepairs()"><select id="rFilterStatus" onchange="renderRepairs()"><option value="">All Status</option><option>Received</option><option>Diagnosing</option><option>Waiting Parts</option><option>Repaired</option><option>Collected</option></select></div><div class="scroll" style="margin-top:10px"><table><thead><tr><th>ID</th><th>Date</th><th>Customer</th><th>Device</th><th>Cost</th><th>Status</th><th>By</th><th>Del</th></tr></thead><tbody id="rBody"></tbody></table></div></div></div>
+<div id="page-quotations" class="page"><div class="card"><h4>📄 Quotations - Create & Print</h4><div class="grid3" style="margin-top:8px"><input id="qCust" placeholder="Customer"><input id="qPhone" placeholder="Phone"><input id="qValid" type="date"></div><div class="grid3" style="margin-top:6px"><select id="qItem"></select><input id="qQty" type="number" value="1"><input id="qPrice" type="number"></div><button class="btn btn-green" style="margin-top:6px" onclick="addQItem()">Add to Quote</button><div id="qCart" style="margin-top:10px"></div><div class="grid2" style="margin-top:8px"><input id="qDisc" type="number" placeholder="Discount" value="0"><input id="qNotes" placeholder="Notes"></div><button class="btn btn-blue" style="margin-top:8px" onclick="saveQuotation()">Save</button><button class="btn btn-green" style="margin-left:6px" onclick="printQuotation()">Print Last</button><div style="margin-top:12px"><div class="scroll"><table><thead><tr><th>Date</th><th>Customer</th><th>Items</th><th>Total</th><th>Print</th></tr></thead><tbody id="qList"></tbody></table></div></div></div></div>
+<div id="page-jobcosting" class="page"><div class="card"><h4>🧮 Job Costing - Project Profit</h4><div class="grid2" style="margin-top:8px"><input id="jCust" placeholder="Client"><input id="jType" placeholder="Job Type"></div><div class="grid3" style="margin-top:6px"><input id="jIncome" type="number" placeholder="Income"><input id="jLabor" type="number" placeholder="Labor"><input id="jTransport" type="number" placeholder="Transport"></div><div class="grid3" style="margin-top:6px"><input id="jMaterials" type="number" placeholder="Materials"><input id="jOther" type="number" placeholder="Other"><input id="jDate" type="date"></div><textarea id="jDesc" placeholder="Description" rows="2"></textarea><button class="btn btn-orange" style="margin-top:6px" onclick="addJob()">Add Job</button><div id="jProfit" style="margin-top:8px;font-weight:800"></div><div class="scroll" style="margin-top:10px"><table><thead><tr><th>Date</th><th>Client</th><th>Income</th><th>Cost</th><th>Profit</th><th>Margin</th><th>Del</th></tr></thead><tbody id="jBody"></tbody></table></div><div style="text-align:right;font-weight:800;margin-top:6px">Total Job Profit: <span id="jTotalProfit">KSh 0</span></div></div></div>
+<div id="page-expenses" class="page"><div class="card"><h4>💸 Expenses</h4><div class="grid3" style="margin-top:8px"><input id="expDate" type="date"><select id="expCat"><option>Transport</option><option>Airtime</option><option>Food</option><option>Shop Rent</option><option>Electricity</option><option>Repair Parts</option><option>Staff Advance</option><option>Internet</option><option>Other</option></select><select id="expMethod"><option>Cash</option><option>Mpesa</option><option>Bank</option></select></div><div class="grid2" style="margin-top:6px"><input id="expAmt" type="number" placeholder="Amount"><input id="expDesc" placeholder="Description"></div><button class="btn btn-purple" style="width:100%;margin-top:8px" onclick="saveExp()">Save Expense</button><div id="expMsg" style="font-size:11px;color:green;margin-top:6px"></div><div style="margin-top:12px"><h5>Today - <span id="todayLbl"></span></h5><div class="scroll"><table><thead><tr><th>Time</th><th>Cat</th><th>Desc</th><th>Amt</th><th>By</th><th>Del</th></tr></thead><tbody id="expTodayBody"></tbody></table></div><div style="text-align:right;font-weight:800;margin-top:6px">Total: <span id="expTodayTotal">KSh 0</span></div></div></div><div class="card"><h5>All Expenses</h5><div class="grid2" style="margin-top:8px"><input id="expFilterDate" type="date"><button class="btn btn-blue btn-sm" onclick="renderExp()">Filter</button></div><div class="scroll"><table><thead><tr><th>Date</th><th>Cat</th><th>Desc</th><th>Amt</th><th>Method</th><th>User</th></tr></thead><tbody id="expAllBody"></tbody></table></div><button class="btn btn-red btn-sm" style="margin-top:8px" onclick="exportExpCSV()">Export</button></div></div>
+<div id="page-history" class="page"><div class="card"><h4>📜 Full History with Profit</h4><div class="grid3" style="margin-top:8px"><input id="hDate" type="date"><select id="hType"><option value="all">All</option><option value="sales">Sales</option><option value="repairs">Repairs</option><option value="expenses">Expenses</option><option value="jobs">Jobs</option></select><button class="btn btn-blue btn-sm" onclick="renderHistory()">Filter</button></div><div class="scroll" style="margin-top:10px"><table><thead><tr><th>Date</th><th>Type</th><th>Details</th><th>Amount</th><th>Profit</th><th>User</th></tr></thead><tbody id="hBody"></tbody></table></div></div></div>
 </div>
 </div>
 </div>
 <script>
 const USERS={admin:"36939181",machaa:"0769",mutugu:"0791",Elias:"0759"};
 let cur=localStorage.getItem("vpos_user")||"";
-let stock=JSON.parse(localStorage.getItem("vpos_stock")||'[{"name":"Router Tenda","qty":15,"price":2500,"buy":1800},{"name":"ONU Huawei","qty":12,"price":2200,"buy":1500},{"name":"Fiber Cable 1KM","qty":5,"price":6500,"buy":4500}]');
+let stock=JSON.parse(localStorage.getItem("vpos_stock")||'[{"name":"Router Tenda","qty":15,"price":2500,"buy":1800},{"name":"ONU Huawei","qty":12,"price":2200,"buy":1500},{"name":"Fiber Cable 1KM","qty":5,"price":6500,"buy":4500},{"name":"Ethernet Cable","qty":2,"price":300,"buy":180},{"name":"Power Adapter","qty":3,"price":800,"buy":450}]');
 let sales=JSON.parse(localStorage.getItem("vpos_sales")||"[]");
 let expenses=JSON.parse(localStorage.getItem("vpos_exp_v565")||localStorage.getItem("vpos_exp_v563")||"[]");
 let repairs=JSON.parse(localStorage.getItem("vpos_repairs_v565")||"[]");
 let quotations=JSON.parse(localStorage.getItem("vpos_quot_v565")||"[]");
 let jobs=JSON.parse(localStorage.getItem("vpos_jobs_v565")||"[]");
 let cart=[], qCart=[], lastQuote=null;
-function saveAll(){
- localStorage.setItem("vpos_stock",JSON.stringify(stock));
- localStorage.setItem("vpos_sales",JSON.stringify(sales));
- localStorage.setItem("vpos_exp_v565",JSON.stringify(expenses));
- localStorage.setItem("vpos_repairs_v565",JSON.stringify(repairs));
- localStorage.setItem("vpos_quot_v565",JSON.stringify(quotations));
- localStorage.setItem("vpos_jobs_v565",JSON.stringify(jobs));
-}
-function doLogin(){
- let u=document.getElementById("l_u").value.trim(), p=document.getElementById("l_p").value.trim();
- if(USERS[u] && USERS[u]===p){localStorage.setItem("vpos_user",u);cur=u;initApp();}else{document.getElementById("l_msg").innerText="Wrong username/password";}
-}
+function saveAll(){localStorage.setItem("vpos_stock",JSON.stringify(stock));localStorage.setItem("vpos_sales",JSON.stringify(sales));localStorage.setItem("vpos_exp_v565",JSON.stringify(expenses));localStorage.setItem("vpos_repairs_v565",JSON.stringify(repairs));localStorage.setItem("vpos_quot_v565",JSON.stringify(quotations));localStorage.setItem("vpos_jobs_v565",JSON.stringify(jobs));}
+function doLogin(){let u=document.getElementById("l_u").value.trim(),p=document.getElementById("l_p").value.trim();if(USERS[u]&&USERS[u]===p){localStorage.setItem("vpos_user",u);cur=u;initApp();}else{document.getElementById("l_msg").innerText="Wrong password";}}
 function logout(){localStorage.removeItem("vpos_user");location.reload();}
 function initApp(){
- if(!cur)cur=localStorage.getItem("vpos_user");
- if(!cur)return;
- document.getElementById("loginDiv").style.display="none";
- document.getElementById("appDiv").style.display="block";
- document.getElementById("uLabel").innerText=cur+" ("+(cur==="admin"?"ADMIN":"STAFF")+")";
- let now=new Date();
- document.getElementById("expDate").valueAsDate=now;
- document.getElementById("expFilterDate").valueAsDate=now;
- document.getElementById("hDate").valueAsDate=now;
- document.getElementById("salesDate").valueAsDate=now;
- document.getElementById("jDate").valueAsDate=now;
- document.getElementById("qValid").valueAsDate=new Date(Date.now()+7*24*3600*1000);
- document.getElementById("todayLbl").innerText=now.toLocaleDateString();
+ if(!cur)cur=localStorage.getItem("vpos_user");if(!cur)return;
+ document.getElementById("loginDiv").style.display="none";document.getElementById("appDiv").style.display="block";
+ document.getElementById("uLabel").innerText=cur+" - ADMIN";let now=new Date();
+ document.getElementById("expDate").valueAsDate=now;document.getElementById("expFilterDate").valueAsDate=now;document.getElementById("hDate").valueAsDate=now;document.getElementById("salesDate").valueAsDate=now;document.getElementById("jDate").valueAsDate=now;document.getElementById("qValid").valueAsDate=new Date(Date.now()+7*24*3600*1000);document.getElementById("todayLbl").innerText=now.toLocaleDateString();
  renderAll();
 }
-function nav(id){
- document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
- document.getElementById("page-"+id).classList.add("active");
- document.querySelectorAll(".m").forEach(m=>m.classList.remove("active"));
- event.currentTarget.classList.add("active");
- renderAll();
-}
-function renderAll(){renderPOS();renderStock();renderSales();renderRepairs();renderQuotations();renderJobs();renderExp();renderHistory();}
-function renderPOS(){
- let sel=document.getElementById("posItem"); if(!sel)return;
- sel.innerHTML=""; stock.forEach((s,i)=>{let o=document.createElement("option");o.value=i;o.text=s.name+" ("+s.qty+" @KSh"+s.price+")";sel.appendChild(o);});
- sel.onchange=()=>{let it=stock[sel.value]; if(it)document.getElementById("posPrice").value=it.price;};
- if(stock[0])document.getElementById("posPrice").value=stock[0].price;
- let cBox=document.getElementById("cartBox");
- cBox.innerHTML=cart.map((c,i)=>`<div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid #eee"><span>${c.name} x${c.qty} @${c.price} ${c.disc>0?"- disc "+c.disc:""}</span><span>KSh ${c.total} <a href="#" onclick="remCart(${i})">❌</a></span></div>`).join("")+(cart.length?`<div style="text-align:right;font-weight:800;margin-top:8px">Total: KSh ${cart.reduce((a,b)=>a+b.total,0)}</div><button class="btn btn-blue" style="width:100%;margin-top:8px" onclick="checkout()">✅ Checkout - Pay ${document.getElementById("payMethod").value}</button>`:"<div style='color:#94a3b8;font-size:12px'>Cart empty</div>");
+function nav(id){document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));document.getElementById("page-"+id).classList.add("active");document.querySelectorAll(".m").forEach(m=>m.classList.remove("active"));event.currentTarget.classList.add("active");renderAll();}
+function renderAll(){renderDashboard();renderPOS();renderStock();renderSales();renderRepairs();renderQuotations();renderJobs();renderExp();renderHistory();}
+function getBuyPrice(name){let s=stock.find(x=>x.name.toLowerCase()===name.toLowerCase());return s? (s.buy||0) : 0;}
+function renderDashboard(){
  let today=new Date().toISOString().slice(0,10);
  let tSales=sales.filter(s=>s.date===today);
  let tExp=expenses.filter(e=>e.date===today);
- let sTot=tSales.reduce((a,b)=>a+b.total,0);
- let eTot=tExp.reduce((a,b)=>a+b.amount,0);
- document.getElementById("kpiS").innerText="KSh "+sTot;
- document.getElementById("kpiSCount").innerText=tSales.length+" sales";
- document.getElementById("kpiE").innerText="KSh "+eTot;
- document.getElementById("kpiN").innerText="KSh "+(sTot-eTot);
-}
-function addCart(){
- let idx=document.getElementById("posItem").value;
- let qty=parseInt(document.getElementById("posQty").value)||1;
- let price=parseInt(document.getElementById("posPrice").value)||0;
- let disc=parseInt(document.getElementById("posDisc").value)||0;
- let it=stock[idx]; if(!it)return;
- if(it.qty<qty)return alert("Not enough stock! Available: "+it.qty);
- let total=(price*qty)-disc;
- cart.push({name:it.name,qty,price,disc,total,sIdx:idx});
- renderPOS();
-}
-function remCart(i){cart.splice(i,1);renderPOS();}
-function checkout(){
- if(!cart.length)return alert("Cart empty");
- let date=new Date().toISOString().slice(0,10), time=new Date().toLocaleTimeString();
- let pay=document.getElementById("payMethod").value, cust=document.getElementById("custName").value||"Walk-in";
- let total=cart.reduce((a,b)=>a+b.total,0);
- cart.forEach(c=>{stock[c.sIdx].qty-=c.qty;});
- sales.push({date,time,items:JSON.parse(JSON.stringify(cart)),total,pay,customer:cust,by:cur});
- cart=[]; document.getElementById("custName").value=""; saveAll(); renderAll(); alert("Sale saved: KSh "+total);
-}
-function renderStock(){
- let q=document.getElementById("stSearch").value?.toLowerCase()||"";
- let filtered=stock.filter(s=>s.name.toLowerCase().includes(q));
- document.getElementById("stBody").innerHTML=filtered.map((s,realIdx)=>{
+ let salesTotal=tSales.reduce((a,b)=>a+b.total,0);
+ let buyCostTotal=0;
+ tSales.forEach(s=>{
+  if(s.items&&Array.isArray(s.items)){
+   s.items.forEach(it=>{
+    let buy=getBuyPrice(it.name);
+    if(it.buy!==undefined) buy=it.buy;
+    buyCostTotal+=buy*it.qty;
+   });
+  }else{
+   let buy=getBuyPrice(s.name||"");
+   buyCostTotal+=buy*(s.qty||1);
+  }
+ });
+ let expTotal=tExp.reduce((a,b)=>a+b.amount,0);
+ let gross=salesTotal-buyCostTotal;
+ let net=gross-expTotal;
+ let stockVal=stock.reduce((a,b)=>a+b.qty*(b.buy||0),0);
+ let stockSellVal=stock.reduce((a,b)=>a+b.qty*b.price,0);
+ let low=stock.filter(s=>s.qty<5);
+ let repairsPending=repairs.filter(r=>r.status!=="Collected"&&r.status!=="Returned");
+ let repairsVal=repairsPending.reduce((a,b)=>a+(b.cost+b.parts),0);
+ document.getElementById("dSales").innerText="KSh "+salesTotal;
+ document.getElementById("dSalesCount").innerText=tSales.length+" sales";
+ document.getElementById("dCost").innerText="KSh "+buyCostTotal;
+ document.getElementById("dGross").innerText="KSh "+gross;
+ document.getElementById("dGross").className="kpi "+(gross>=0?"profit-positive":"profit-negative");
+ document.getElementById("dExp").innerText="KSh "+expTotal;
+ document.getElementById("dNet").innerText="KSh "+net;
+ document.getElementById("dNet").className="kpi "+(net>=0?"profit-positive":"profit-negative");
+ document.getElementById("dNetSub").innerText=net>=0?"Profit after expenses":"Loss today";
+ document.getElementById("dStockVal").innerText="KSh "+stockVal+" / Sell KSh "+stockSellVal;
+ document.getElementById("dStockCount").innerText=stock.length+" types, "+stock.reduce((a,b)=>a+b.qty,0)+" pcs";
+ document.getElementById("dLowCount").innerText=low.length;
+ document.getElementById("dRepairs").innerText=repairsPending.length;
+ document.getElementById("dRepairsVal").innerText="KSh "+repairsVal+" value";
+ document.getElementById("lowBody").innerHTML=low.map(s=>{
   let idx=stock.indexOf(s);
-  return `<tr><td>${s.name}</td><td>${s.qty} ${s.qty<3?'<span class="badge b-red">LOW</span>':''}</td><td>${s.buy||0}</td><td>${s.price}</td><td>${s.qty*(s.buy||0)}</td><td><button class="btn btn-red btn-sm" onclick="delStock(${idx})">Del</button></td></tr>`;
- }).join("")||"<tr><td colspan=6>No stock</td></tr>";
+  let profit=s.price-(s.buy||0);
+  return `<tr class="low"><td>${s.name}</td><td><span class="badge b-red">${s.qty}</span></td><td>${s.buy||0}</td><td>${s.price}</td><td>KSh ${profit}</td><td><button class="btn btn-sm btn-blue" onclick="restockPrompt(${idx})">Restock</button></td></tr>`;
+ }).join("")||"<tr><td colspan=6>No low stock ✅</td></tr>";
+ let counts={};
+ tSales.forEach(s=>{if(s.items){s.items.forEach(it=>{counts[it.name]=(counts[it.name]||0)+it.qty;});}});
+ let top=Object.entries(counts).sort((a,b)=>b[1]-a[1]).slice(0,5);
+ document.getElementById("topSelling").innerHTML=top.map(([name,qty])=>{let total=Object.values(counts).reduce((a,b)=>a+b,0)||1; let pct=Math.round(qty/total*100); return `<div style="margin-bottom:8px"><div style="display:flex;justify-content:space-between;font-size:12px"><span>${name}</span><span>${qty} pcs - ${pct}%</span></div><div class="bar"><div class="bar-fill" style="width:${pct}%"></div></div></div>`;}).join("")||"<div style='color:#94a3b8'>No sales today</div>";
+ let byCat={}; tExp.forEach(e=>{byCat[e.category]=(byCat[e.category]||0)+e.amount;});
+ document.getElementById("expBreakdown").innerHTML=Object.entries(byCat).map(([cat,amt])=>{let pct=expTotal?Math.round(amt/expTotal*100):0; return `<div style="margin-bottom:8px"><div style="display:flex;justify-content:space-between;font-size:12px"><span>${cat}</span><span>KSh ${amt} - ${pct}%</span></div><div class="bar"><div class="bar-fill" style="width:${pct}%;background:#dc2626"></div></div></div>`;}).join("")||"<div style='color:#94a3b8'>No expenses today</div>";
+ document.getElementById("profitPotential").innerHTML=stock.map(s=>{let totalBuy=s.qty*(s.buy||0); let totalSell=s.qty*s.price; let profit=totalSell-totalBuy; return `<tr><td>${s.name}</td><td>${s.qty}</td><td>KSh ${totalBuy}</td><td>KSh ${totalSell}</td><td class="${profit>=0?'profit-positive':'profit-negative'}">KSh ${profit}</td></tr>`;}).join("");
+ document.getElementById("totalPotential").innerText="KSh "+(stockSellVal-stockVal);
 }
-function addStock(){
- let n=document.getElementById("stName").value.trim(), q=parseInt(document.getElementById("stQty").value), p=parseInt(document.getElementById("stPrice").value), b=parseInt(document.getElementById("stBuy").value)||0;
- if(!n||isNaN(q)||isNaN(p))return alert("Fill name, qty, price");
- let ex=stock.find(s=>s.name.toLowerCase()===n.toLowerCase());
- if(ex){ex.qty+=q;ex.price=p;ex.buy=b||ex.buy;}else stock.push({name:n,qty:q,price:p,buy:b});
- document.getElementById("stName").value="";document.getElementById("stQty").value="";document.getElementById("stPrice").value="";document.getElementById("stBuy").value="";
- saveAll();renderAll();
+function restockPrompt(idx){let add=parseInt(prompt("Add how many for "+stock[idx].name+"?", "10")); if(add){stock[idx].qty+=add; saveAll(); renderAll();}}
+function renderPOS(){
+ let sel=document.getElementById("posItem"); sel.innerHTML=""; stock.forEach((s,i)=>{let o=document.createElement("option");o.value=i;o.text=s.name+" ("+s.qty+" @KSh"+s.price+" buy "+(s.buy||0)+")";sel.appendChild(o);});
+ sel.onchange=updatePosHint; document.getElementById("posQty").oninput=updatePosHint; document.getElementById("posPrice").oninput=updatePosHint;
+ if(stock[0])document.getElementById("posPrice").value=stock[0].price;
+ updatePosHint();
+ let cBox=document.getElementById("cartBox");
+ cBox.innerHTML=cart.map((c,i)=>`<div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px solid #eee"><span>${c.name} x${c.qty} Buy ${c.buy} Sell ${c.price} Profit ${c.profit}</span><span>KSh ${c.total} <a href="#" onclick="remCart(${i})">❌</a></span></div>`).join("")+(cart.length?`<div style="text-align:right;font-weight:800;margin-top:8px">Total Sell: KSh ${cart.reduce((a,b)=>a+b.total,0)} | Profit: KSh ${cart.reduce((a,b)=>a+b.profit,0)}</div><button class="btn btn-blue" style="width:100%;margin-top:8px" onclick="checkout()">Checkout ${document.getElementById("payMethod").value}</button>`:"Cart empty");
 }
-function delStock(i){if(confirm("Delete stock?")){stock.splice(i,1);saveAll();renderAll();}}
-function exportStock(){let csv="Item,Qty,Buy,Sell,Value\n";stock.forEach(s=>{csv+=`${s.name},${s.qty},${s.buy||0},${s.price},${s.qty*(s.buy||0)}\n`;});dl(csv,"stock.csv");}
-function renderSales(){
- let fDate=document.getElementById("salesDate").value, q=document.getElementById("salesSearch").value.toLowerCase();
- let filtered=sales.filter(s=>{
-  if(fDate && s.date!==fDate)return false;
-  if(q && !(s.customer.toLowerCase().includes(q) || JSON.stringify(s.items).toLowerCase().includes(q)))return false;
-  return true;
- }).slice(-100).reverse();
- document.getElementById("salesBody").innerHTML=filtered.map(s=>{
-  let items=s.items?.map? s.items.map(i=>i.name+" x"+i.qty).join(", ") : s.name;
-  return `<tr><td>${s.date}<br><small>${s.time}</small></td><td>${items}</td><td>${s.pay}</td><td>KSh ${s.total}</td><td>${s.customer}</td><td>${s.by}</td></tr>`;
- }).join("")||"<tr><td colspan=6>No sales</td></tr>";
- document.getElementById("salesTotal").innerText="KSh "+filtered.reduce((a,b)=>a+b.total,0);
+function updatePosHint(){
+ let idx=document.getElementById("posItem").value; let it=stock[idx]; if(!it)return;
+ let qty=parseInt(document.getElementById("posQty").value)||1; let sell=parseInt(document.getElementById("posPrice").value)||it.price;
+ let buy=it.buy||0; let profit=(sell-buy)*qty;
+ document.getElementById("posProfitHint").innerText=`Buy KSh ${buy} | Sell KSh ${sell} | Profit KSh ${profit} for ${qty} pcs | Stock left: ${it.qty}`;
 }
-function exportSales(){let csv="Date,Time,Customer,Items,Pay,Total,By\n";sales.forEach(s=>{let items=s.items?.map? s.items.map(i=>i.name+" x"+i.qty).join(";") : ""; csv+=`${s.date},${s.time},${s.customer},"${items}",${s.pay},${s.total},${s.by}\n`;});dl(csv,"sales.csv");}
-function addRepair(){
- let c=document.getElementById("rCust").value.trim(), ph=document.getElementById("rPhone").value.trim(), dev=document.getElementById("rDevice").value.trim(), iss=document.getElementById("rIssue").value.trim(), status=document.getElementById("rStatus").value, cost=parseInt(document.getElementById("rCost").value)||0, parts=parseInt(document.getElementById("rParts").value)||0, adv=parseInt(document.getElementById("rAdv").value)||0;
- if(!c||!ph||!dev)return alert("Customer, phone, device required");
- let id="R"+Date.now().toString().slice(-6), date=new Date().toISOString().slice(0,10), time=new Date().toLocaleTimeString();
- repairs.push({id,date,time,customer:c,phone:ph,device:dev,issue:iss,status,cost,parts,advance:adv,balance:(cost+parts)-adv,by:cur});
- document.getElementById("rCust").value="";document.getElementById("rPhone").value="";document.getElementById("rDevice").value="";document.getElementById("rIssue").value="";document.getElementById("rCost").value="";document.getElementById("rParts").value="";document.getElementById("rAdv").value="";
- saveAll();renderRepairs();renderHistory();
-}
-function renderRepairs(){
- let q=document.getElementById("rSearch").value.toLowerCase(), fs=document.getElementById("rFilterStatus").value;
- let filtered=repairs.filter(r=>{
-  if(fs && r.status!==fs)return false;
-  if(q && !(r.customer.toLowerCase().includes(q)||r.phone.includes(q)||r.device.toLowerCase().includes(q)))return false;
-  return true;
- }).slice(-100).reverse();
- document.getElementById("rBody").innerHTML=filtered.map(r=>`<tr><td>${r.id}</td><td>${r.date}<br><small>${r.time}</small></td><td>${r.customer}<br><small>${r.phone}</small></td><td><b>${r.device}</b><br><small>${r.issue}</small></td><td>KSh ${r.cost+r.parts}<br><small>Bal ${r.balance}</small></td><td><select onchange="updateRepairStatus('${r.id}',this.value)"><option ${r.status=="Received"?"selected":""}>Received</option><option ${r.status=="Diagnosing"?"selected":""}>Diagnosing</option><option ${r.status=="Waiting Parts"?"selected":""}>Waiting Parts</option><option ${r.status=="Repaired"?"selected":""}>Repaired</option><option ${r.status=="Collected"?"selected":""}>Collected</option><option ${r.status=="Returned"?"selected":""}>Returned</option></select><br><span class="badge ${r.status=="Collected"?"b-green":r.status=="Repaired"?"b-blue":"b-yellow"}">${r.status}</span></td><td>${r.by}</td><td><button class="btn btn-red btn-sm" onclick="delRepair('${r.id}')">Del</button></td></tr>`).join("")||"<tr><td colspan=8>No repairs</td></tr>";
-}
-function updateRepairStatus(id,val){let r=repairs.find(x=>x.id===id);if(r){r.status=val;saveAll();renderRepairs();renderHistory();}}
-function delRepair(id){if(confirm("Delete repair?")){repairs=repairs.filter(r=>r.id!==id);saveAll();renderRepairs();}}
-function renderQuotations(){
- let sel=document.getElementById("qItem"); sel.innerHTML=""; stock.forEach((s,i)=>{let o=document.createElement("option");o.value=i;o.text=s.name+" @KSh"+s.price;sel.appendChild(o);});
- sel.onchange=()=>{let it=stock[sel.value]; if(it)document.getElementById("qPrice").value=it.price;};
- if(stock[0])document.getElementById("qPrice").value=stock[0].price;
- document.getElementById("qCart").innerHTML=qCart.map((c,i)=>`<div style="display:flex;justify-content:space-between;padding:4px 0;border-bottom:1px solid #eee"><span>${c.name} x${c.qty} @${c.price}</span><span>KSh ${c.total} <a href="#" onclick="remQ(${i})">❌</a></span></div>`).join("")+(qCart.length?`<div style="text-align:right;font-weight:800;margin-top:6px">Total: KSh ${qCart.reduce((a,b)=>a+b.total,0)- (parseInt(document.getElementById("qDisc").value)||0)}</div>`:"<div style='color:#94a3b8'>No items</div>");
- document.getElementById("qList").innerHTML=quotations.slice(-30).reverse().map((q,i)=>{
-  let idx=quotations.indexOf(q);
-  return `<tr><td>${q.date}</td><td>${q.customer}<br><small>${q.phone}</small></td><td>${q.items.map(it=>it.name+" x"+it.qty).join(", ")}</td><td>KSh ${q.total}</td><td>${q.by}</td><td><button class="btn btn-sm btn-blue" onclick="printQuoteIdx(${idx})">Print</button></td></tr>`;
- }).join("")||"<tr><td colspan=6>No quotations</td></tr>";
-}
-function addQItem(){
- let idx=document.getElementById("qItem").value, qty=parseInt(document.getElementById("qQty").value)||1, price=parseInt(document.getElementById("qPrice").value)||0;
- let it=stock[idx]; if(!it)return;
- qCart.push({name:it.name,qty,price,total:qty*price});
- renderQuotations();
-}
+function addCart(){let idx=document.getElementById("posItem").value; let qty=parseInt(document.getElementById("posQty").value)||1; let price=parseInt(document.getElementById("posPrice").value)||0; let it=stock[idx]; if(it.qty<qty)return alert("Not enough stock: "+it.qty); let disc=parseInt(document.getElementById("posDisc")?.value)||0; let total=price*qty-disc; let buy=it.buy||0; let profit=price-buy; cart.push({name:it.name,qty,price,buy,profit,total,sIdx:idx}); renderPOS();}
+function remCart(i){cart.splice(i,1);renderPOS();}
+function checkout(){if(!cart.length)return;let date=new Date().toISOString().slice(0,10),time=new Date().toLocaleTimeString();let pay=document.getElementById("payMethod").value,cust=document.getElementById("custName").value||"Walk-in"; cart.forEach(c=>{stock[c.sIdx].qty-=c.qty;}); sales.push({date,time,items:JSON.parse(JSON.stringify(cart)),total:cart.reduce((a,b)=>a+b.total,0),pay,customer:cust,by:cur}); cart=[]; document.getElementById("custName").value=""; saveAll(); renderAll(); alert("Sale saved");}
+function renderStock(){let q=document.getElementById("stSearch").value.toLowerCase();let filtered=stock.filter(s=>s.name.toLowerCase().includes(q));document.getElementById("stBody").innerHTML=filtered.map(s=>{let idx=stock.indexOf(s);let profit=s.price-(s.buy||0);return `<tr ${s.qty<5?'class="low"':''}><td>${s.name}</td><td>${s.qty} ${s.qty<5?'<span class="badge b-red">LOW</span>':''}</td><td>${s.buy||0}</td><td>${s.price}</td><td class="${profit>=0?'profit-positive':'profit-negative'}">KSh ${profit}</td><td>KSh ${s.qty*(s.buy||0)}</td><td>${s.qty<3?'⚠️ Restock':s.qty<5?'Low':''}</td><td><button class="btn btn-red btn-sm" onclick="delStock(${idx})">Del</button></td></tr>`;}).join("");}
+function addStock(){let n=document.getElementById("stName").value.trim(),q=parseInt(document.getElementById("stQty").value),p=parseInt(document.getElementById("stPrice").value),b=parseInt(document.getElementById("stBuy").value)||0;if(!n||isNaN(q)||isNaN(p))return alert("Fill name qty price");let ex=stock.find(s=>s.name.toLowerCase()===n.toLowerCase());if(ex){ex.qty+=q;ex.price=p;ex.buy=b||ex.buy;}else stock.push({name:n,qty:q,price:p,buy:b});document.getElementById("stName").value="";document.getElementById("stQty").value="";document.getElementById("stPrice").value="";document.getElementById("stBuy").value="";saveAll();renderAll();}
+function delStock(i){if(confirm("Delete?")){stock.splice(i,1);saveAll();renderAll();}}
+function exportStock(){let csv="Item,Qty,Buy,Sell,Profit/Unit,Total Buy,Total Sell,Potential Profit\n";stock.forEach(s=>{let profit=s.price-(s.buy||0);csv+=`${s.name},${s.qty},${s.buy||0},${s.price},${profit},${s.qty*(s.buy||0)},${s.qty*s.price},${s.qty*profit}\n`;});dl(csv,"stock_profit.csv");}
+function renderSales(){let fDate=document.getElementById("salesDate").value,q=document.getElementById("salesSearch").value.toLowerCase();let filtered=sales.filter(s=>{if(fDate&&s.date!==fDate)return false;if(q&&!(s.customer.toLowerCase().includes(q)||JSON.stringify(s.items).toLowerCase().includes(q)))return false;return true;}).slice(-100).reverse();let totalProfit=0,totalSell=0;document.getElementById("salesBody").innerHTML=filtered.map(s=>{let sell=s.total;let buy=0;if(s.items){s.items.forEach(it=>{let b=it.buy!==undefined?it.buy:getBuyPrice(it.name);buy+=b*it.qty;});}else{buy=getBuyPrice(s.name)*(s.qty||1);}let profit=sell-buy;totalProfit+=profit;totalSell+=sell;return `<tr><td>${s.date}<br><small>${s.time}</small></td><td>${s.items?s.items.map(i=>i.name+" x"+i.qty).join(", "):s.name}</td><td>KSh ${sell}</td><td>KSh ${buy}</td><td class="${profit>=0?'profit-positive':'profit-negative'}">KSh ${profit}</td><td>${s.pay}</td><td>${s.by}</td></tr>`;}).join("")||"<tr><td colspan=7>No sales</td></tr>";document.getElementById("salesTotal").innerText="KSh "+totalSell;document.getElementById("salesProfit").innerText="KSh "+totalProfit;}
+function exportSales(){let csv="Date,Time,Customer,Items,Sell,Buy,Profit,Pay,By\n";sales.forEach(s=>{let sell=s.total,buy=0,items="";if(s.items){items=s.items.map(i=>i.name+" x"+i.qty).join(";");s.items.forEach(it=>{let b=it.buy!==undefined?it.buy:getBuyPrice(it.name);buy+=b*it.qty;});}let profit=sell-buy;csv+=`${s.date},${s.time},${s.customer},"${items}",${sell},${buy},${profit},${s.pay},${s.by}\n`;});dl(csv,"sales_profit.csv");}
+function addRepair(){let c=document.getElementById("rCust").value.trim(),ph=document.getElementById("rPhone").value.trim(),dev=document.getElementById("rDevice").value.trim(),iss=document.getElementById("rIssue").value.trim(),status=document.getElementById("rStatus").value,cost=parseInt(document.getElementById("rCost").value)||0,parts=parseInt(document.getElementById("rParts").value)||0,adv=parseInt(document.getElementById("rAdv").value)||0;if(!c||!ph||!dev)return alert("Customer phone device required");let id="R"+Date.now().toString().slice(-6),date=new Date().toISOString().slice(0,10),time=new Date().toLocaleTimeString();repairs.push({id,date,time,customer:c,phone:ph,device:dev,issue:iss,status,cost,parts,advance:adv,balance:(cost+parts)-adv,by:cur});document.getElementById("rCust").value="";document.getElementById("rPhone").value="";document.getElementById("rDevice").value="";document.getElementById("rIssue").value="";document.getElementById("rCost").value="";document.getElementById("rParts").value="";document.getElementById("rAdv").value="";saveAll();renderRepairs();renderDashboard();}
+function renderRepairs(){let q=document.getElementById("rSearch").value.toLowerCase(),fs=document.getElementById("rFilterStatus").value;let filtered=repairs.filter(r=>{if(fs&&r.status!==fs)return false;if(q&&!(r.customer.toLowerCase().includes(q)||r.phone.includes(q)||r.device.toLowerCase().includes(q)))return false;return true;}).slice(-100).reverse();document.getElementById("rBody").innerHTML=filtered.map(r=>`<tr><td>${r.id}</td><td>${r.date}</td><td>${r.customer}<br><small>${r.phone}</small></td><td>${r.device}<br><small>${r.issue}</small></td><td>KSh ${r.cost+r.parts}<br><small>Bal ${r.balance}</small></td><td><select onchange="updateRepairStatus('${r.id}',this.value)"><option ${r.status=="Received"?"selected":""}>Received</option><option ${r.status=="Diagnosing"?"selected":""}>Diagnosing</option><option ${r.status=="Waiting Parts"?"selected":""}>Waiting Parts</option><option ${r.status=="Repaired"?"selected":""}>Repaired</option><option ${r.status=="Collected"?"selected":""}>Collected</option></select><br><span class="badge ${r.status=="Collected"?"b-green":r.status=="Repaired"?"b-blue":"b-yellow"}">${r.status}</span></td><td>${r.by}</td><td><button class="btn btn-red btn-sm" onclick="delRepair('${r.id}')">Del</button></td></tr>`).join("")||"<tr><td colspan=8>No repairs</td></tr>";}
+function updateRepairStatus(id,val){let r=repairs.find(x=>x.id===id);if(r){r.status=val;saveAll();renderRepairs();renderDashboard();}}
+function delRepair(id){if(confirm("Delete?")){repairs=repairs.filter(r=>r.id!==id);saveAll();renderRepairs();renderDashboard();}}
+function renderQuotations(){let sel=document.getElementById("qItem");sel.innerHTML="";stock.forEach((s,i)=>{let o=document.createElement("option");o.value=i;o.text=s.name+" @KSh"+s.price;sel.appendChild(o);});sel.onchange=()=>{let it=stock[sel.value];if(it)document.getElementById("qPrice").value=it.price;};if(stock[0])document.getElementById("qPrice").value=stock[0].price;document.getElementById("qCart").innerHTML=qCart.map((c,i)=>`<div style="display:flex;justify-content:space-between;padding:4px 0"><span>${c.name} x${c.qty}</span><span>KSh ${c.total} <a href="#" onclick="remQ(${i})">❌</a></span></div>`).join("")+(qCart.length?`<div style="text-align:right;font-weight:800">Total: KSh ${qCart.reduce((a,b)=>a+b.total,0)- (parseInt(document.getElementById("qDisc").value)||0)}</div>`:"No items");document.getElementById("qList").innerHTML=quotations.slice(-30).reverse().map((q,i)=>{let idx=quotations.indexOf(q);return `<tr><td>${q.date}</td><td>${q.customer}</td><td>${q.items.map(it=>it.name+" x"+it.qty).join(", ")}</td><td>KSh ${q.total}</td><td><button class="btn btn-sm btn-blue" onclick="printQuoteIdx(${idx})">Print</button></td></tr>`;}).join("")||"<tr><td colspan=5>No quotations</td></tr>";}
+function addQItem(){let idx=document.getElementById("qItem").value,qty=parseInt(document.getElementById("qQty").value)||1,price=parseInt(document.getElementById("qPrice").value)||0;let it=stock[idx];qCart.push({name:it.name,qty,price,total:qty*price});renderQuotations();}
 function remQ(i){qCart.splice(i,1);renderQuotations();}
-function saveQuotation(){
- if(!qCart.length)return alert("Add items");
- let cust=document.getElementById("qCust").value||"Customer", phone=document.getElementById("qPhone").value||"", disc=parseInt(document.getElementById("qDisc").value)||0, notes=document.getElementById("qNotes").value||"", valid=document.getElementById("qValid").value||"", date=new Date().toISOString().slice(0,10);
- let total=qCart.reduce((a,b)=>a+b.total,0)-disc;
- let q={date,customer:cust,phone,items:JSON.parse(JSON.stringify(qCart)),discount:disc,total,notes,valid,by:cur};
- quotations.push(q); lastQuote=q; qCart=[]; saveAll(); renderQuotations(); alert("Quotation saved KSh "+total);
-}
-function printQuoteIdx(idx){lastQuote=quotations[idx]; printQuotation();}
-function printQuotation(){
- if(!lastQuote)return alert("No quotation to print");
- let q=lastQuote;
- let w=window.open("","_blank");
- w.document.write(`<html><head><title>Quotation</title><style>body{font-family:Arial;padding:20px} table{width:100%;border-collapse:collapse} th,td{border:1px solid #ccc;padding:8px}</style></head><body><h2>VALIDNET TECHNOLOGIES - KANYONI</h2><p>Quotation for: ${q.customer} - ${q.phone}<br>Date: ${q.date} | Valid Till: ${q.valid}<br>By: ${q.by}</p><table><tr><th>Item</th><th>Qty</th><th>Price</th><th>Total</th></tr>${q.items.map(it=>`<tr><td>${it.name}</td><td>${it.qty}</td><td>${it.price}</td><td>${it.total}</td></tr>`).join("")}<tr><td colspan=3>Discount</td><td>${q.discount}</td></tr><tr><td colspan=3><b>GRAND TOTAL</b></td><td><b>KSh ${q.total}</b></td></tr></table><p>Notes: ${q.notes}</p><p style="margin-top:20px">Thank you for your business!</p><script>window.print()<\/script></body></html>`);
- w.document.close();
-}
-function addJob(){
- let cust=document.getElementById("jCust").value.trim(), type=document.getElementById("jType").value.trim(), income=parseInt(document.getElementById("jIncome").value)||0, labor=parseInt(document.getElementById("jLabor").value)||0, trans=parseInt(document.getElementById("jTransport").value)||0, mat=parseInt(document.getElementById("jMaterials").value)||0, other=parseInt(document.getElementById("jOther").value)||0, date=document.getElementById("jDate").value||new Date().toISOString().slice(0,10), desc=document.getElementById("jDesc").value.trim();
- if(!cust||!income)return alert("Client and income required");
- let totalCost=labor+trans+mat+other, profit=income-totalCost, margin=income?((profit/income)*100).toFixed(1):0;
- jobs.push({date,customer:cust,type,description:desc,income,labor,transport:trans,materials:mat,other,totalCost,profit,margin,by:cur});
- document.getElementById("jCust").value="";document.getElementById("jIncome").value="";document.getElementById("jLabor").value="";document.getElementById("jTransport").value="";document.getElementById("jMaterials").value="";document.getElementById("jOther").value="";document.getElementById("jDesc").value="";
- saveAll();renderJobs();renderHistory();
-}
-function renderJobs(){
- document.getElementById("jBody").innerHTML=jobs.slice(-50).reverse().map((j,i)=>{
-  let idx=jobs.indexOf(j);
-  return `<tr><td>${j.date}</td><td>${j.customer}<br><small>${j.type}</small></td><td>KSh ${j.income}</td><td>KSh ${j.totalCost}</td><td style="color:${j.profit>=0?'green':'red'}">KSh ${j.profit}</td><td>${j.margin}%</td><td>${j.by}</td><td><button class="btn btn-red btn-sm" onclick="delJob(${idx})">Del</button></td></tr>`;
- }).join("")||"<tr><td colspan=8>No jobs</td></tr>";
- document.getElementById("jTotalProfit").innerText="KSh "+jobs.reduce((a,b)=>a+b.profit,0);
- let income=parseInt(document.getElementById("jIncome").value)||0, labor=parseInt(document.getElementById("jLabor").value)||0, trans=parseInt(document.getElementById("jTransport").value)||0, mat=parseInt(document.getElementById("jMaterials").value)||0, other=parseInt(document.getElementById("jOther").value)||0;
- if(income){let tc=labor+trans+mat+other, pf=income-tc; document.getElementById("jProfit").innerText=`Est. Profit: KSh ${pf} | Cost: KSh ${tc} | Margin: ${((pf/income)*100).toFixed(1)}%`;}
-}
+function saveQuotation(){if(!qCart.length)return alert("Add items");let cust=document.getElementById("qCust").value||"Customer",phone=document.getElementById("qPhone").value||"",disc=parseInt(document.getElementById("qDisc").value)||0,notes=document.getElementById("qNotes").value||"",valid=document.getElementById("qValid").value||"",date=new Date().toISOString().slice(0,10);let total=qCart.reduce((a,b)=>a+b.total,0)-disc;let q={date,customer:cust,phone,items:JSON.parse(JSON.stringify(qCart)),discount:disc,total,notes,valid,by:cur};quotations.push(q);lastQuote=q;qCart=[];saveAll();renderQuotations();alert("Quotation saved");}
+function printQuoteIdx(idx){lastQuote=quotations[idx];printQuotation();}
+function printQuotation(){if(!lastQuote)return alert("No quote");let q=lastQuote;let w=window.open("","_blank");w.document.write(`<html><head><style>body{font-family:Arial;padding:20px}table{width:100%;border-collapse:collapse}th,td{border:1px solid #ccc;padding:8px}</style></head><body><h2>VALIDNET - KANYONI QUOTATION</h2><p>Customer: ${q.customer} ${q.phone}<br>Date: ${q.date} Valid: ${q.valid}</p><table><tr><th>Item</th><th>Qty</th><th>Price</th><th>Total</th></tr>${q.items.map(it=>`<tr><td>${it.name}</td><td>${it.qty}</td><td>${it.price}</td><td>${it.total}</td></tr>`).join("")}<tr><td colspan=3>Discount</td><td>${q.discount}</td></tr><tr><td colspan=3><b>Total</b></td><td><b>KSh ${q.total}</b></td></tr></table><p>${q.notes}</p><script>window.print()<\/script></body></html>`);w.document.close();}
+function addJob(){let cust=document.getElementById("jCust").value.trim(),type=document.getElementById("jType").value.trim(),income=parseInt(document.getElementById("jIncome").value)||0,labor=parseInt(document.getElementById("jLabor").value)||0,trans=parseInt(document.getElementById("jTransport").value)||0,mat=parseInt(document.getElementById("jMaterials").value)||0,other=parseInt(document.getElementById("jOther").value)||0,date=document.getElementById("jDate").value||new Date().toISOString().slice(0,10),desc=document.getElementById("jDesc").value.trim();if(!cust||!income)return alert("Client income required");let totalCost=labor+trans+mat+other,profit=income-totalCost,margin=income?((profit/income)*100).toFixed(1):0;jobs.push({date,customer:cust,type,description:desc,income,labor,transport:trans,materials:mat,other,totalCost,profit,margin,by:cur});document.getElementById("jCust").value="";document.getElementById("jIncome").value="";document.getElementById("jLabor").value="";document.getElementById("jTransport").value="";document.getElementById("jMaterials").value="";document.getElementById("jOther").value="";document.getElementById("jDesc").value="";saveAll();renderJobs();renderDashboard();}
+function renderJobs(){document.getElementById("jBody").innerHTML=jobs.slice(-50).reverse().map((j,i)=>{let idx=jobs.indexOf(j);return `<tr><td>${j.date}</td><td>${j.customer}<br><small>${j.type}</small></td><td>KSh ${j.income}</td><td>KSh ${j.totalCost}</td><td style="color:${j.profit>=0?'green':'red'}">KSh ${j.profit}</td><td>${j.margin}%</td><td><button class="btn btn-red btn-sm" onclick="delJob(${idx})">Del</button></td></tr>`;}).join("")||"<tr><td colspan=7>No jobs</td></tr>";document.getElementById("jTotalProfit").innerText="KSh "+jobs.reduce((a,b)=>a+b.profit,0);let income=parseInt(document.getElementById("jIncome").value)||0,labor=parseInt(document.getElementById("jLabor").value)||0,trans=parseInt(document.getElementById("jTransport").value)||0,mat=parseInt(document.getElementById("jMaterials").value)||0,other=parseInt(document.getElementById("jOther").value)||0;if(income){let tc=labor+trans+mat+other,pf=income-tc;document.getElementById("jProfit").innerText=`Est. Profit: KSh ${pf} | Cost KSh ${tc} | Margin ${((pf/income)*100).toFixed(1)}%`;}}
 function delJob(idx){if(confirm("Delete job?")){jobs.splice(idx,1);saveAll();renderJobs();}}
-function exportJobs(){let csv="Date,Client,Type,Income,TotalCost,Profit,Margin,By\n";jobs.forEach(j=>{csv+=`${j.date},${j.customer},${j.type},${j.income},${j.totalCost},${j.profit},${j.margin},${j.by}\n`;});dl(csv,"jobs.csv");}
-function saveExp(){
- let date=document.getElementById("expDate").value||new Date().toISOString().slice(0,10), cat=document.getElementById("expCat").value, method=document.getElementById("expMethod").value, amt=parseInt(document.getElementById("expAmt").value), desc=document.getElementById("expDesc").value.trim();
- if(!amt||!desc){document.getElementById("expMsg").innerText="Enter amount + desc";return;}
- let time=new Date().toLocaleTimeString();
- expenses.push({date,time,category:cat,amount:amt,desc,method,by:cur});
- document.getElementById("expAmt").value="";document.getElementById("expDesc").value="";document.getElementById("expMsg").innerText="✅ Saved KSh "+amt; setTimeout(()=>document.getElementById("expMsg").innerText="",2000);
- saveAll();renderExp();renderPOS();renderHistory();
-}
-function renderExp(){
- let today=new Date().toISOString().slice(0,10);
- let tExp=expenses.filter(e=>e.date===today);
- document.getElementById("expTodayBody").innerHTML=tExp.map(e=>{
-  let idx=expenses.indexOf(e);
-  return `<tr><td>${e.time}</td><td><span class="badge b-red">${e.category}</span></td><td>${e.desc}</td><td>KSh ${e.amount}</td><td>${e.by}</td><td><button class="btn btn-red btn-sm" onclick="delExp(${idx})">x</button></td></tr>`;
- }).join("")||"<tr><td colspan=6>No expenses today</td></tr>";
- document.getElementById("expTodayTotal").innerText="KSh "+tExp.reduce((a,b)=>a+b.amount,0);
- let fDate=document.getElementById("expFilterDate").value;
- let allF=fDate?expenses.filter(e=>e.date===fDate):expenses.slice(-80).reverse();
- document.getElementById("expAllBody").innerHTML=allF.map(e=>`<tr><td>${e.date}</td><td>${e.category}</td><td>${e.desc}</td><td>${e.amount}</td><td>${e.method}</td><td>${e.by}</td></tr>`).join("")||"<tr><td colspan=6>No data</td></tr>";
-}
-function delExp(idx){if(cur!=="admin"&&expenses[idx].by!==cur)return alert("Only admin/owner"); if(confirm("Delete expense?")){expenses.splice(idx,1);saveAll();renderExp();renderPOS();}}
+function saveExp(){let date=document.getElementById("expDate").value||new Date().toISOString().slice(0,10),cat=document.getElementById("expCat").value,method=document.getElementById("expMethod").value,amt=parseInt(document.getElementById("expAmt").value),desc=document.getElementById("expDesc").value.trim();if(!amt||!desc){document.getElementById("expMsg").innerText="Enter amount + desc";return;}let time=new Date().toLocaleTimeString();expenses.push({date,time,category:cat,amount:amt,desc,method,by:cur});document.getElementById("expAmt").value="";document.getElementById("expDesc").value="";document.getElementById("expMsg").innerText="✅ Saved KSh "+amt;setTimeout(()=>document.getElementById("expMsg").innerText="",2000);saveAll();renderExp();renderDashboard();}
+function renderExp(){let today=new Date().toISOString().slice(0,10);let tExp=expenses.filter(e=>e.date===today);document.getElementById("expTodayBody").innerHTML=tExp.map(e=>{let idx=expenses.indexOf(e);return `<tr><td>${e.time}</td><td><span class="badge b-red">${e.category}</span></td><td>${e.desc}</td><td>KSh ${e.amount}</td><td>${e.by}</td><td><button class="btn btn-red btn-sm" onclick="delExp(${idx})">x</button></td></tr>`;}).join("")||"<tr><td colspan=6>No expenses today</td></tr>";document.getElementById("expTodayTotal").innerText="KSh "+tExp.reduce((a,b)=>a+b.amount,0);let fDate=document.getElementById("expFilterDate").value;let allF=fDate?expenses.filter(e=>e.date===fDate):expenses.slice(-80).reverse();document.getElementById("expAllBody").innerHTML=allF.map(e=>`<tr><td>${e.date}</td><td>${e.category}</td><td>${e.desc}</td><td>${e.amount}</td><td>${e.method}</td><td>${e.by}</td></tr>`).join("")||"<tr><td colspan=6>No data</td></tr>";}
+function delExp(idx){if(cur!=="admin"&&expenses[idx].by!==cur)return alert("Only admin/owner");if(confirm("Delete expense?")){expenses.splice(idx,1);saveAll();renderExp();renderDashboard();}}
 function exportExpCSV(){let csv="Date,Category,Desc,Amount,Method,User,Time\n";expenses.forEach(e=>{csv+=`${e.date},${e.category},"${e.desc}",${e.amount},${e.method},${e.by},${e.time}\n`;});dl(csv,"expenses.csv");}
-function renderHistory(){
- let fDate=document.getElementById("hDate").value, fType=document.getElementById("hType").value;
- let rows=[];
- if(fType==="all"||fType==="sales")sales.filter(s=>!fDate||s.date===fDate).forEach(s=>{let items=s.items?.map? s.items.map(i=>i.name+" x"+i.qty).join(", ") : ""; rows.push({date:s.date,time:s.time,type:"SALE",details:items+" | "+s.customer+" | "+s.pay,amount:s.total,by:s.by,sort:s.date+" "+s.time});});
- if(fType==="all"||fType==="expenses")expenses.filter(e=>!fDate||e.date===fDate).forEach(e=>{rows.push({date:e.date,time:e.time,type:"EXPENSE",details:e.category+": "+e.desc+" ("+e.method+")",amount:e.amount,by:e.by,sort:e.date+" "+e.time});});
- if(fType==="all"||fType==="repairs")repairs.filter(r=>!fDate||r.date===fDate).forEach(r=>{rows.push({date:r.date,time:r.time,type:"REPAIR",details:r.customer+" | "+r.device+" | "+r.status,amount:r.cost+r.parts,by:r.by,sort:r.date+" "+r.time});});
- if(fType==="all"||fType==="jobs")jobs.filter(j=>!fDate||j.date===fDate).forEach(j=>{rows.push({date:j.date,time:"",type:"JOB",details:j.customer+" | "+j.type+" | Profit KSh "+j.profit,amount:j.income,by:j.by,sort:j.date});});
- rows.sort((a,b)=>b.sort.localeCompare(a.sort));
- document.getElementById("hBody").innerHTML=rows.map(r=>`<tr><td>${r.date}<br><small>${r.time}</small></td><td><span class="badge ${r.type==="SALE"?"b-green":r.type==="EXPENSE"?"b-red":r.type==="REPAIR"?"b-yellow":"b-blue"}">${r.type}</span></td><td>${r.details}</td><td>${r.type==="EXPENSE"?"-":"+"}KSh ${r.amount}</td><td>${r.by}</td></tr>`).join("")||"<tr><td colspan=5>No records</td></tr>";
-}
+function renderHistory(){let fDate=document.getElementById("hDate").value,fType=document.getElementById("hType").value;let rows=[];if(fType==="all"||fType==="sales")sales.filter(s=>!fDate||s.date===fDate).forEach(s=>{let items=s.items?s.items.map(i=>i.name+" x"+i.qty).join(", "):"";let buy=0;if(s.items){s.items.forEach(it=>{let b=it.buy!==undefined?it.buy:getBuyPrice(it.name);buy+=b*it.qty;});}let profit=s.total-buy;rows.push({date:s.date,time:s.time,type:"SALE",details:items+" | "+s.customer,amount:s.total,profit:profit,by:s.by,sort:s.date+" "+s.time});});if(fType==="all"||fType==="expenses")expenses.filter(e=>!fDate||e.date===fDate).forEach(e=>{rows.push({date:e.date,time:e.time,type:"EXPENSE",details:e.category+": "+e.desc,amount:e.amount,profit:-e.amount,by:e.by,sort:e.date+" "+e.time});});if(fType==="all"||fType==="repairs")repairs.filter(r=>!fDate||r.date===fDate).forEach(r=>{rows.push({date:r.date,time:r.time,type:"REPAIR",details:r.customer+" | "+r.device+" | "+r.status,amount:r.cost+r.parts,profit:r.cost+r.parts,by:r.by,sort:r.date+" "+r.time});});if(fType==="all"||fType==="jobs")jobs.filter(j=>!fDate||j.date===fDate).forEach(j=>{rows.push({date:j.date,time:"",type:"JOB",details:j.customer+" | "+j.type+" Profit "+j.profit,amount:j.income,profit:j.profit,by:j.by,sort:j.date});});rows.sort((a,b)=>b.sort.localeCompare(a.sort));document.getElementById("hBody").innerHTML=rows.map(r=>`<tr><td>${r.date}<br><small>${r.time}</small></td><td><span class="badge ${r.type==="SALE"?"b-green":r.type==="EXPENSE"?"b-red":r.type==="REPAIR"?"b-yellow":"b-blue"}">${r.type}</span></td><td>${r.details}</td><td>KSh ${r.amount}</td><td class="${r.profit>=0?'profit-positive':'profit-negative'}">KSh ${r.profit}</td><td>${r.by}</td></tr>`).join("")||"<tr><td colspan=6>No records</td></tr>";}
 function dl(csv,name){let b=new Blob([csv],{type:"text/csv"}),a=document.createElement("a");a.href=URL.createObjectURL(b);a.download=name;a.click();}
 if(localStorage.getItem("vpos_user")){cur=localStorage.getItem("vpos_user");initApp();}
 </script>
